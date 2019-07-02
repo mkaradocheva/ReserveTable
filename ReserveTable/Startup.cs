@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ReserveTable.Data;
+using ReserveTable.Domain;
+using System.Linq;
 
 namespace ReserveTable.App
 {
@@ -33,9 +35,22 @@ namespace ReserveTable.App
             services.AddDbContext<ReserveTableDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddDefaultUI(UIFramework.Bootstrap4)
-                .AddEntityFrameworkStores<ReserveTableDbContext>();
+
+            services.AddIdentity<ReserveTableUser, ReserveTableUserRole>()
+    .AddEntityFrameworkStores<ReserveTableDbContext>()
+    .AddDefaultTokenProviders();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 3;
+                options.Password.RequiredUniqueChars = 0;
+
+                options.User.RequireUniqueEmail = true;
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -43,18 +58,24 @@ namespace ReserveTable.App
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
+            using (var serviceScope = app.ApplicationServices.CreateScope())
             {
-                app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                using (var context = serviceScope.ServiceProvider.GetRequiredService<ReserveTableDbContext>())
+                {
+                    context.Database.EnsureCreated();
+
+                    //if (!context.Roles.Any())
+                    //{
+                    //    context.Roles.Add(new ReserveTableUserRole { Name = "Admin", NormalizedName = "ADMIN" });
+                    //    context.Roles.Add(new ReserveTableUserRole { Name = "User", NormalizedName = "USER" });
+                    //}
+
+                    context.SaveChanges();
+                }
             }
 
+            app.UseDeveloperExceptionPage();
+            app.UseDatabaseErrorPage();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
