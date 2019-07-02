@@ -50,6 +50,8 @@ namespace ReserveTable.App
                 options.Password.RequiredUniqueChars = 0;
 
                 options.User.RequireUniqueEmail = true;
+                options.User.AllowedUserNameCharacters =
+           "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -64,11 +66,11 @@ namespace ReserveTable.App
                 {
                     context.Database.EnsureCreated();
 
-                    //if (!context.Roles.Any())
-                    //{
-                    //    context.Roles.Add(new ReserveTableUserRole { Name = "Admin", NormalizedName = "ADMIN" });
-                    //    context.Roles.Add(new ReserveTableUserRole { Name = "User", NormalizedName = "USER" });
-                    //}
+                    if (!context.Roles.Any())
+                    {
+                        context.Roles.Add(new ReserveTableUserRole { Name = "Admin", NormalizedName = "ADMIN" });
+                        context.Roles.Add(new ReserveTableUserRole { Name = "User", NormalizedName = "USER" });
+                    }
 
                     context.SaveChanges();
                 }
