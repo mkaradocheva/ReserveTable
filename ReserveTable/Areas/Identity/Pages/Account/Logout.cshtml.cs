@@ -20,15 +20,14 @@ namespace ReserveTable.App.Areas.Identity.Pages.Account
             _logger = logger;
         }
 
-        public async Task<IActionResult> OnGet(string returnUrl = null)
+        public void OnGet()
         {
-            //TODO
+        }
 
+        public async Task<IActionResult> OnPost(string returnUrl = null)
+        {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
-
-            returnUrl = "/Home/Index";
-
             if (returnUrl != null)
             {
                 return LocalRedirect(returnUrl);
@@ -38,6 +37,5 @@ namespace ReserveTable.App.Areas.Identity.Pages.Account
                 return Page();
             }
         }
-
     }
 }

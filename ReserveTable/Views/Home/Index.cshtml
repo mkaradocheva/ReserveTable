@@ -3,19 +3,24 @@
 }
 
 <div class="text-center text-reserve-table p-4">
-    <h1 class="display-4 reserve-table"> Welcome to ReserveTable!</h1>
+    <h1 class="display-4 reserve-table"> <b>Welcome to ReserveTable!</b></h1>
 </div>
 @if (!User.Identity.IsAuthenticated)
 {
-    <div class="jumbotron jumbotron-fluid bg-dark">
-        <div class="container text-white">
+    <div class="container text-white">
 
-            <h2> If you have a registration, <a href="/Identity/Account/Login">log in</a>.</h2>
-            <h2> If you are new, register <a href="/Identity/Account/Register">here</a> and make your first reservation!</h2>
-        </div>
+        <h2> If you have a registration, <a href="/Identity/Account/Login" class="text-dark">log in</a>.</h2>
+        <h2> If you are new, register <a href="/Identity/Account/Register" class="text-dark">here</a> and make your first reservation!</h2>
     </div>
 }
 else
 {
-
+<div class="card" style="width: 18rem;">
+    <img class="card-img-top" src="https://i.pinimg.com/originals/4b/79/00/4b790066dfec3edc85469d17dc6058aa.jpg" alt="Card image cap">
+    <div class="card-body">
+        <h5 class="card-title">Sofia</h5>
+        <p class="card-text">Restaurants in Sofia</p>
+        <a href="#" class="btn btn-primary">View restaurants</a>
+    </div>
+</div>
 }
