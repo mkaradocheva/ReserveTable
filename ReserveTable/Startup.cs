@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -10,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ReserveTable.Data;
 using ReserveTable.Domain;
 using System.Linq;
+using ReserveTable.Services;
 
 namespace ReserveTable.App
 {
@@ -48,6 +47,8 @@ namespace ReserveTable.App
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            //services.AddScoped<IRestaurantService, RestaurantService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,10 +60,19 @@ namespace ReserveTable.App
                 {
                     context.Database.EnsureCreated();
 
+                    //TODO: Implement seeders
+
                     if (!context.Roles.Any())
                     {
                         context.Roles.Add(new ReserveTableUserRole { Name = "Admin", NormalizedName = "ADMIN" });
                         context.Roles.Add(new ReserveTableUserRole { Name = "User", NormalizedName = "USER" });
+                    }
+
+                    if (!context.Cities.Any())
+                    {
+                        context.Cities.Add(new City { Name = "Sofia" });
+                        context.Cities.Add(new City { Name = "Plovdiv" });
+                        context.Cities.Add(new City { Name = "Varna" });
                     }
 
                     context.SaveChanges();

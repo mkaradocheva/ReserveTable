@@ -1,0 +1,39 @@
+﻿@model ReserveTable.App.Models.Restaurants.CreateRestaurantModelView
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1 class="d-flex justify-content-center text-white">Add new restaurant</h1>
+
+<hr />
+<div class="row d-flex justify-content-center">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-white"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label text-white">Restaurant name</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-white"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="City" class="text-white">Select city:</label>
+                <select class="form-control" id="city" >
+                    <option>Sofia</option>
+                    <option>Varna</option>
+                    <option>Plovdiv</option>
+                </select>
+            </div>
+            <div class="form-group d-flex justify-content-center p-2">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="d-flex justify-content-center p-2">
+    <h5><a asp-controller="Home" asp-action="Index">Back to home page</a></h5>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -5,22 +5,42 @@
 <div class="text-center text-reserve-table p-4">
     <h1 class="display-4 reserve-table"> <b>Welcome to ReserveTable!</b></h1>
 </div>
-@if (!User.Identity.IsAuthenticated)
+<hr />
+<h1 class="text-white text-center">Reserve a table wherever you are! </h1>
+@if(User.Identity.IsAuthenticated)
 {
-    <div class="container text-white">
-
-        <h2> If you have a registration, <a href="/Identity/Account/Login" class="text-dark">log in</a>.</h2>
-        <h2> If you are new, register <a href="/Identity/Account/Register" class="text-dark">here</a> and make your first reservation!</h2>
-    </div>
+    <h2 class="text-white text-center p-2">Hello, @User.Identity.Name!</h2>
 }
-else
-{
-<div class="card" style="width: 18rem;">
-    <img class="card-img-top" src="https://i.pinimg.com/originals/4b/79/00/4b790066dfec3edc85469d17dc6058aa.jpg" alt="Card image cap">
-    <div class="card-body">
-        <h5 class="card-title">Sofia</h5>
-        <p class="card-text">Restaurants in Sofia</p>
-        <a href="#" class="btn btn-primary">View restaurants</a>
+
+<div class="row p-5">
+    <div class="col-sm-4">
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="https://i.pinimg.com/originals/4b/79/00/4b790066dfec3edc85469d17dc6058aa.jpg" alt="Sofia">
+            <div class="card-body">
+                <h5 class="card-title">Sofia</h5>
+                <p class="card-text">Restaurants in Sofia</p>
+                <a href="#" class="btn btn-primary">View restaurants</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="https://www.bereisediewelt.de/wp-content/uploads/2018/06/20180525_200846-600x450.jpg" alt="Varna">
+            <div class="card-body">
+                <h5 class="card-title">Varna</h5>
+                <p class="card-text">Restaurants in Varna</p>
+                <a href="#" class="btn btn-primary">View restaurants</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="https://media.carredartistes.com/img/cms/Blog/2016-05-Plovdiv/theatre-romain.png" alt="Plovdiv">
+            <div class="card-body">
+                <h5 class="card-title">Plovdiv</h5>
+                <p class="card-text">Restaurants in Plovdiv</p>
+                <a href="#" class="btn btn-primary">View restaurants</a>
+            </div>
+        </div>
     </div>
 </div>
-}

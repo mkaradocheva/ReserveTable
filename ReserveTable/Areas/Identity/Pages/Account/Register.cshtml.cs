@@ -40,7 +40,7 @@ namespace ReserveTable.App.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-            [StringLength(10, ErrorMessage = "Username must be at least 4 and at max 10 characters long.", MinimumLength = 4)]
+            [StringLength(20, ErrorMessage = "Username must be at least 4 and at max 10 characters long.", MinimumLength = 4)]
             [Display(Name = "Username")]
             public string Username { get; set; }
 
