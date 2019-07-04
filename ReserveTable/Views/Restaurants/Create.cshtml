@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Create";
 }
-
+    
 <h1 class="d-flex justify-content-center text-white">Add new restaurant</h1>
 
 <hr />
@@ -17,10 +17,10 @@
             </div>
             <div class="form-group">
                 <label asp-for="City" class="text-white">Select city:</label>
-                <select class="form-control" id="city" >
+                <select class="form-control" asp-for="City" id="City" >
                     <option>Sofia</option>
-                    <option>Varna</option>
-                    <option>Plovdiv</option>
+                    <option id="City">Varna</option>
+                    <option id="City">Plovdiv</option>
                 </select>
             </div>
             <div class="form-group d-flex justify-content-center p-2">
