@@ -48,6 +48,8 @@ namespace ReserveTable.App.Controllers
                 {
                     Name = modelView.Name,
                     CityId = cityId,
+                    Address = modelView.Address,
+                    PhoneNumber = modelView.PhoneNumber
                 };
 
                 await dbContext.Restaurants.AddAsync(restaurant);
@@ -63,7 +65,7 @@ namespace ReserveTable.App.Controllers
                 {
                     Id = r.Id,
                     Name = r.Name,
-                    City = r.City.Name
+                    City = r.City.Name,
                 })
                 .ToList();
 
