@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ReserveTable.App.Models.Cities;
 using ReserveTable.App.Models.Restaurants;
 using ReserveTable.Data;
 using ReserveTable.Domain;
@@ -25,12 +27,14 @@ namespace ReserveTable.App.Controllers
             this.dbContext = dbContext;
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(CreateRestaurantModelView modelView)
         {
             //TODO: Unique restaurants in database
@@ -51,5 +55,38 @@ namespace ReserveTable.App.Controllers
 
                 return this.Redirect("/Home/Index");
         }
+
+        public IActionResult All()
+        {
+            var allRestaurants = dbContext.Restaurants
+                .Select(r => new AllRestaurantsViewModel
+                {
+                    Id = r.Id,
+                    Name = r.Name,
+                    City = r.City.Name
+                })
+                .ToList();
+
+            return this.View(allRestaurants);
+        }
+
+        [HttpGet("/Restaurants/{id}")]
+        public IActionResult Details(string id)
+        {
+            var viewModel = dbContext.Restaurants.
+                Where(r => r.Id == id)
+                .Select(r => new RestaurantDetailsViewModel
+                {
+                    Id = r.Id,
+                    Name = r.Name,
+                    Address = r.Address + ", " + r.City.Name,
+                    PhoneNumber = r.PhoneNumber
+                })
+                .SingleOrDefault();
+
+
+            return this.View(viewModel);
+        }
+
     }
 }

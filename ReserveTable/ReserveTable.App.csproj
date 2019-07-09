@@ -20,9 +20,4 @@
     <ProjectReference Include="..\ReserveTable.Services\ReserveTable.Services.csproj" />
   </ItemGroup>
 
-
-  <ItemGroup>
-    <Folder Include="Models\Cities\" />
-  </ItemGroup>
-
 </Project>

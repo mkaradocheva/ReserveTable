@@ -1,0 +1,29 @@
+﻿@model ReserveTable.App.Models.Restaurants.RestaurantDetailsViewModel
+
+<div>
+    <h4>@Model.Name - Reserve your table here!</h4>
+    <hr />
+    <dl class="row pl-xl-2">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class="btn btn-warning" href="/Reservations/{@Model.Id}">Make Reservation</a>
+</div>

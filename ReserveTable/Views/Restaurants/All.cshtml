@@ -1,0 +1,41 @@
+﻿@model List<ReserveTable.App.Models.Restaurants.AllRestaurantsViewModel>
+
+
+<div class="d-flex justify-content-center row">
+    <div class="col-md-4 col">
+        <h3 class="text-white">Sofia:</h3>
+        <ul>
+            @foreach (var restaurant in Model)
+            {
+                @if (restaurant.City == "Sofia")
+                {
+                    <li class="text-white"><a href="/Restaurants/@restaurant.Id">@restaurant.Name</a></li>
+                }
+            }
+        </ul>
+    </div>
+    <div class="col-md-4 col">
+        <h3 class="text-white">Varna:</h3>
+        <ul>
+            @foreach (var restaurant in Model)
+            {
+                @if (restaurant.City == "Varna")
+                {
+                    <li class="text-white"><a href="/Restaurants/@restaurant.Id">@restaurant.Name</a></li>
+                }
+            }
+        </ul>
+    </div>
+    <div class="col-md-4 col">
+        <h3 class="text-white">Plovdiv:</h3>
+        <ul>
+            @foreach (var restaurant in Model)
+            {
+                @if (restaurant.City == "Plovdiv")
+                {
+                    <li class="text-white"><a href="/Restaurants/@restaurant.Id">@restaurant.Name</a></li>
+                }
+            }
+        </ul>
+    </div>
+</div>
