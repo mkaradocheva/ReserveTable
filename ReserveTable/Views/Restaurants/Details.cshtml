@@ -1,17 +1,15 @@
 ﻿@model ReserveTable.App.Models.Restaurants.RestaurantDetailsViewModel
 
 <div>
-    <h4 class="text-center">@Model.Name - Reserve your table here!</h4>
+    <h4 class="text-center text-white">@Model.Name - Reserve your table here!</h4>
     <hr />
     <div class="d-flex justify-content-center">
         <ul class="row list-group">
             <li class="list-group-item disabled">
-                @Html.DisplayNameFor(model => model.Address)
-                @Html.DisplayFor(model => model.Address)
+                @Html.DisplayNameFor(model => model.Address) - @Html.DisplayFor(model => model.Address)
             </li>
             <li class="list-group-item disabled">
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-                @Html.DisplayFor(model => model.PhoneNumber)
+                Phone - @Html.DisplayFor(model => model.PhoneNumber)
             </li>
         </ul>
     </div>

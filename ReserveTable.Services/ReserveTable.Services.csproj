@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Models\ReserveTable.Models\ReserveTable.Models.csproj" />
     <ProjectReference Include="..\ReserveTable.Data\ReserveTable.Data.csproj" />
     <ProjectReference Include="..\ReserveTable.Domain\ReserveTable.Domain.csproj" />
   </ItemGroup>

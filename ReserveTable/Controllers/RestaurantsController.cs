@@ -1,11 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ReserveTable.App.Models.Cities;
 using ReserveTable.App.Models.Restaurants;
-using ReserveTable.Data;
 using ReserveTable.Domain;
 using ReserveTable.Services;
 
@@ -13,18 +9,13 @@ namespace ReserveTable.App.Controllers
 {
     public class RestaurantsController : Controller
     {
-        private readonly ReserveTableDbContext dbContext;
+        private readonly IRestaurantService restaurantService;
+        private readonly CityService cityService;
 
-        //private readonly RestaurantService restaurantService;
-
-        //public RestaurantsController(RestaurantService restaurantService)
-        //{
-        //    this.restaurantService = restaurantService;
-        //}
-
-        public RestaurantsController(ReserveTableDbContext dbContext)
+        public RestaurantsController(IRestaurantService restaurantService, CityService cityService)
         {
-            this.dbContext = dbContext;
+            this.restaurantService = restaurantService;
+            this.cityService = cityService;
         }
 
         [Authorize(Roles = "Admin")]
@@ -37,59 +28,45 @@ namespace ReserveTable.App.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(CreateRestaurantModelView modelView)
         {
-            //TODO: Unique restaurants in database
+            string cityId = cityService.FindCityByName(modelView.City);
 
-            string cityId = dbContext.Cities
-                .Where(c => c.Name == modelView.City)
-                .Select(c => c.Id)
-                .SingleOrDefault();
+            var restaurant = new Restaurant
+            {
+                Name = modelView.Name,
+                CityId = cityId,
+                Address = modelView.Address,
+                PhoneNumber = modelView.PhoneNumber
+            };
 
-                var restaurant = new Restaurant
-                {
-                    Name = modelView.Name,
-                    CityId = cityId,
-                    Address = modelView.Address,
-                    PhoneNumber = modelView.PhoneNumber
-                };
+            if (!restaurantService.CheckIfExistsInDb(restaurant))
+            {
+                await restaurantService.CreateNewRestaurant(restaurant);
+            }
 
-                await dbContext.Restaurants.AddAsync(restaurant);
-                await dbContext.SaveChangesAsync();
-
-                return this.Redirect("/Home/Index");
+            return this.Redirect("/Home/Index");
         }
 
         public IActionResult All()
         {
-            var allRestaurants = dbContext.Restaurants
-                .Select(r => new AllRestaurantsViewModel
-                {
-                    Id = r.Id,
-                    Name = r.Name,
-                    City = r.City.Name,
-                })
-                .ToList();
+            var allRestaurants = restaurantService.GetAllRestaurants();
 
             return this.View(allRestaurants);
         }
 
         [HttpGet("/Restaurants/{city}/{restaurant}")]
-        public IActionResult Details(string city, string restaurant)
+        public IActionResult Details(string city, string restaurantName)
         {
-            var viewModel = dbContext.Restaurants
-                .Where(r => r.City.Name == city
-                        && r.Name == restaurant)
-                .Select(r => new RestaurantDetailsViewModel
-                {
-                    Id = r.Id,
-                    Name = r.Name,
-                    Address = r.Address + ", " + r.City.Name,
-                    PhoneNumber = r.PhoneNumber
-                })
-                .SingleOrDefault();
+            var restaurant = restaurantService.GetRestaurantByNameAndCity(city, restaurantName);
 
+            var viewModel = new RestaurantDetailsViewModel
+            {
+                Id = restaurant.Id,
+                Name = restaurant.Name,
+                Address = restaurant.Address + ", " + restaurant.City.Name,
+                PhoneNumber = restaurant.PhoneNumber
+            };
 
             return this.View(viewModel);
         }
-
     }
 }
