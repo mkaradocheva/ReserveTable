@@ -50,6 +50,7 @@ namespace ReserveTable.App
 
             services.AddScoped<IRestaurantService, RestaurantService>();
             services.AddScoped<ICityService, CityService>();
+            services.AddScoped<IReservationsService, ReservationsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

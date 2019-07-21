@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using ReserveTable.App.Models.Cities;
 using ReserveTable.App.Models.Restaurants;

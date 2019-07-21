@@ -6,7 +6,7 @@
     <div class="d-flex justify-content-center">
         <ul class="row list-group">
             <li class="list-group-item disabled">
-                @Html.DisplayNameFor(model => model.Address) - @Html.DisplayFor(model => model.Address)
+                @Html.DisplayNameFor(model => model.Address) - @Html.DisplayFor(model => model.Address), @Html.DisplayFor(model => model.City)
             </li>
             <li class="list-group-item disabled">
                 Phone - @Html.DisplayFor(model => model.PhoneNumber)
@@ -15,7 +15,7 @@
     </div>
 </div>
 <div class="d-flex justify-content-center pt-4">
-    <a class="btn btn-warning" href="/Reservations/{@Model.Id}">Make Reservation</a>
+    <a class="btn btn-warning" href="/Reservations/{@Model.City}/{@Model.Name}">Make Reservation</a>
 </div>
 <div class="d-flex justify-content-center p-3">
     <h5><a href="/Restaurants/All">Back to all restaurants</a></h5>

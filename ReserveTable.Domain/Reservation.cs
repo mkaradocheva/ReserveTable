@@ -13,7 +13,8 @@ namespace ReserveTable.Domain
 
         public DateTime EndOfReservation => this.ForDate.AddHours(2);
 
-        public string ClientName { get; set; }
+        public string UserId { get; set; }
+        public ReserveTableUser User { get; set; }
 
         [Range(1, 100)]
         public int SeatsCount { get; set; }

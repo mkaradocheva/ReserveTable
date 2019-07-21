@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ReserveTable.App.Models.Restaurants;
@@ -54,6 +55,19 @@ namespace ReserveTable.Services
                 .SingleOrDefault();
 
             return restaurant;
+        }
+
+        public bool CheckAvailability(DateTime dateTime, Restaurant restaurant)
+        {
+            //TODO
+
+            //var reservationsInRestaurantForTheDate = dbContext.Tables
+            //    .Where(t => t.Restaurant == restaurant)
+            //    .SelectMany(t => t.Reservations)
+            //    .Where(r => r.ForDate == dateTime)
+            //    .ToList();
+
+            return true;
         }
     }
 }

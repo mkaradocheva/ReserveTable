@@ -62,7 +62,8 @@ namespace ReserveTable.App.Controllers
             {
                 Id = restaurantFromDb.Id,
                 Name = restaurantFromDb.Name,
-                Address = restaurantFromDb.Address + ", " + city,
+                Address = restaurantFromDb.Address,
+                City = city,
                 PhoneNumber = restaurantFromDb.PhoneNumber
             };
 
