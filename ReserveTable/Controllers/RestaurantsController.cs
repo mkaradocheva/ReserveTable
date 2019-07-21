@@ -72,11 +72,12 @@ namespace ReserveTable.App.Controllers
             return this.View(allRestaurants);
         }
 
-        [HttpGet("/Restaurants/{id}")]
-        public IActionResult Details(string id)
+        [HttpGet("/Restaurants/{city}/{restaurant}")]
+        public IActionResult Details(string city, string restaurant)
         {
-            var viewModel = dbContext.Restaurants.
-                Where(r => r.Id == id)
+            var viewModel = dbContext.Restaurants
+                .Where(r => r.City.Name == city
+                        && r.Name == restaurant)
                 .Select(r => new RestaurantDetailsViewModel
                 {
                     Id = r.Id,

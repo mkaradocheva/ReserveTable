@@ -1,0 +1,18 @@
+﻿@model ReserveTable.App.Models.Cities.CityRestaurantsViewModel
+
+<div>
+    <h4 class="text-center text-white">Restaurants in @Model.CityName</h4>
+    <hr />
+    <div class="d-flex justify-content-center">
+        <ul>
+            @foreach (var restaurant in Model.RestaurantsNames)
+            {
+                <li class="text-white"><a href="/Restaurants/@Model.CityName/@restaurant.Name">@restaurant.Name</a></li>
+            }
+        </ul>
+    </div>
+    <hr />
+</div>
+<div class="d-flex justify-content-center p-2">
+    <h5><a asp-controller="Home" asp-action="Index">Back to home page</a></h5>
+</div>
