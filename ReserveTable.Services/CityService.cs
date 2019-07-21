@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using ReserveTable.Data;
 
 namespace ReserveTable.Services
 {
-    public class CityService
+    public class CityService : ICityService
     {
         private readonly ReserveTableDbContext dbContext;
 

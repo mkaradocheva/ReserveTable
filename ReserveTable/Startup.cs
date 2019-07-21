@@ -48,7 +48,8 @@ namespace ReserveTable.App
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            //services.AddScoped<IRestaurantService, RestaurantService>();
+            services.AddScoped<IRestaurantService, RestaurantService>();
+            services.AddScoped<ICityService, CityService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

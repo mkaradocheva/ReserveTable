@@ -10,9 +10,9 @@ namespace ReserveTable.App.Controllers
     public class RestaurantsController : Controller
     {
         private readonly IRestaurantService restaurantService;
-        private readonly CityService cityService;
+        private readonly ICityService cityService;
 
-        public RestaurantsController(IRestaurantService restaurantService, CityService cityService)
+        public RestaurantsController(IRestaurantService restaurantService, ICityService cityService)
         {
             this.restaurantService = restaurantService;
             this.cityService = cityService;
@@ -54,16 +54,16 @@ namespace ReserveTable.App.Controllers
         }
 
         [HttpGet("/Restaurants/{city}/{restaurant}")]
-        public IActionResult Details(string city, string restaurantName)
+        public IActionResult Details(string city, string restaurant)
         {
-            var restaurant = restaurantService.GetRestaurantByNameAndCity(city, restaurantName);
+            var restaurantFromDb = restaurantService.GetRestaurantByNameAndCity(city, restaurant);
 
             var viewModel = new RestaurantDetailsViewModel
             {
-                Id = restaurant.Id,
-                Name = restaurant.Name,
-                Address = restaurant.Address + ", " + restaurant.City.Name,
-                PhoneNumber = restaurant.PhoneNumber
+                Id = restaurantFromDb.Id,
+                Name = restaurantFromDb.Name,
+                Address = restaurantFromDb.Address + ", " + city,
+                PhoneNumber = restaurantFromDb.PhoneNumber
             };
 
             return this.View(viewModel);
