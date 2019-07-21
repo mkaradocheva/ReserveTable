@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using ReserveTable.Data;
+using ReserveTable.Domain;
 
 namespace ReserveTable.Services
 {
@@ -20,6 +22,15 @@ namespace ReserveTable.Services
                 .SingleOrDefault();
 
             return cityId;
+        }
+
+        public List<Restaurant> GetRestaurantsInCity(string city)
+        {
+            var restaurants = dbContext.Restaurants
+                .Where(r => r.City.Name == city)
+                .ToList();
+
+            return restaurants;
         }
     }
 }

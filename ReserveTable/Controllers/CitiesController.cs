@@ -1,38 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ReserveTable.App.Models.Cities;
 using ReserveTable.App.Models.Restaurants;
-using ReserveTable.Data;
+using ReserveTable.Domain;
+using ReserveTable.Services;
 
 namespace ReserveTable.App.Controllers
 {
     public class CitiesController : Controller
     {
-        private readonly ReserveTableDbContext dbContext;
+        private readonly ICityService cityService;
 
-        public CitiesController(ReserveTableDbContext dbContext)
+        public CitiesController(ICityService cityService)
         {
-            this.dbContext = dbContext;
+            this.cityService = cityService;
         }
 
         [Route("/Cities/{city}")]
         public IActionResult CityRestaurants(string city)
         {
-            var restaurants = dbContext.Restaurants
-                .Where(r => r.City.Name == city)
-                .Select(r => new RestaurantsViewModel
+            List<Restaurant> restaurants = cityService.GetRestaurantsInCity(city);
+
+            List<RestaurantsViewModel> restaurantsViewModel = new List<RestaurantsViewModel>();
+
+            foreach (var restaurant in restaurants)
+            {
+                restaurantsViewModel.Add(new RestaurantsViewModel
                 {
-                    Name = r.Name
-                })
-                .ToList();
+                    Name = restaurant.Name
+                });
+            }
 
             var model = new CityRestaurantsViewModel
             {
                 CityName = city,
-                RestaurantsNames = restaurants
+                RestaurantsNames = restaurantsViewModel
             };
 
             return View(model);
