@@ -69,5 +69,15 @@ namespace ReserveTable.Services
 
             return true;
         }
+
+        public double GetAverageRate(Restaurant restaurant)
+        {
+            var reviews = dbContext.Reviews
+                .Where(r => r.RestaurantId == restaurant.Id);
+
+            double average = Math.Round(reviews.Sum(r => r.Rate) / reviews.Count(), 2);
+
+            return average;
+        }
     }
 }

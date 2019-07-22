@@ -17,5 +17,7 @@ namespace ReserveTable.Services
         Restaurant GetRestaurantByNameAndCity(string city, string name);
 
         bool CheckAvailability(DateTime dateTime, Restaurant restaurant);
+
+        double GetAverageRate(Restaurant restaurant);
     }
 }

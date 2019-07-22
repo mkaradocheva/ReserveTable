@@ -10,6 +10,7 @@ namespace ReserveTable.Domain
         public Restaurant()
         {
             this.Tables = new HashSet<Table>();
+            this.Reviews = new HashSet<Review>();
         }
 
         public string Id { get; set; }
@@ -23,9 +24,13 @@ namespace ReserveTable.Domain
 
         public string PhoneNumber { get; set; }
 
+        public double AverageRate { get; set; }
+
         public string CityId { get; set; }
         public City City { get; set; }
 
         public ICollection<Table> Tables { get; set; }
+
+        public ICollection<Review> Reviews { get; set; }
     }
 }

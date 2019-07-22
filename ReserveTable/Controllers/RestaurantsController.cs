@@ -1,8 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ReserveTable.App.Models.Restaurants;
 using ReserveTable.Domain;
+using ReserveTable.Models.Reviews;
 using ReserveTable.Services;
 
 namespace ReserveTable.App.Controllers
@@ -57,17 +59,31 @@ namespace ReserveTable.App.Controllers
         public IActionResult Details(string city, string restaurant)
         {
             var restaurantFromDb = restaurantService.GetRestaurantByNameAndCity(city, restaurant);
+            var restaurantAverageRate = restaurantService.GetAverageRate(restaurantFromDb);
 
-            var viewModel = new RestaurantDetailsViewModel
+            var reviewsViewModel = new List<AllReviewsForRestaurantViewModel>();
+            foreach (var review in restaurantFromDb.Reviews)
+            {
+                reviewsViewModel.Add(new AllReviewsForRestaurantViewModel
+                {
+                    Username = review.User.UserName,
+                    Comment = review.Comment,
+                    Rate = review.Rate
+                });
+            }
+
+            var restaurantViewModel = new RestaurantDetailsViewModel
             {
                 Id = restaurantFromDb.Id,
                 Name = restaurantFromDb.Name,
                 Address = restaurantFromDb.Address,
                 City = city,
-                PhoneNumber = restaurantFromDb.PhoneNumber
+                PhoneNumber = restaurantFromDb.PhoneNumber,
+                AverageRate = restaurantAverageRate,
+                Reviews = reviewsViewModel
             };
 
-            return this.View(viewModel);
+            return this.View(restaurantViewModel);
         }
     }
 }
