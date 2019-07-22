@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,11 +14,15 @@ namespace ReserveTable.App.Controllers
     {
         private readonly IRestaurantService restaurantService;
         private readonly ICityService cityService;
+        private readonly IUsersService usersService;
 
-        public RestaurantsController(IRestaurantService restaurantService, ICityService cityService)
+        public RestaurantsController(IRestaurantService restaurantService,
+            ICityService cityService,
+            IUsersService usersService)
         {
             this.restaurantService = restaurantService;
             this.cityService = cityService;
+            this.usersService = usersService;
         }
 
         [Authorize(Roles = "Admin")]
@@ -30,7 +35,7 @@ namespace ReserveTable.App.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(CreateRestaurantModelView modelView)
         {
-            string cityId = cityService.FindCityByName(modelView.City);
+            string cityId = cityService.GetCityByName(modelView.City);
 
             var restaurant = new Restaurant
             {
@@ -66,7 +71,7 @@ namespace ReserveTable.App.Controllers
             {
                 reviewsViewModel.Add(new AllReviewsForRestaurantViewModel
                 {
-                    Username = review.User.UserName,
+                    Username = usersService.GetUserById(review.UserId).UserName,
                     Comment = review.Comment,
                     Rate = review.Rate
                 });

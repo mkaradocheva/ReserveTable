@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using ReserveTable.App.Models.Restaurants;
 using ReserveTable.Data;
 using ReserveTable.Domain;
@@ -51,8 +52,9 @@ namespace ReserveTable.Services
         {
             var restaurant = dbContext
                 .Restaurants
+                .Include(r => r.Reviews)
                 .Where(r => r.Name == name && r.City.Name == city)
-                .SingleOrDefault();
+                .FirstOrDefault();
 
             return restaurant;
         }
@@ -75,7 +77,7 @@ namespace ReserveTable.Services
             var reviews = dbContext.Reviews
                 .Where(r => r.RestaurantId == restaurant.Id);
 
-            double average = Math.Round(reviews.Sum(r => r.Rate) / reviews.Count(), 2);
+            double average = Math.Round((reviews.Sum(r => r.Rate)) / reviews.Count(), 1);
 
             return average;
         }

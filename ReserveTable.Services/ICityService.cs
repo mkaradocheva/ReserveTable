@@ -5,7 +5,7 @@ namespace ReserveTable.Services
 {
     public interface ICityService
     {
-        string FindCityByName(string cityName);
+        string GetCityByName(string cityName);
 
         List<Restaurant> GetRestaurantsInCity(string city);
     }

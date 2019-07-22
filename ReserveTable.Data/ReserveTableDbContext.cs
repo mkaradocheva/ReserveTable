@@ -26,6 +26,31 @@ namespace ReserveTable.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<ReserveTableUser>()
+                .HasMany(u => u.Reservations)
+                .WithOne(r => r.User)
+                .HasForeignKey(u => u.UserId);
+
+            builder.Entity<ReserveTableUser>()
+                .HasMany(u => u.Reviews)
+                .WithOne(r => r.User)
+                .HasForeignKey(u => u.UserId);
+
+            builder.Entity<Table>()
+                .HasMany(t => t.Reservations)
+                .WithOne(r => r.Table)
+                .HasForeignKey(t => t.TableId);
+
+            builder.Entity<City>()
+                .HasMany(c => c.Restaurants)
+                .WithOne(r => r.City)
+                .HasForeignKey(c => c.CityId);
+
+            builder.Entity<Restaurant>()
+                .HasMany(r => r.Tables)
+                .WithOne(t => t.Restaurant)
+                .HasForeignKey(r => r.RestaurantId);
+
             base.OnModelCreating(builder);
         }
     }

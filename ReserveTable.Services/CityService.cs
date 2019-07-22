@@ -14,7 +14,7 @@ namespace ReserveTable.Services
             this.dbContext = dbContext;
         }
 
-        public string FindCityByName(string cityName)
+        public string GetCityByName(string cityName)
         {
             string cityId = dbContext.Cities
                 .Where(c => c.Name == cityName)
