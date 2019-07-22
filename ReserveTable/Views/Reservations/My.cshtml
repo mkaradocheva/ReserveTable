@@ -1,0 +1,26 @@
+﻿@model ReserveTable.Models.Reservations.MyReservationsListViewModel
+
+    <div class="container container-fluid">
+        <h2 class="text-white">My reservations</h2>
+        <hr />
+        @foreach (var reservation in Model.Reservations)
+        {
+            <dl class="row">
+                <dt class="col-sm-2">
+                    Date
+                </dt>
+                <dd class="col-sm-10">
+                    @reservation.Date
+                </dd>
+                <dt class="col-sm-2">
+                    Restaurant
+                </dt>
+                <dd class="col-sm-10">
+                    @reservation.Restaurant
+                </dd>
+            </dl>
+        }
+    </div>
+<div>
+    <a href="/">Home</a>
+</div>

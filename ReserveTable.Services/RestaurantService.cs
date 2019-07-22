@@ -81,5 +81,12 @@ namespace ReserveTable.Services
 
             return average;
         }
+
+        public Restaurant GetRestaurantById(string id)
+        {
+            var restaurant = dbContext.Restaurants.Find(id);
+
+            return restaurant;
+        }
     }
 }

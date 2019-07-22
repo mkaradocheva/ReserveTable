@@ -21,5 +21,8 @@ namespace ReserveTable.Domain
 
         public string TableId { get; set; }
         public Table Table { get; set; }
+
+        public string RestaurantId { get; set; }
+        public Restaurant Restaurant { get; set; }
     }
 }

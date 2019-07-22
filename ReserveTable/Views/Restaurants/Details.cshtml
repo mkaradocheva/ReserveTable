@@ -12,7 +12,7 @@
                 Phone: @Html.DisplayFor(model => model.PhoneNumber)
             </li>
             <li class="list-group-item disabled">
-               Rate: @Html.DisplayFor(model => model.AverageRate)
+                Rate: @Html.DisplayFor(model => model.AverageRate)
             </li>
         </ul>
     </div>
@@ -38,10 +38,23 @@
         </table>
     </div>
 </div>
-<div class="d-flex justify-content-around pt-4">
-    <a class="btn btn-warning" href="/Reservations/@Model.City/@Model.Name">Make Reservation</a>
-    <a class="btn btn-warning" href="/Reviews/Create/@Model.City/@Model.Name">Write a review</a>
-</div>
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="d-flex justify-content-around pt-4">
+        <a class="btn btn-warning" href="/Reservations/@Model.City/@Model.Name">Make Reservation</a>
+        <a class="btn btn-warning" href="/Reviews/Create/@Model.City/@Model.Name">Write a review</a>
+    </div>
+}
+else
+{
+    <div class="d-flex justify-content-around pt-4">
+        <a class="btn btn-warning" href="/Identity/Account/Register">Register</a>
+        <a class="btn btn-warning" href="/Identity/Account/Login">Login</a>
+    </div>
+    <div class="d-flex justify-content-around pt-4">
+        <h4 class="text-white">Register or login to reserve a table or write a review!</h4>
+    </div>
+}
 
 <div class="d-flex justify-content-center p-3">
     <h5><a href="/Restaurants/All">Back to all restaurants</a></h5>

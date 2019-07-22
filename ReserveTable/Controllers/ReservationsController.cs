@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ReserveTable.Domain;
 using ReserveTable.Models.Reservations;
@@ -6,6 +9,7 @@ using ReserveTable.Services;
 
 namespace ReserveTable.App.Controllers
 {
+    [Authorize]
     public class ReservationsController : Controller
     {
         private readonly IReservationsService reservationsService;
@@ -37,6 +41,34 @@ namespace ReserveTable.App.Controllers
             reservationsService.MakeReservation(viewModel, user);
 
             return this.View();
+        }
+
+        public IActionResult My()
+        {
+            var username = this.User.Identity.Name;
+            var reservationsFromDb = reservationsService.GetMyReservations(username);
+
+            var list = new List<MyReservationViewModel>();
+
+            foreach (var reservation in reservationsFromDb)
+            {
+                var restaurant = restaurantService.GetRestaurantById(reservation.RestaurantId);
+
+                var reservationViewModel = new MyReservationViewModel
+                {
+                    Date = reservation.ForDate.ToString("dd/MM/yyyy hh:mm:ss", CultureInfo.InvariantCulture),
+                    Restaurant = restaurant.Name
+                };
+
+                list.Add(reservationViewModel);
+            }
+
+            MyReservationsListViewModel viewModel = new MyReservationsListViewModel
+            {
+                Reservations = list
+            };
+
+            return this.View(viewModel);
         }
     }
 }
