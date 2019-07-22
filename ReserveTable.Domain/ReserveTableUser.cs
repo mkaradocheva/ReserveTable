@@ -8,10 +8,13 @@ namespace ReserveTable.Domain
         public ReserveTableUser()
         {
             this.Reservations = new HashSet<Reservation>();
+            this.Reviews = new HashSet<Review>();
         }
 
         public ReserveTableUserRole UserRole { get; set; }
 
         public ICollection<Reservation> Reservations { get; set; }
+
+        public ICollection<Review> Reviews { get; set; }
     }
 }

@@ -14,6 +14,8 @@ namespace ReserveTable.Data
 
         public DbSet<Reservation> Reservations { get; set; }
 
+        public DbSet<Review> Reviews { get; set; }
+
         public ReserveTableDbContext(DbContextOptions options) : base(options)
         {
         }
