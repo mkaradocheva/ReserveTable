@@ -42,6 +42,11 @@
 {
     <div class="d-flex justify-content-around pt-4">
         <a class="btn btn-warning" href="/Reservations/@Model.City/@Model.Name">Make Reservation</a>
+        @if (User.IsInRole("Admin"))
+        {
+            <a class="btn btn-warning" href="/Tables/@Model.City/@Model.Name">View tables</a>
+        }
+
         <a class="btn btn-warning" href="/Reviews/Create/@Model.City/@Model.Name">Write a review</a>
     </div>
 }
