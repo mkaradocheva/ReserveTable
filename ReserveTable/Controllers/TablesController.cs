@@ -9,6 +9,7 @@ using ReserveTable.Services;
 
 namespace ReserveTable.App.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class TablesController : Controller
     {
         private readonly ITablesService tablesService;
@@ -22,7 +23,6 @@ namespace ReserveTable.App.Controllers
         }
 
         [HttpGet("/Tables/{city}/{restaurant}")]
-        [Authorize(Roles = "Admin")]
         public IActionResult RestaurantTables(string city, string restaurant)
         {
             var restaurantFromDb = restaurantService.GetRestaurantByNameAndCity(city, restaurant);
@@ -48,6 +48,21 @@ namespace ReserveTable.App.Controllers
             };
 
             return View(viewModelList);
+        }
+
+        [HttpGet("/Tables/{city}/{restaurant}/Add")]
+        public IActionResult Add(string city, string restaurant)
+        {
+            return this.View();
+        }
+
+        [HttpPost("/Tables/{city}/{restaurant}/Add")]
+        public IActionResult Add(string city, string restaurant, AddTableBindingModel model)
+        {
+            var restaurantFromDb = restaurantService.GetRestaurantByNameAndCity(city, restaurant);
+            tablesService.AddTable(model, restaurantFromDb);
+
+            return this.Redirect($"/Tables/{city}/{restaurant}");
         }
     }
 }
