@@ -9,5 +9,9 @@ namespace ReserveTable.Services
         void MakeReservation(CreateReservationBindingModel viewModel, ReserveTableUser user);
 
         List<Reservation> GetMyReservations(string username);
+
+        void CancelReservation(string reservationId);
+
+        CancelReservationViewModel GetReservationForCancel(string reservationId);
     }
 }

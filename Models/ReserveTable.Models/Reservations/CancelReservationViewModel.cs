@@ -1,9 +1,7 @@
 ﻿namespace ReserveTable.Models.Reservations
 {
-    public class MyReservationViewModel
+    public class CancelReservationViewModel
     {
-        public string Id { get; set; }
-
         public string Date { get; set; }
 
         public string Restaurant { get; set; }

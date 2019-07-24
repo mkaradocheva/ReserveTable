@@ -19,6 +19,8 @@ namespace ReserveTable.Domain
         [Range(1, 100)]
         public int SeatsCount { get; set; }
 
+        public bool IsCancelled { get; set; }
+
         public string TableId { get; set; }
         public Table Table { get; set; }
 

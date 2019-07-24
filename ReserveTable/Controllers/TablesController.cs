@@ -34,7 +34,8 @@ namespace ReserveTable.App.Controllers
             {
                 var tableViewModel = new RestaurantTablesViewModel
                 {
-                    SeatsCount = table.SeatsCount
+                    SeatsCount = table.SeatsCount,
+                    Id = table.Id
                 };
 
                 tablesList.Add(tableViewModel);
@@ -64,5 +65,6 @@ namespace ReserveTable.App.Controllers
 
             return this.Redirect($"/Tables/{city}/{restaurant}");
         }
+
     }
 }

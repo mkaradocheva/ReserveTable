@@ -56,8 +56,10 @@ namespace ReserveTable.App.Controllers
 
                 var reservationViewModel = new MyReservationViewModel
                 {
-                    Date = reservation.ForDate.ToString("dd/MM/yyyy hh:mm:ss", CultureInfo.InvariantCulture),
-                    Restaurant = restaurant.Name
+                    Id = reservation.Id,
+                    Date = reservation.ForDate.ToString("dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture),
+                    Restaurant = restaurant.Name,
+                    City = restaurant.City.Name
                 };
 
                 list.Add(reservationViewModel);
@@ -69,6 +71,21 @@ namespace ReserveTable.App.Controllers
             };
 
             return this.View(viewModel);
+        }
+
+        [HttpGet("/Reservations/Cancel/{reservationId}")]
+        public IActionResult Cancel(string reservationId)
+        {
+            var viewModel = reservationsService.GetReservationForCancel(reservationId);
+            return this.View(viewModel);
+        }
+
+        [HttpPost("/Reservations/Cancel/{reservationId}")]
+        public IActionResult CancelReservation(string reservationId)
+        {
+            reservationsService.CancelReservation(reservationId);
+
+            return this.Redirect("/Reservations/My");
         }
     }
 }
