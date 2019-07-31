@@ -6,7 +6,7 @@ namespace ReserveTable.Services
 {
     public interface IReservationsService
     {
-        void MakeReservation(CreateReservationBindingModel viewModel, ReserveTableUser user);
+        Reservation MakeReservation(CreateReservationBindingModel viewModel, ReserveTableUser user, Restaurant restaurant);
 
         List<Reservation> GetMyReservations(string username);
 

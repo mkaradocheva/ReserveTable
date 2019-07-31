@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using ReserveTable.App.Models.Restaurants;
-using ReserveTable.Data;
-using ReserveTable.Domain;
-
-namespace ReserveTable.Services
+﻿namespace ReserveTable.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using App.Models.Restaurants;
+    using Data;
+    using Domain;
+
     public class RestaurantService : IRestaurantService
     {
         private readonly ReserveTableDbContext dbContext;
@@ -53,6 +53,8 @@ namespace ReserveTable.Services
             var restaurant = dbContext
                 .Restaurants
                 .Include(r => r.Reviews)
+                .Include(r => r.Tables)
+                .ThenInclude(r => r.Reservations)
                 .Where(r => r.Name == name && r.City.Name == city)
                 .FirstOrDefault();
 

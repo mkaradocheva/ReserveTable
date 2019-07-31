@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using ReserveTable.Data;
-using ReserveTable.Domain;
-using ReserveTable.Models.Reservations;
-
-namespace ReserveTable.Services
+﻿namespace ReserveTable.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
+    using Microsoft.EntityFrameworkCore;
+    using Data;
+    using Domain;
+    using Models.Reservations;
+
     public class ReservationsService : IReservationsService
     {
         private readonly ReserveTableDbContext dbContext;
@@ -18,20 +18,73 @@ namespace ReserveTable.Services
             this.dbContext = dbContext;
         }
 
-        public void MakeReservation(CreateReservationBindingModel viewModel, ReserveTableUser user)
+        public Reservation MakeReservation(CreateReservationBindingModel viewModel, ReserveTableUser user, Restaurant restaurant)
         {
-            var reservation = new Reservation
+            string dateTime = viewModel.Date + " " + viewModel.Time;
+            DateTime parsed = DateTime.Parse(dateTime);
+
+            var tablesWithExactCountSeats = restaurant.Tables
+                .Where(t => t.SeatsCount == viewModel.SeatsCount)
+                .ToList();
+
+            var tablesWithSeatsCountPlusOne = restaurant.Tables
+                .Where(t => t.SeatsCount + 1 == viewModel.SeatsCount)
+                .ToList();
+
+            Reservation reservation = new Reservation();
+
+            foreach (var table in tablesWithExactCountSeats)
             {
-                //ForDate = DateTime.Parse(dateTime),
-                SeatsCount = viewModel.SeatsCount,
-                UserId = user.Id,
-            };
+                if (table.Reservations.Any(t => (t.ForDate < parsed || t.EndOfReservation > parsed) && t.IsCancelled == false))
+                {
+                    return null;
+                }
+                else
+                {
+                    reservation.ForDate = parsed;
+                    reservation.SeatsCount = viewModel.SeatsCount;
+                    reservation.UserId = user.Id;
+                    reservation.Table = table;
+                    reservation.Restaurant = restaurant;
+
+                    dbContext.Reservations.Add(reservation);
+                    dbContext.SaveChanges();
+
+                    return reservation;
+                }
+            }
+
+            if (reservation == null)
+            {
+                foreach (var biggerTable in tablesWithSeatsCountPlusOne)
+                {
+                    if (biggerTable.Reservations.Any(t => (t.ForDate < parsed || t.EndOfReservation > parsed) && t.IsCancelled == false))
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        reservation.ForDate = parsed;
+                        reservation.SeatsCount = viewModel.SeatsCount;
+                        reservation.UserId = user.Id;
+                        reservation.Table = biggerTable;
+                        reservation.Restaurant = restaurant;
+
+                        dbContext.Reservations.Add(reservation);
+                        dbContext.SaveChanges();
+
+                        return reservation;
+                    }
+                }
+            }
+
+            return null;
         }
 
         public List<Reservation> GetMyReservations(string username)
         {
             var reservations = dbContext.Reservations
-                .Where(r => r.User.UserName == username 
+                .Where(r => r.User.UserName == username
                 && r.ForDate.AddHours(2) > DateTime.Now
                 && r.IsCancelled == false)
                 .Include(r => r.Restaurant)

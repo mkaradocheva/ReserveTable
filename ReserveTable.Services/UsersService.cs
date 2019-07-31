@@ -1,8 +1,9 @@
-﻿using ReserveTable.Data;
-using ReserveTable.Domain;
-
-namespace ReserveTable.Services
+﻿namespace ReserveTable.Services
 {
+    using System.Linq;
+    using Data;
+    using Domain;
+
     public class UsersService : IUsersService
     {
         private readonly ReserveTableDbContext dbContext;
@@ -15,6 +16,15 @@ namespace ReserveTable.Services
         public ReserveTableUser GetUserById(string id)
         {
             var user = dbContext.Users.Find(id);
+
+            return user;
+        }
+
+        public ReserveTableUser GetUserByUsername(string username)
+        {
+            var user = dbContext.Users
+                .Where(u => u.UserName == username)
+                .FirstOrDefault();
 
             return user;
         }

@@ -3,8 +3,8 @@
     int id = 1;
 }
 
-<h3 class="text-center text-white p-3">Tables in restaurant <a href="/Restaurants/@Model.CityName/@Model.RestaurantName">@Model.RestaurantName, @Model.CityName</a></h3>
-<table class="table text-center mt-5">
+<h1 class="text-center text-white p-5">Tables in restaurant <a href="/Restaurants/@Model.CityName/@Model.RestaurantName">@Model.RestaurantName, @Model.CityName</a></h1>
+<table class="table text-center mt-lg-5 container container-fluid">
     <thead>
         <tr>
             <th>
@@ -13,7 +13,6 @@
             <th>
                 Seats Count
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -29,14 +28,11 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.SeatsCount)
                 </td>
-                <td>
-                    <a href="#" class="btn btn-success">View reservations</a>
-                </td>
             </tr>
 
         }
     </tbody>
 </table>
-<div class="d-flex justify-content-center">
+<div class="d-flex justify-content-center p-lg-5">
     <a href="/Tables/@Model.CityName/@Model.RestaurantName/Add" class="btn btn-success">Add new table</a>
 </div>

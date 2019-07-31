@@ -1,24 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using ReserveTable.Domain;
-using ReserveTable.Models.Reservations;
-using ReserveTable.Services;
-
-namespace ReserveTable.App.Controllers
+﻿namespace ReserveTable.App.Controllers
 {
+    using System.Collections.Generic;
+    using System.Globalization;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using ReserveTable.Models.Reservations;
+    using Services;
+
     [Authorize]
     public class ReservationsController : Controller
     {
         private readonly IReservationsService reservationsService;
         private readonly IRestaurantService restaurantService;
+        private readonly IUsersService usersService;
 
-        public ReservationsController(IReservationsService reservationsService, IRestaurantService restaurantService)
+        public ReservationsController(IReservationsService reservationsService,
+                IRestaurantService restaurantService,
+                IUsersService usersService)
         {
             this.reservationsService = reservationsService;
             this.restaurantService = restaurantService;
+            this.usersService = usersService;
         }
 
         [Route("/Reservations/{city}/{restaurant}")]
@@ -31,16 +33,18 @@ namespace ReserveTable.App.Controllers
         [Route("/Reservations/{city}/{restaurant}")]
         public IActionResult Create(string city, string restaurant, CreateReservationBindingModel viewModel)
         {
-            string dateTime = viewModel.Date + " " + viewModel.Time;
-            var parsedDateTime = DateTime.Parse(dateTime);
-
             var restaurantFromDb = restaurantService.GetRestaurantByNameAndCity(city, restaurant);
-            restaurantService.CheckAvailability(parsedDateTime, restaurantFromDb);
+            var user = usersService.GetUserByUsername(this.User.Identity.Name);
+            var reservation = reservationsService.MakeReservation(viewModel, user, restaurantFromDb);
 
-            var user = (ReserveTableUser)this.User.Identity;
-            reservationsService.MakeReservation(viewModel, user);
-
-            return this.View();
+            if (reservation == null)
+            {
+                return this.View();
+            }
+            else
+            {
+                return this.Redirect("/Reservations/My");
+            }
         }
 
         public IActionResult My()
