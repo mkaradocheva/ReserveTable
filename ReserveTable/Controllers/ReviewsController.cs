@@ -1,10 +1,10 @@
-﻿using System.Security.Claims;
-using Microsoft.AspNetCore.Mvc;
-using ReserveTable.Models.Reviews;
-using ReserveTable.Services;
-
-namespace ReserveTable.App.Controllers
+﻿namespace ReserveTable.App.Controllers
 {
+    using System.Security.Claims;
+    using Microsoft.AspNetCore.Mvc;
+    using ReserveTable.Models.Reviews;
+    using Services;
+
     public class ReviewsController : Controller
     {
         private readonly IReviewsService reviewsService;

@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
-using ReserveTable.App.Models.Cities;
-using ReserveTable.App.Models.Restaurants;
-using ReserveTable.Domain;
-using ReserveTable.Services;
-
-namespace ReserveTable.App.Controllers
+﻿namespace ReserveTable.App.Controllers
 {
+    using System.Collections.Generic;
+    using Microsoft.AspNetCore.Mvc;
+    using Models.Cities;
+    using Models.Restaurants;
+    using Domain;
+    using Services;
+
     public class CitiesController : Controller
     {
         private readonly ICityService cityService;

@@ -1,15 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using ReserveTable.App.Models.Restaurants;
-using ReserveTable.Domain;
-using ReserveTable.Models.Reviews;
-using ReserveTable.Services;
-
-namespace ReserveTable.App.Controllers
+﻿namespace ReserveTable.App.Controllers
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using Models.Restaurants;
+    using Domain;
+    using ReserveTable.Models.Reviews;
+    using Services;
+
     public class RestaurantsController : Controller
     {
         private readonly IRestaurantService restaurantService;
@@ -33,7 +32,7 @@ namespace ReserveTable.App.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create(CreateRestaurantModelView modelView)
+        public async Task<IActionResult> Create(CreateRestaurantBindingModel modelView)
         {
             string cityId = cityService.GetCityByName(modelView.City);
 

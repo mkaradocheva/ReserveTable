@@ -4,12 +4,12 @@
 @inject UserManager<ReserveTableUser> UserManager
 
     <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Restaurants" asp-action="All" title="View all restaurants">All restaurants</a>
+        </li>
+
         @if (SignInManager.IsSignedIn(User))
         {
-            <li class="nav-item">
-                <a class="nav-link" asp-controller="Restaurants" asp-action="All" title="View all restaurants">All restaurants</a>
-            </li>
-
             if (User.IsInRole("Admin"))
             {
                 <li class="nav-item">
