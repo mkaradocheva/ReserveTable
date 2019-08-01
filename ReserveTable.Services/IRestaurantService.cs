@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using ReserveTable.App.Models.Restaurants;
-using ReserveTable.Domain;
-
-namespace ReserveTable.Services
+﻿namespace ReserveTable.Services
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using App.Models.Restaurants;
+    using Domain;
+
     public interface IRestaurantService
     {
         Task CreateNewRestaurant(Restaurant restaurant);
@@ -15,8 +14,6 @@ namespace ReserveTable.Services
         List<AllRestaurantsViewModel> GetAllRestaurants();
 
         Restaurant GetRestaurantByNameAndCity(string city, string name);
-
-        bool CheckAvailability(DateTime dateTime, Restaurant restaurant);
 
         double GetAverageRate(Restaurant restaurant);
 

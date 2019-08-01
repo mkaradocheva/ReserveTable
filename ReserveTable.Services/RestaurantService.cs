@@ -26,7 +26,9 @@
 
         public bool CheckIfExistsInDb(Restaurant restaurant)
         {
-            if (dbContext.Restaurants.Any(r => r.Name == restaurant.Name && r.City.Name == restaurant.Name))
+            if (dbContext.Restaurants
+                .Any(r => r.Name == restaurant.Name 
+                && r.City.Name == restaurant.Name))
             {
                 return true;
             }
@@ -59,19 +61,6 @@
                 .FirstOrDefault();
 
             return restaurant;
-        }
-
-        public bool CheckAvailability(DateTime dateTime, Restaurant restaurant)
-        {
-            //TODO
-
-            //var reservationsInRestaurantForTheDate = dbContext.Tables
-            //    .Where(t => t.Restaurant == restaurant)
-            //    .SelectMany(t => t.Reservations)
-            //    .Where(r => r.ForDate == dateTime)
-            //    .ToList();
-
-            return true;
         }
 
         public double GetAverageRate(Restaurant restaurant)

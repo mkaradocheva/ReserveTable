@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using ReserveTable.Models.Tables;
-using ReserveTable.Services;
-
-namespace ReserveTable.App.Controllers
+﻿namespace ReserveTable.App.Controllers
 {
+    using System.Collections.Generic;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using ReserveTable.Models.Tables;
+    using Services;
+
     [Authorize(Roles = "Admin")]
     public class TablesController : Controller
     {
@@ -65,6 +62,5 @@ namespace ReserveTable.App.Controllers
 
             return this.Redirect($"/Tables/{city}/{restaurant}");
         }
-
     }
 }

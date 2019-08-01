@@ -1,6 +1,7 @@
 ﻿namespace ReserveTable.App.Controllers
 {
     using System.Security.Claims;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using ReserveTable.Models.Reviews;
     using Services;
@@ -18,12 +19,14 @@
         }
 
         [HttpGet("/Reviews/Create/{city}/{restaurant}")]
+        [Authorize]
         public IActionResult Create(string city, string restaurant)
         {
             return View();
         }
 
         [HttpPost("/Reviews/Create/{city}/{restaurant}")]
+        [Authorize]
         public IActionResult Create(CreateReviewBindingModel model, string city, string restaurant)
         {
             var restaurantFromDb = restaurantService.GetRestaurantByNameAndCity(city, restaurant);

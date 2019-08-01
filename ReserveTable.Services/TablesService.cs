@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ReserveTable.Data;
-using ReserveTable.Domain;
-using ReserveTable.Models.Tables;
-
-namespace ReserveTable.Services
+﻿namespace ReserveTable.Services
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using Data;
+    using Domain;
+    using Models.Tables;
+
     public class TablesService : ITablesService
     {
         private readonly ReserveTableDbContext dbContext;

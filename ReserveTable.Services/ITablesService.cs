@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using ReserveTable.Domain;
-using ReserveTable.Models.Tables;
-
-namespace ReserveTable.Services
+﻿namespace ReserveTable.Services
 {
+    using System.Collections.Generic;
+    using Domain;
+    using Models.Tables;
+
     public interface ITablesService
     {
         List<Table> GetRestaurantTables(Restaurant restaurant);

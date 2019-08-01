@@ -1,7 +1,7 @@
-﻿using ReserveTable.Domain;
-
-namespace ReserveTable.Services
+﻿namespace ReserveTable.Services
 {
+    using Domain;
+
     public interface IUsersService
     {
         ReserveTableUser GetUserById(string id);

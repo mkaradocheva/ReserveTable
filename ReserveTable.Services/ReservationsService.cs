@@ -11,6 +11,8 @@
 
     public class ReservationsService : IReservationsService
     {
+        private const string DateStringFormat = "dd/MM/yyyy HH:mm";
+
         private readonly ReserveTableDbContext dbContext;
 
         public ReservationsService(ReserveTableDbContext dbContext)
@@ -115,7 +117,7 @@
             {
                 Restaurant = reservation.Restaurant.Name,
                 City = reservation.Restaurant.City.Name,
-                Date = reservation.ForDate.ToString("dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture)
+                Date = reservation.ForDate.ToString(DateStringFormat, CultureInfo.InvariantCulture)
             };
 
             return viewModel;

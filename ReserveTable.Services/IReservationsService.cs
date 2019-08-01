@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using ReserveTable.Domain;
-using ReserveTable.Models.Reservations;
-
-namespace ReserveTable.Services
+﻿namespace ReserveTable.Services
 {
+    using System.Collections.Generic;
+    using Domain;
+    using Models.Reservations;
+
     public interface IReservationsService
     {
         Reservation MakeReservation(CreateReservationBindingModel viewModel, ReserveTableUser user, Restaurant restaurant);

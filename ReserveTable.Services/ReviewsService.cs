@@ -1,10 +1,9 @@
-﻿using System.Threading.Tasks;
-using ReserveTable.Data;
-using ReserveTable.Domain;
-using ReserveTable.Models.Reviews;
-
-namespace ReserveTable.Services
+﻿namespace ReserveTable.Services
 {
+    using Data;
+    using Domain;
+    using Models.Reviews;
+
     public class ReviewsService : IReviewsService
     {
         private readonly ReserveTableDbContext dbContext;

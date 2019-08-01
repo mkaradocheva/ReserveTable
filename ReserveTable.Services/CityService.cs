@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using ReserveTable.Data;
-using ReserveTable.Domain;
-
-namespace ReserveTable.Services
+﻿namespace ReserveTable.Services
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using Data;
+    using Domain;
+
     public class CityService : ICityService
     {
         private readonly ReserveTableDbContext dbContext;
