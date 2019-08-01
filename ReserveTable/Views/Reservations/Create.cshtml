@@ -5,29 +5,29 @@
 <div class="row d-flex justify-content-center">
     <div class="col-md-4">
         <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div asp-validation-summary="All" class="text-warning font-weight-bold"></div>
             <div class="form-group text-white">
                 <label asp-for="SeatsCount" class="control-label">For how much people</label>
                 <input asp-for="SeatsCount" class="form-control" />
-                <span asp-validation-for="SeatsCount" class="text-danger"></span>
+                <span asp-validation-for="SeatsCount" class="text-warning font-weight-bold"></span>
             </div>
             <div class="form-group text-white d-flex justify-content-around">
                 <div>
                     <label asp-for="Date" class="control-label">Date</label>
-                <input type="date" asp-for="Date" class="form-control" />
-                <span asp-validation-for="Date" class="text-danger"></span>
+                    <input type="date" asp-for="Date" class="form-control" />
+                    <span asp-validation-for="Date" class="text-warning font-weight-bold"></span>
                 </div>
                 <div>
                     <label asp-for="Time" class="control-label">Time</label>
-                <input type="time" asp-for="Time" class="form-control" />
-                <span asp-validation-for="Time" class="text-danger"></span>
+                    <input type="time" asp-for="Time" class="form-control" />
+                    <span asp-validation-for="Time" class="text-warning font-weight-bold"></span>
                 </div>
             </div>
             <div class="form-group text-white">
-                
+
             </div>
             <div class="form-group d-flex justify-content-center">
-                <input type="submit" value="Find a table" class="btn btn-primary"/>
+                <input type="submit" value="Find a table" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -36,4 +36,8 @@
 <div class="d-flex justify-content-center p-2">
     <h5><a asp-controller="Restaurants" asp-action="All">Back to all restaurants</a></h5>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
 

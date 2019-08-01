@@ -29,10 +29,13 @@
         [Authorize]
         public IActionResult Create(CreateReviewBindingModel model, string city, string restaurant)
         {
-            var restaurantFromDb = restaurantService.GetRestaurantByNameAndCity(city, restaurant);
-            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            if (ModelState.IsValid)
+            {
+                var restaurantFromDb = restaurantService.GetRestaurantByNameAndCity(city, restaurant);
+                var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            reviewsService.CreateReview(model, restaurantFromDb, userId);
+                reviewsService.CreateReview(model, restaurantFromDb, userId);
+            }
 
             return this.Redirect($"/Restaurants/{city}/{restaurant}");
         }

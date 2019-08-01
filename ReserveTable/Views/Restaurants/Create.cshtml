@@ -9,21 +9,21 @@
 <div class="row d-flex justify-content-center">
     <div class="col-md-4">
         <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-white"></div>
+            <div asp-validation-summary="ModelOnly" class="text-warning font-weight-bold"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label text-white">Restaurant name</label>
                 <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-white"></span>
+                <span asp-validation-for="Name" class="text-warning font-weight-bold"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Address" class="control-label text-white">Address</label>
                 <input asp-for="Address" class="form-control" />
-                <span asp-validation-for="Address" class="text-white"></span>
+                <span asp-validation-for="Address" class="text-warning font-weight-bold"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PhoneNumber" class="control-label text-white">Phone Number</label>
                 <input asp-for="PhoneNumber" class="form-control" />
-                <span asp-validation-for="PhoneNumber" class="text-white"></span>
+                <span asp-validation-for="PhoneNumber" class="text-warning font-weight-bold"></span>
             </div>
             <div class="form-group">
                 <label asp-for="City" class="text-white">Select city:</label>

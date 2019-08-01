@@ -4,11 +4,11 @@
 
     public class CreateRestaurantBindingModel
     {
-        private const string NameLengthErrorMessage = "Name of restaurant must be between 1 and 20 characters long.";
+        private const string NameLengthErrorMessage = "Name of restaurant must be between 3 and 20 characters long.";
         private const string AddressLengthErrorMessage = "Address must be between 4 and 30 characters long.";
 
         [Required]
-        [StringLength(20, ErrorMessage = NameLengthErrorMessage, MinimumLength = 1)]
+        [StringLength(20, ErrorMessage = NameLengthErrorMessage, MinimumLength = 3)]
         public string Name { get; set; }
 
         [Required]

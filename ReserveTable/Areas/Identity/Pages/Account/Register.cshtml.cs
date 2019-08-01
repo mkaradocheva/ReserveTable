@@ -1,35 +1,29 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
-using ReserveTable.Domain;
-
-namespace ReserveTable.App.Areas.Identity.Pages.Account
+﻿namespace ReserveTable.App.Areas.Identity.Pages.Account
 {
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
+    using Domain;
+
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<ReserveTableUser> _signInManager;
         private readonly UserManager<ReserveTableUser> _userManager;
-        private readonly ILogger<RegisterModel> _logger;
         private readonly RoleManager<ReserveTableUserRole> _roleManager;
-        //private readonly IEmailSender _emailSender;
 
         public RegisterModel(
             UserManager<ReserveTableUser> userManager,
             RoleManager<ReserveTableUserRole> roleManager,
-            SignInManager<ReserveTableUser> signInManager,
-            ILogger<RegisterModel> logger)
+            SignInManager<ReserveTableUser> signInManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
-            _logger = logger;
-            //_emailSender = emailSender;
         }
 
         [BindProperty]
@@ -85,18 +79,6 @@ namespace ReserveTable.App.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User created a new account with password.");
-
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { userId = user.Id, code = code },
-                        protocol: Request.Scheme);
-
-                    //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                    //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return LocalRedirect(returnUrl);
                 }
