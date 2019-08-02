@@ -12,11 +12,14 @@
         {
             if (User.IsInRole("Admin"))
             {
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="Restaurants" asp-action="Create" title="Add new restaurant">Add restaurant</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="Cities" asp-action="Create" title="Add new city">Add city</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Admin Options
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="nav-link text-dark" asp-controller="Restaurants" asp-action="Create" title="Add new restaurant">Add Restaurant</a>
+                        <a class="nav-link text-dark" asp-controller="Cities" asp-action="Create" title="Add new city">Add City</a>
+                    </div>
                 </li>
             }
 
