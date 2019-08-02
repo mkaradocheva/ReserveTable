@@ -14,15 +14,12 @@
     {
         private readonly SignInManager<ReserveTableUser> _signInManager;
         private readonly UserManager<ReserveTableUser> _userManager;
-        private readonly RoleManager<ReserveTableUserRole> _roleManager;
 
         public RegisterModel(
             UserManager<ReserveTableUser> userManager,
-            RoleManager<ReserveTableUserRole> roleManager,
             SignInManager<ReserveTableUser> signInManager)
         {
             _userManager = userManager;
-            _roleManager = roleManager;
             _signInManager = signInManager;
         }
 
@@ -63,6 +60,7 @@
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
+
             if (ModelState.IsValid)
             {
                 var user = new ReserveTableUser { UserName = Input.Username, Email = Input.Email };
@@ -88,7 +86,6 @@
                 }
             }
 
-            // If we got this far, something failed, redisplay form
             return Page();
         }
     }

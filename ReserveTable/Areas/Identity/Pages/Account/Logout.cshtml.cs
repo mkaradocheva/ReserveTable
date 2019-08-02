@@ -1,23 +1,20 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
-using ReserveTable.Domain;
-
-namespace ReserveTable.App.Areas.Identity.Pages.Account
+﻿namespace ReserveTable.App.Areas.Identity.Pages.Account
 {
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
+    using Domain;
+
     [AllowAnonymous]
     public class LogoutModel : PageModel
     {
         private readonly SignInManager<ReserveTableUser> _signInManager;
-        private readonly ILogger<LogoutModel> _logger;
 
-        public LogoutModel(SignInManager<ReserveTableUser> signInManager, ILogger<LogoutModel> logger)
+        public LogoutModel(SignInManager<ReserveTableUser> signInManager)
         {
             _signInManager = signInManager;
-            _logger = logger;
         }
 
         public void OnGet()
@@ -27,7 +24,7 @@ namespace ReserveTable.App.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPost(string returnUrl = null)
         {
             await _signInManager.SignOutAsync();
-            _logger.LogInformation("User logged out.");
+
             if (returnUrl != null)
             {
                 return LocalRedirect(returnUrl);
