@@ -8,7 +8,6 @@
     using Domain;
     using ReserveTable.Models.Reviews;
     using Services;
-    using System.Linq;
 
     public class RestaurantsController : Controller
     {
@@ -26,10 +25,9 @@
         }
 
         [Authorize(Roles = "Admin")]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            var allCities = cityService.GetAllCities()
-                .ToList();
+            var allCities = await cityService.GetAllCities();
             this.ViewData["cityNames"] = allCities;
 
             return View();
@@ -39,7 +37,7 @@
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(CreateRestaurantBindingModel modelView)
         {
-            string cityId = cityService.GetCityByName(modelView.City);
+            string cityId = await cityService.GetCityByName(modelView.City);
 
             var restaurant = new Restaurant
             {
@@ -49,7 +47,7 @@
                 PhoneNumber = modelView.PhoneNumber
             };
 
-            if (!restaurantService.CheckIfExistsInDb(restaurant))
+            if (!await restaurantService.CheckIfExistsInDb(restaurant))
             {
                 await restaurantService.CreateNewRestaurant(restaurant);
             }
@@ -57,25 +55,28 @@
             return this.Redirect("/Home/Index");
         }
 
-        public IActionResult All()
+        public async Task<IActionResult> All()
         {
-            var allRestaurants = restaurantService.GetAllRestaurants();
+            var allRestaurants = await restaurantService.GetAllRestaurants();
 
             return this.View(allRestaurants);
         }
 
         [HttpGet("/Restaurants/{city}/{restaurant}")]
-        public IActionResult Details(string city, string restaurant)
+        public async Task<IActionResult> Details(string city, string restaurant)
         {
-            var restaurantFromDb = restaurantService.GetRestaurantByNameAndCity(city, restaurant);
-            var restaurantAverageRate = restaurantService.GetAverageRate(restaurantFromDb);
+            var restaurantFromDb = await restaurantService.GetRestaurantByNameAndCity(city, restaurant);
+            var restaurantAverageRate = await restaurantService.GetAverageRate(restaurantFromDb);
 
             var reviewsViewModel = new List<AllReviewsForRestaurantViewModel>();
+
             foreach (var review in restaurantFromDb.Reviews)
             {
+                var user = await usersService.GetUserById(review.UserId);
+
                 reviewsViewModel.Add(new AllReviewsForRestaurantViewModel
                 {
-                    Username = usersService.GetUserById(review.UserId).UserName,
+                    Username = user.UserName,
                     Comment = review.Comment,
                     Rate = review.Rate
                 });

@@ -26,10 +26,10 @@
             return result > 0;
         }
 
-        public bool CheckIfExistsInDb(Restaurant restaurant)
+        public async Task<bool> CheckIfExistsInDb(Restaurant restaurant)
         {
-            if (dbContext.Restaurants
-                .Any(r => r.Name == restaurant.Name 
+            if (await dbContext.Restaurants
+                .AnyAsync(r => r.Name == restaurant.Name 
                 && r.City.Name == restaurant.Name))
             {
                 return true;
@@ -38,46 +38,47 @@
             return false;
         }
 
-        public List<AllRestaurantsViewModel> GetAllRestaurants()
+        public async Task<List<AllRestaurantsViewModel>> GetAllRestaurants()
         {
-            var allRestaurants = dbContext.Restaurants
+            var allRestaurants = await dbContext.Restaurants
                 .Select(r => new AllRestaurantsViewModel
                 {
                     Id = r.Id,
                     Name = r.Name,
                     City = r.City.Name,
                 })
-                .ToList();
+                .ToListAsync();
 
             return allRestaurants;
         }
 
-        public Restaurant GetRestaurantByNameAndCity(string city, string name)
+        public async Task<Restaurant> GetRestaurantByNameAndCity(string city, string name)
         {
-            var restaurant = dbContext
+            var restaurant = await dbContext
                 .Restaurants
                 .Include(r => r.Reviews)
                 .Include(r => r.Tables)
                 .ThenInclude(r => r.Reservations)
                 .Where(r => r.Name == name && r.City.Name == city)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             return restaurant;
         }
 
-        public double GetAverageRate(Restaurant restaurant)
+        public async Task<double> GetAverageRate(Restaurant restaurant)
         {
-            var reviews = dbContext.Reviews
-                .Where(r => r.RestaurantId == restaurant.Id);
+            var reviews = await dbContext.Reviews
+                .Where(r => r.RestaurantId == restaurant.Id)
+                .ToListAsync();
 
             double average = Math.Round((reviews.Sum(r => r.Rate)) / reviews.Count(), 1);
 
             return average;
         }
 
-        public Restaurant GetRestaurantById(string id)
+        public async Task<Restaurant> GetRestaurantById(string id)
         {
-            var restaurant = dbContext.Restaurants.Find(id);
+            var restaurant = await dbContext.Restaurants.FindAsync(id);
 
             return restaurant;
         }

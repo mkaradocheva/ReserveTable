@@ -9,14 +9,14 @@
     {
         Task<bool> CreateNewRestaurant(Restaurant restaurant);
 
-        bool CheckIfExistsInDb(Restaurant restaurant);
+        Task<bool> CheckIfExistsInDb(Restaurant restaurant);
 
-        List<AllRestaurantsViewModel> GetAllRestaurants();
+        Task<List<AllRestaurantsViewModel>> GetAllRestaurants();
 
-        Restaurant GetRestaurantByNameAndCity(string city, string name);
+        Task<Restaurant> GetRestaurantByNameAndCity(string city, string name);
 
-        double GetAverageRate(Restaurant restaurant);
+        Task<double> GetAverageRate(Restaurant restaurant);
 
-        Restaurant GetRestaurantById(string id);
+        Task<Restaurant> GetRestaurantById(string id);
     }
 }

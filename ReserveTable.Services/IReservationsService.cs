@@ -1,17 +1,18 @@
 ﻿namespace ReserveTable.Services
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Domain;
     using Models.Reservations;
 
     public interface IReservationsService
     {
-        Reservation MakeReservation(CreateReservationBindingModel viewModel, ReserveTableUser user, Restaurant restaurant);
+        Task<Reservation> MakeReservation(CreateReservationBindingModel viewModel, ReserveTableUser user, Restaurant restaurant);
 
-        List<Reservation> GetMyReservations(string username);
+        Task<List<Reservation>> GetMyReservations(string username);
 
-        bool CancelReservation(string reservationId);
+        Task<bool> CancelReservation(string reservationId);
 
-        CancelReservationViewModel GetReservationForCancel(string reservationId);
+        Task<CancelReservationViewModel> GetReservationForCancel(string reservationId);
     }
 }

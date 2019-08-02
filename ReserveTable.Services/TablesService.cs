@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
     using Data;
     using Domain;
+    using Microsoft.EntityFrameworkCore;
     using Models.Tables;
 
     public class TablesService : ITablesService
@@ -31,11 +32,11 @@
             return result > 0; 
         }
 
-        public List<Table> GetRestaurantTables(Restaurant restaurant)
+        public async Task<List<Table>> GetRestaurantTables(Restaurant restaurant)
         {
-            var tables = dbContext.Tables
+            var tables = await dbContext.Tables
                 .Where(t => t.RestaurantId == restaurant.Id)
-                .ToList();
+                .ToListAsync();
 
             return tables;
         }

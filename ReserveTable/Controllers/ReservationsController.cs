@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Globalization;
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using ReserveTable.Models.Reservations;
@@ -24,18 +25,18 @@
         }
 
         [Route("/Reservations/{city}/{restaurant}")]
-        public IActionResult Create(string city, string restaurant)
+        public async Task<IActionResult> Create(string city, string restaurant)
         {
             return View();
         }
 
         [HttpPost]
         [Route("/Reservations/{city}/{restaurant}")]
-        public IActionResult Create(string city, string restaurant, CreateReservationBindingModel viewModel)
+        public async Task<IActionResult> Create(string city, string restaurant, CreateReservationBindingModel viewModel)
         {
-            var restaurantFromDb = restaurantService.GetRestaurantByNameAndCity(city, restaurant);
-            var user = usersService.GetUserByUsername(this.User.Identity.Name);
-            var reservation = reservationsService.MakeReservation(viewModel, user, restaurantFromDb);
+            var restaurantFromDb = await restaurantService.GetRestaurantByNameAndCity(city, restaurant);
+            var user = await usersService.GetUserByUsername(this.User.Identity.Name);
+            var reservation = await reservationsService.MakeReservation(viewModel, user, restaurantFromDb);
 
             if (reservation == null)
             {
@@ -47,16 +48,16 @@
             }
         }
 
-        public IActionResult My()
+        public async Task<IActionResult> My()
         {
             var username = this.User.Identity.Name;
-            var reservationsFromDb = reservationsService.GetMyReservations(username);
+            var reservationsFromDb = await reservationsService.GetMyReservations(username);
 
             var list = new List<MyReservationViewModel>();
 
             foreach (var reservation in reservationsFromDb)
             {
-                var restaurant = restaurantService.GetRestaurantById(reservation.RestaurantId);
+                var restaurant = await restaurantService.GetRestaurantById(reservation.RestaurantId);
 
                 var reservationViewModel = new MyReservationViewModel
                 {
@@ -78,16 +79,16 @@
         }
 
         [HttpGet("/Reservations/Cancel/{reservationId}")]
-        public IActionResult Cancel(string reservationId)
+        public async Task<IActionResult> Cancel(string reservationId)
         {
-            var viewModel = reservationsService.GetReservationForCancel(reservationId);
+            var viewModel = await reservationsService.GetReservationForCancel(reservationId);
             return this.View(viewModel);
         }
 
         [HttpPost("/Reservations/Cancel/{reservationId}")]
-        public IActionResult CancelReservation(string reservationId)
+        public async Task<IActionResult> CancelReservation(string reservationId)
         {
-            reservationsService.CancelReservation(reservationId);
+            await reservationsService.CancelReservation(reservationId);
 
             return this.Redirect("/Reservations/My");
         }

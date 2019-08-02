@@ -1,8 +1,10 @@
 ﻿namespace ReserveTable.Services
 {
     using System.Linq;
+    using System.Threading.Tasks;
     using Data;
     using Domain;
+    using Microsoft.EntityFrameworkCore;
 
     public class UsersService : IUsersService
     {
@@ -13,18 +15,18 @@
             this.dbContext = dbContext;
         }
 
-        public ReserveTableUser GetUserById(string id)
+        public async Task<ReserveTableUser> GetUserById(string id)
         {
-            var user = dbContext.Users.Find(id);
+            var user = await dbContext.Users.FindAsync(id);
 
             return user;
         }
 
-        public ReserveTableUser GetUserByUsername(string username)
+        public async Task<ReserveTableUser> GetUserByUsername(string username)
         {
-            var user = dbContext.Users
+            var user = await dbContext.Users
                 .Where(u => u.UserName == username)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             return user;
         }

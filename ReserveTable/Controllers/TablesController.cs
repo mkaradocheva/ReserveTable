@@ -1,6 +1,7 @@
 ﻿namespace ReserveTable.App.Controllers
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using ReserveTable.Models.Tables;
@@ -20,10 +21,10 @@
         }
 
         [HttpGet("/Tables/{city}/{restaurant}")]
-        public IActionResult RestaurantTables(string city, string restaurant)
+        public async Task<IActionResult> RestaurantTables(string city, string restaurant)
         {
-            var restaurantFromDb = restaurantService.GetRestaurantByNameAndCity(city, restaurant);
-            var restaurantTables = tablesService.GetRestaurantTables(restaurantFromDb);
+            var restaurantFromDb = await restaurantService.GetRestaurantByNameAndCity(city, restaurant);
+            var restaurantTables = await tablesService.GetRestaurantTables(restaurantFromDb);
 
             var tablesList = new List<RestaurantTablesViewModel>();
 
@@ -49,16 +50,16 @@
         }
 
         [HttpGet("/Tables/{city}/{restaurant}/Add")]
-        public IActionResult Add(string city, string restaurant)
+        public async Task<IActionResult> Add(string city, string restaurant)
         {
             return this.View();
         }
 
         [HttpPost("/Tables/{city}/{restaurant}/Add")]
-        public IActionResult Add(string city, string restaurant, AddTableBindingModel model)
+        public async Task<IActionResult> Add(string city, string restaurant, AddTableBindingModel model)
         {
-            var restaurantFromDb = restaurantService.GetRestaurantByNameAndCity(city, restaurant);
-            tablesService.AddTable(model, restaurantFromDb);
+            var restaurantFromDb = await restaurantService.GetRestaurantByNameAndCity(city, restaurant);
+            await tablesService.AddTable(model, restaurantFromDb);
 
             return this.Redirect($"/Tables/{city}/{restaurant}");
         }

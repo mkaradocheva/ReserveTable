@@ -8,6 +8,7 @@
     using Services;
     using Microsoft.AspNetCore.Authorization;
     using ReserveTable.Models.Cities;
+    using System.Threading.Tasks;
 
     public class CitiesController : Controller
     {
@@ -19,9 +20,9 @@
         }
 
         [Route("/Cities/{city}")]
-        public IActionResult CityRestaurants(string city)
+        public async Task<IActionResult> CityRestaurants(string city)
         {
-            List<Restaurant> restaurants = cityService.GetRestaurantsInCity(city);
+            List<Restaurant> restaurants = await cityService.GetRestaurantsInCity(city);
 
             List<RestaurantsViewModel> restaurantsViewModel = new List<RestaurantsViewModel>();
 
@@ -39,19 +40,19 @@
                 RestaurantsNames = restaurantsViewModel
             };
 
-            return View(model);
+            return this.View(model);
         }
 
         [HttpGet()]
         [Authorize(Roles = "Admin")]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             return this.View();
         }
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public IActionResult Create(CreateCityBindingModel model)
+        public async Task<IActionResult> Create(CreateCityBindingModel model)
         {
             var city = new City
             {
@@ -59,7 +60,7 @@
                 //Add photo
             };
 
-            cityService.AddCity(city);
+            await cityService.AddCity(city);
 
             return this.Redirect("/");
         }

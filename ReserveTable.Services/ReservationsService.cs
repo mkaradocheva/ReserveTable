@@ -8,6 +8,7 @@
     using Data;
     using Domain;
     using Models.Reservations;
+    using System.Threading.Tasks;
 
     public class ReservationsService : IReservationsService
     {
@@ -20,7 +21,7 @@
             this.dbContext = dbContext;
         }
 
-        public Reservation MakeReservation(CreateReservationBindingModel viewModel, ReserveTableUser user, Restaurant restaurant)
+        public async Task<Reservation> MakeReservation(CreateReservationBindingModel viewModel, ReserveTableUser user, Restaurant restaurant)
         {
             string dateTime = viewModel.Date + " " + viewModel.Time;
             DateTime parsed = DateTime.Parse(dateTime);
@@ -49,8 +50,8 @@
                     reservation.Table = table;
                     reservation.Restaurant = restaurant;
 
-                    dbContext.Reservations.Add(reservation);
-                    dbContext.SaveChanges();
+                    await dbContext.Reservations.AddAsync(reservation);
+                    await dbContext.SaveChangesAsync();
 
                     return reservation;
                 }
@@ -72,8 +73,8 @@
                         reservation.Table = biggerTable;
                         reservation.Restaurant = restaurant;
 
-                        dbContext.Reservations.Add(reservation);
-                        dbContext.SaveChanges();
+                        await dbContext.Reservations.AddAsync(reservation);
+                        await dbContext.SaveChangesAsync();
 
                         return reservation;
                     }
@@ -83,37 +84,37 @@
             return null;
         }
 
-        public List<Reservation> GetMyReservations(string username)
+        public async Task<List<Reservation>> GetMyReservations(string username)
         {
-            var reservations = dbContext.Reservations
+            var reservations = await dbContext.Reservations
                 .Where(r => r.User.UserName == username
                 && r.ForDate.AddHours(2) > DateTime.Now
                 && r.IsCancelled == false)
                 .Include(r => r.Restaurant)
                 .ThenInclude(r => r.City)
-                .ToList();
+                .ToListAsync();
 
             return reservations;
         }
 
-        public bool CancelReservation(string reservationId)
+        public async Task<bool> CancelReservation(string reservationId)
         {
-            Reservation reservation = dbContext.Reservations.Find(reservationId);
+            Reservation reservation =  await dbContext.Reservations.FindAsync(reservationId);
             reservation.IsCancelled = true;
 
             dbContext.Reservations.Update(reservation);
-            var result = dbContext.SaveChanges();
+            var result = await dbContext.SaveChangesAsync();
 
             return result > 0;
         }
 
-        public CancelReservationViewModel GetReservationForCancel(string reservationId)
+        public async Task<CancelReservationViewModel> GetReservationForCancel(string reservationId)
         {
-            var reservation = dbContext.Reservations
+            var reservation = await dbContext.Reservations
                 .Where(r => r.Id == reservationId)
                 .Include(r => r.Restaurant)
                 .ThenInclude(r => r.City)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             var viewModel = new CancelReservationViewModel
             {

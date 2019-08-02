@@ -1,16 +1,17 @@
 ﻿namespace ReserveTable.Services
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Domain;
 
     public interface ICityService
     {
-        string GetCityByName(string cityName);
+        Task<string> GetCityByName(string cityName);
 
-        List<Restaurant> GetRestaurantsInCity(string city);
+        Task<List<Restaurant>> GetRestaurantsInCity(string city);
 
-        bool AddCity(City city);
+        Task<bool> AddCity(City city);
 
-        IEnumerable<string> GetAllCities();
+        Task<IEnumerable<string>> GetAllCities();
     }
 }

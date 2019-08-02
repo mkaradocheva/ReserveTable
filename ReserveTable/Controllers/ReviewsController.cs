@@ -1,6 +1,7 @@
 ﻿namespace ReserveTable.App.Controllers
 {
     using System.Security.Claims;
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using ReserveTable.Models.Reviews;
@@ -20,22 +21,19 @@
 
         [HttpGet("/Reviews/Create/{city}/{restaurant}")]
         [Authorize]
-        public IActionResult Create(string city, string restaurant)
+        public async Task<IActionResult> Create(string city, string restaurant)
         {
             return View();
         }
 
         [HttpPost("/Reviews/Create/{city}/{restaurant}")]
         [Authorize]
-        public IActionResult Create(CreateReviewBindingModel model, string city, string restaurant)
+        public async Task<IActionResult> Create(CreateReviewBindingModel model, string city, string restaurant)
         {
-            if (ModelState.IsValid)
-            {
-                var restaurantFromDb = restaurantService.GetRestaurantByNameAndCity(city, restaurant);
-                var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var restaurantFromDb = await restaurantService.GetRestaurantByNameAndCity(city, restaurant);
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-                reviewsService.CreateReview(model, restaurantFromDb, userId);
-            }
+            await reviewsService.CreateReview(model, restaurantFromDb, userId);
 
             return this.Redirect($"/Restaurants/{city}/{restaurant}");
         }

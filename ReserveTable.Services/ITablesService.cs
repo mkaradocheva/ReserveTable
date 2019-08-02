@@ -7,7 +7,7 @@
 
     public interface ITablesService
     {
-        List<Table> GetRestaurantTables(Restaurant restaurant);
+        Task<List<Table>> GetRestaurantTables(Restaurant restaurant);
 
         Task<bool> AddTable(AddTableBindingModel model, Restaurant restaurant);
 
