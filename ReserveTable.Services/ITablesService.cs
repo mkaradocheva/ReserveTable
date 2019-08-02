@@ -1,6 +1,7 @@
 ﻿namespace ReserveTable.Services
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Domain;
     using Models.Tables;
 
@@ -8,7 +9,7 @@
     {
         List<Table> GetRestaurantTables(Restaurant restaurant);
 
-        void AddTable(AddTableBindingModel model, Restaurant restaurant);
+        Task<bool> AddTable(AddTableBindingModel model, Restaurant restaurant);
 
     }
 }

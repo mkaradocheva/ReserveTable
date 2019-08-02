@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Identity;
-
-namespace ReserveTable.Domain
+﻿namespace ReserveTable.Domain
 {
+    using System.Collections.Generic;
+    using Microsoft.AspNetCore.Identity;
+
     public class ReserveTableUser : IdentityUser
     {
         public ReserveTableUser()

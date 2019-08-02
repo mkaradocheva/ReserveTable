@@ -47,12 +47,12 @@
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddScoped<IRestaurantService, RestaurantService>();
-            services.AddScoped<ICityService, CityService>();
-            services.AddScoped<IReservationsService, ReservationsService>();
-            services.AddScoped<IReviewsService, ReviewsService>();
-            services.AddScoped<IUsersService, UsersService>();
-            services.AddScoped<ITablesService, TablesService>();
+            services.AddTransient<IRestaurantService, RestaurantService>();
+            services.AddTransient<ICityService, CityService>();
+            services.AddTransient<IReservationsService, ReservationsService>();
+            services.AddTransient<IReviewsService, ReviewsService>();
+            services.AddTransient<IUsersService, UsersService>();
+            services.AddTransient<ITablesService, TablesService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

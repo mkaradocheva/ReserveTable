@@ -96,13 +96,15 @@
             return reservations;
         }
 
-        public void CancelReservation(string reservationId)
+        public bool CancelReservation(string reservationId)
         {
             Reservation reservation = dbContext.Reservations.Find(reservationId);
             reservation.IsCancelled = true;
 
             dbContext.Reservations.Update(reservation);
-            dbContext.SaveChanges();
+            var result = dbContext.SaveChanges();
+
+            return result > 0;
         }
 
         public CancelReservationViewModel GetReservationForCancel(string reservationId)

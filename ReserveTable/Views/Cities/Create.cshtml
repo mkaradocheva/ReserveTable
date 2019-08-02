@@ -1,0 +1,32 @@
+﻿@model ReserveTable.Models.Cities.CreateCityViewModel
+
+<h1 class="text-center text-white">Add a new city</h1>
+<hr />
+<div class="row d-flex justify-content-center">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-warning font-weight-bold"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label text-white"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-warning font-weight-bold"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Photo" class="control-label text-white"></label>
+                <input asp-for="Photo" type="file" class="form-control" />
+                <span asp-validation-for="Photo" class="text-warning font-weight-bold"></span>
+            </div>
+            <div class="form-group d-flex justify-content-center p-2">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="d-flex justify-content-center p-2">
+    <h5><a asp-controller="Home" asp-action="Index">Back to home page</a></h5>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -6,6 +6,8 @@
     using Models.Restaurants;
     using Domain;
     using Services;
+    using Microsoft.AspNetCore.Authorization;
+    using ReserveTable.Models.Cities;
 
     public class CitiesController : Controller
     {
@@ -38,6 +40,28 @@
             };
 
             return View(model);
+        }
+
+        [HttpGet()]
+        [Authorize(Roles = "Admin")]
+        public IActionResult Create()
+        {
+            return this.View();
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public IActionResult Create(CreateCityBindingModel model)
+        {
+            var city = new City
+            {
+                Name = model.Name
+                //Add photo
+            };
+
+            cityService.AddCity(city);
+
+            return this.Redirect("/");
         }
     }
 }

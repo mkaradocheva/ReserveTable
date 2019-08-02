@@ -8,6 +8,7 @@
     using Domain;
     using ReserveTable.Models.Reviews;
     using Services;
+    using System.Linq;
 
     public class RestaurantsController : Controller
     {
@@ -27,6 +28,10 @@
         [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
+            var allCities = cityService.GetAllCities()
+                .ToList();
+            this.ViewData["cityNames"] = allCities;
+
             return View();
         }
 

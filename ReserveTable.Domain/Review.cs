@@ -1,17 +1,19 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace ReserveTable.Domain
+﻿namespace ReserveTable.Domain
 {
-    public class Review 
+    using System.ComponentModel.DataAnnotations;
+
+    public class Review
     {
-        private const string CommentLengthErrorMessage = "Comment should be up to 300 symbols long.";
+        private const string CommentLengthErrorMessage = "Comment should be up to 100 symbols long.";
+        private const string RateErrorMessage = "Rate must be a number between 1 and 10.";
 
         public string Id { get; set; }
 
-        [MaxLength(300, ErrorMessage = CommentLengthErrorMessage)]
+        [MaxLength(100, ErrorMessage = CommentLengthErrorMessage)]
         public string Comment { get; set; }
 
         [Required]
+        [Range(1, 10, ErrorMessage = RateErrorMessage)]
         public double Rate { get; set; }
 
         public string UserId { get; set; }

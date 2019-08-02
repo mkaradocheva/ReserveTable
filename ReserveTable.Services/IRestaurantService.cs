@@ -7,7 +7,7 @@
 
     public interface IRestaurantService
     {
-        Task CreateNewRestaurant(Restaurant restaurant);
+        Task<bool> CreateNewRestaurant(Restaurant restaurant);
 
         bool CheckIfExistsInDb(Restaurant restaurant);
 

@@ -1,8 +1,8 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace ReserveTable.Domain
+﻿namespace ReserveTable.Domain
 {
+    using System;
+    using System.ComponentModel.DataAnnotations;
+
     public class Reservation
     {
         public string Id { get; set; }
@@ -13,10 +13,11 @@ namespace ReserveTable.Domain
 
         public DateTime EndOfReservation => this.ForDate.AddHours(2);
 
+        [Required]
         public string UserId { get; set; }
         public ReserveTableUser User { get; set; }
 
-        [Range(1, 100)]
+        [Range(1, 99)]
         public int SeatsCount { get; set; }
 
         public bool IsCancelled { get; set; }

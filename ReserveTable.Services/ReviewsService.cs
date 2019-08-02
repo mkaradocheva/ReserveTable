@@ -1,5 +1,6 @@
 ﻿namespace ReserveTable.Services
 {
+    using System.Threading.Tasks;
     using Data;
     using Domain;
     using Models.Reviews;
@@ -13,7 +14,7 @@
             this.dbContext = dbContext;
         }
 
-        public void CreateReview(CreateReviewBindingModel model, Restaurant restaurant, string userId)
+        public async Task<bool> CreateReview(CreateReviewBindingModel model, Restaurant restaurant, string userId)
         {
             var review = new Review
             {
@@ -25,8 +26,10 @@
                 Restaurant = dbContext.Restaurants.Find(restaurant.Id)
             };
 
-            dbContext.Reviews.Add(review);
-            dbContext.SaveChanges();
+            await dbContext.Reviews.AddAsync(review);
+            var result = await dbContext.SaveChangesAsync();
+
+            return result > 0;
         }
     }
 }

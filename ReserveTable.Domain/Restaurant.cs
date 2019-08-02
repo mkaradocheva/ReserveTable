@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-
-namespace ReserveTable.Domain
+﻿namespace ReserveTable.Domain
 {
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+
     public class Restaurant
     {
-        private const string InvalidRestaurantNameErrorMessage = "Invalid restaurant name. Name must not be longer than 20 characters.";
+        private const string NameErrorMessage = "Addres must be at max 20 characters long.";
+        private const string AddressErrorMessage = "Address must be at max 30 characters long.";
+        public const string AverageRateErrorMessage = "Rate must be a number between 1 and 10.";
 
         public Restaurant()
         {
@@ -15,15 +17,17 @@ namespace ReserveTable.Domain
 
         public string Id { get; set; }
 
-        [MaxLength(20, ErrorMessage = InvalidRestaurantNameErrorMessage)]
+        [MaxLength(20, ErrorMessage = NameErrorMessage)]
         public string Name { get; set; }
 
         public bool HasAvailableTables { get; set; }
 
+        [MaxLength(30, ErrorMessage = AddressErrorMessage)]
         public string Address { get; set; }
 
         public string PhoneNumber { get; set; }
 
+        [Range(1, 10, ErrorMessage = AverageRateErrorMessage)]
         public double AverageRate { get; set; }
 
         public string CityId { get; set; }

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ReserveTable.Models.Reservations
+﻿namespace ReserveTable.Models.Reservations
 {
     public class CreateReservationViewModel
     {

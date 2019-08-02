@@ -10,7 +10,7 @@
 
         List<Reservation> GetMyReservations(string username);
 
-        void CancelReservation(string reservationId);
+        bool CancelReservation(string reservationId);
 
         CancelReservationViewModel GetReservationForCancel(string reservationId);
     }

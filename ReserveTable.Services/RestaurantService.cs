@@ -18,10 +18,12 @@
             this.dbContext = dbContext;
         }
 
-        public async Task CreateNewRestaurant(Restaurant restaurant)
+        public async Task<bool> CreateNewRestaurant(Restaurant restaurant)
         {
             await dbContext.Restaurants.AddAsync(restaurant);
-            await dbContext.SaveChangesAsync();
+            var result = await dbContext.SaveChangesAsync();
+
+            return result > 0;
         }
 
         public bool CheckIfExistsInDb(Restaurant restaurant)

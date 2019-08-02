@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using Data;
     using Domain;
     using Models.Tables;
@@ -15,7 +16,7 @@
             this.dbContext = dbContext;
         }
 
-        public void AddTable(AddTableBindingModel model, Restaurant restaurant)
+        public async Task<bool> AddTable(AddTableBindingModel model, Restaurant restaurant)
         {
             var table = new Table
             {
@@ -24,8 +25,10 @@
                 RestaurantId = restaurant.Id
             };
 
-            dbContext.Tables.Add(table);
-            dbContext.SaveChanges();
+            await dbContext.Tables.AddAsync(table);
+            var result = await dbContext.SaveChangesAsync();
+
+            return result > 0; 
         }
 
         public List<Table> GetRestaurantTables(Restaurant restaurant)

@@ -14,6 +14,23 @@
             this.dbContext = dbContext;
         }
 
+        public bool AddCity(City city)
+        {
+            dbContext.Cities.Add(city);
+            var result = dbContext.SaveChanges();
+
+            return result > 0;
+        }
+
+        public IEnumerable<string> GetAllCities()
+        {
+            var citiesNames = dbContext.Cities
+                .Select(c => c.Name)
+                .ToList();
+
+            return citiesNames;
+        }
+
         public string GetCityByName(string cityName)
         {
             string cityId = dbContext.Cities

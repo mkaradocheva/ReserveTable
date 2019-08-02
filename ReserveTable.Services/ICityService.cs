@@ -8,5 +8,9 @@
         string GetCityByName(string cityName);
 
         List<Restaurant> GetRestaurantsInCity(string city);
+
+        bool AddCity(City city);
+
+        IEnumerable<string> GetAllCities();
     }
 }
