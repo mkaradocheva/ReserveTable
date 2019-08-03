@@ -23,8 +23,7 @@
 
         public async Task<Reservation> MakeReservation(CreateReservationBindingModel viewModel, ReserveTableUser user, Restaurant restaurant)
         {
-            string dateTime = viewModel.Date + " " + viewModel.Time;
-            DateTime parsed = DateTime.Parse(dateTime);
+            var dateTime = DateTime.Parse(viewModel.Date + " " + viewModel.Time);
 
             var tablesWithExactCountSeats = restaurant.Tables
                 .Where(t => t.SeatsCount == viewModel.SeatsCount)
@@ -38,13 +37,13 @@
 
             foreach (var table in tablesWithExactCountSeats)
             {
-                if (table.Reservations.Any(t => (t.ForDate < parsed || t.EndOfReservation > parsed) && t.IsCancelled == false))
+                if (table.Reservations.Any(t => (t.ForDate < dateTime || t.EndOfReservation > dateTime) && t.IsCancelled == false))
                 {
                     return null;
                 }
                 else
                 {
-                    reservation.ForDate = parsed;
+                    reservation.ForDate = dateTime;
                     reservation.SeatsCount = viewModel.SeatsCount;
                     reservation.UserId = user.Id;
                     reservation.Table = table;
@@ -61,13 +60,13 @@
             {
                 foreach (var biggerTable in tablesWithSeatsCountPlusOne)
                 {
-                    if (biggerTable.Reservations.Any(t => (t.ForDate < parsed || t.EndOfReservation > parsed) && t.IsCancelled == false))
+                    if (biggerTable.Reservations.Any(t => (t.ForDate < dateTime || t.EndOfReservation > dateTime) && t.IsCancelled == false))
                     {
                         return null;
                     }
                     else
                     {
-                        reservation.ForDate = parsed;
+                        reservation.ForDate = dateTime;
                         reservation.SeatsCount = viewModel.SeatsCount;
                         reservation.UserId = user.Id;
                         reservation.Table = biggerTable;

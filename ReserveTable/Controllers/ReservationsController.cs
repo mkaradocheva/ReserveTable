@@ -35,10 +35,9 @@
         [Route("/Reservations/{city}/{restaurant}")]
         public async Task<IActionResult> Create(string city, string restaurant, CreateReservationBindingModel viewModel)
         {
-            string dateTime = viewModel.Date + " " + viewModel.Time;
-            DateTime parsed = DateTime.Parse(dateTime);
+            var dateTime = DateTime.Parse(viewModel.Date + " " + viewModel.Time);
 
-            var isDateValid = await reservationsService.IsDateValid(parsed);
+            var isDateValid = await reservationsService.IsDateValid(dateTime);
 
             if (isDateValid)
             {

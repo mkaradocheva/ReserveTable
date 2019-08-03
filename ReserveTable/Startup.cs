@@ -11,6 +11,7 @@
     using Domain;
     using System.Linq;
     using Services;
+    using CloudinaryDotNet;
 
     public class Startup
     {
@@ -30,6 +31,15 @@
             services.AddIdentity<ReserveTableUser, ReserveTableUserRole>()
     .AddEntityFrameworkStores<ReserveTableDbContext>()
     .AddDefaultTokenProviders();
+
+            Account cloudinaryCredentials = new Account {
+                Cloud = this.Configuration["Cloudinary:CloudName"],
+                ApiKey = this.Configuration["Cloudinary:ApiKey"],
+                ApiSecret = this.Configuration["Cloudinary:ApiSecret"],
+            };
+
+            Cloudinary cloudinaryUtility = new Cloudinary(cloudinaryCredentials);
+            services.AddSingleton(cloudinaryUtility);
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -53,6 +63,7 @@
             services.AddTransient<IReviewsService, ReviewsService>();
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<ITablesService, TablesService>();
+            services.AddTransient<ICloudinaryService, CloudinaryService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

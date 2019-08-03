@@ -13,10 +13,12 @@
     public class CitiesController : Controller
     {
         private readonly ICityService cityService;
+        private readonly ICloudinaryService cloudinaryService;
 
-        public CitiesController(ICityService cityService)
+        public CitiesController(ICityService cityService, ICloudinaryService cloudinaryService)
         {
             this.cityService = cityService;
+            this.cloudinaryService = cloudinaryService;
         }
 
         [Route("/Cities/{city}")]
@@ -54,10 +56,12 @@
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(CreateCityBindingModel model)
         {
+            string pictureUrl = await cloudinaryService.UploadPicture(model.Photo, model.Name);
+
             var city = new City
             {
-                Name = model.Name
-                //Add photo
+                Name = model.Name,
+                Photo = pictureUrl
             };
 
             await cityService.AddCity(city);
