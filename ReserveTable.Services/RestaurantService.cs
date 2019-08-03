@@ -43,20 +43,6 @@
             return false;
         }
 
-        public async Task<List<AllRestaurantsViewModel>> GetAllRestaurants()
-        {
-            var allRestaurants = await dbContext.Restaurants
-                .Select(r => new AllRestaurantsViewModel
-                {
-                    Id = r.Id,
-                    Name = r.Name,
-                    City = r.City.Name,
-                })
-                .ToListAsync();
-
-            return allRestaurants;
-        }
-
         public async Task<Restaurant> GetRestaurantByNameAndCity(string city, string name)
         {
             var restaurant = await dbContext

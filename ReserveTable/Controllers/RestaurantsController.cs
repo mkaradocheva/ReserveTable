@@ -55,13 +55,6 @@
             return this.Redirect("/Home/Index");
         }
 
-        public async Task<IActionResult> All()
-        {
-            var allRestaurants = await restaurantService.GetAllRestaurants();
-
-            return this.View(allRestaurants);
-        }
-
         [HttpGet("/Restaurants/{city}/{restaurant}")]
         public async Task<IActionResult> Details(string city, string restaurant)
         {

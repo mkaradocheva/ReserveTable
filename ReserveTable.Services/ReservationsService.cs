@@ -30,37 +30,39 @@
                 .ToList();
 
             var tablesWithSeatsCountPlusOne = restaurant.Tables
-                .Where(t => t.SeatsCount + 1 == viewModel.SeatsCount)
+                .Where(t => t.SeatsCount == viewModel.SeatsCount + 1)
                 .ToList();
 
             Reservation reservation = new Reservation();
 
-            foreach (var table in tablesWithExactCountSeats)
+            if (tablesWithExactCountSeats.Any())
             {
-                if (table.Reservations.Any(t => (t.ForDate < dateTime || t.EndOfReservation > dateTime) && t.IsCancelled == false))
+                foreach (var table in tablesWithExactCountSeats)
                 {
-                    return null;
-                }
-                else
-                {
-                    reservation.ForDate = dateTime;
-                    reservation.SeatsCount = viewModel.SeatsCount;
-                    reservation.UserId = user.Id;
-                    reservation.Table = table;
-                    reservation.Restaurant = restaurant;
+                    if (table.Reservations.Any(t => (dateTime > t.ForDate && dateTime < t.EndOfReservation) && t.IsCancelled == false))
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        reservation.ForDate = dateTime;
+                        reservation.SeatsCount = viewModel.SeatsCount;
+                        reservation.UserId = user.Id;
+                        reservation.Table = table;
+                        reservation.Restaurant = restaurant;
 
-                    await dbContext.Reservations.AddAsync(reservation);
-                    await dbContext.SaveChangesAsync();
+                        await dbContext.Reservations.AddAsync(reservation);
+                        await dbContext.SaveChangesAsync();
 
-                    return reservation;
+                        return reservation;
+                    }
                 }
             }
-
-            if (reservation == null)
+            else if (tablesWithSeatsCountPlusOne.Any())
             {
                 foreach (var biggerTable in tablesWithSeatsCountPlusOne)
                 {
-                    if (biggerTable.Reservations.Any(t => (t.ForDate < dateTime || t.EndOfReservation > dateTime) && t.IsCancelled == false))
+                    if (biggerTable.Reservations.Any(t => (dateTime > t.ForDate && dateTime < t.EndOfReservation) && t.IsCancelled == false))
                     {
                         return null;
                     }

@@ -11,8 +11,6 @@
 
         Task<bool> CheckIfExistsInDb(Restaurant restaurant, string cityName);
 
-        Task<List<AllRestaurantsViewModel>> GetAllRestaurants();
-
         Task<Restaurant> GetRestaurantByNameAndCity(string city, string name);
 
         Task<double> GetAverageRate(Restaurant restaurant);
