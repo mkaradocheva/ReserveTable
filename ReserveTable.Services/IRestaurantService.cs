@@ -9,7 +9,7 @@
     {
         Task<bool> CreateNewRestaurant(Restaurant restaurant);
 
-        Task<bool> CheckIfExistsInDb(Restaurant restaurant);
+        Task<bool> CheckIfExistsInDb(Restaurant restaurant, string cityName);
 
         Task<List<AllRestaurantsViewModel>> GetAllRestaurants();
 

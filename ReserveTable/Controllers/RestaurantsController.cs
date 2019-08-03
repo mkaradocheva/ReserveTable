@@ -47,7 +47,7 @@
                 PhoneNumber = modelView.PhoneNumber
             };
 
-            if (!await restaurantService.CheckIfExistsInDb(restaurant))
+            if (!await restaurantService.CheckIfExistsInDb(restaurant, modelView.City))
             {
                 await restaurantService.CreateNewRestaurant(restaurant);
             }

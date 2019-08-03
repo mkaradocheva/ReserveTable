@@ -34,6 +34,7 @@
         [Route("/Reservations/{city}/{restaurant}")]
         public async Task<IActionResult> Create(string city, string restaurant, CreateReservationBindingModel viewModel)
         {
+            //var isDateValid = 
             var restaurantFromDb = await restaurantService.GetRestaurantByNameAndCity(city, restaurant);
             var user = await usersService.GetUserByUsername(this.User.Identity.Name);
             var reservation = await reservationsService.MakeReservation(viewModel, user, restaurantFromDb);

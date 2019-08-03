@@ -26,11 +26,16 @@
             return result > 0;
         }
 
-        public async Task<bool> CheckIfExistsInDb(Restaurant restaurant)
+        public async Task<bool> CheckIfExistsInDb(Restaurant restaurant, string cityName)
         {
-            if (await dbContext.Restaurants
-                .AnyAsync(r => r.Name == restaurant.Name 
-                && r.City.Name == restaurant.Name))
+            var allRestaurants = await dbContext.Restaurants
+                .Include(r => r.City)
+                .ToListAsync();
+
+            if (allRestaurants
+                .Any(r => r.Name == restaurant.Name 
+                && r.City.Name == cityName
+                && r.Address == restaurant.Address))
             {
                 return true;
             }
