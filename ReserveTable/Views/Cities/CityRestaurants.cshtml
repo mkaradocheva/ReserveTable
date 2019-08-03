@@ -1,13 +1,13 @@
 ﻿@model ReserveTable.App.Models.Cities.CityRestaurantsViewModel
 
 <div>
-    <h4 class="text-center text-white">Restaurants in @Model.CityName</h4>
+    <h4 class="text-center p-4">Restaurants in @Model.CityName</h4>
     <hr />
     <div class="d-flex justify-content-center">
         <ul>
             @foreach (var restaurant in Model.RestaurantsNames)
             {
-                <li class="text-white"><a href="/Restaurants/@Model.CityName/@restaurant.Name">@restaurant.Name</a></li>
+                <li><a href="/Restaurants/@Model.CityName/@restaurant.Name">@restaurant.Name</a></li>
             }
         </ul>
     </div>

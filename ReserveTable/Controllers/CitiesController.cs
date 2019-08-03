@@ -64,6 +64,11 @@
                 Photo = pictureUrl
             };
 
+            if (await cityService.CheckIfExists(city))
+            {
+                return this.View();
+            }
+            
             await cityService.AddCity(city);
 
             return this.Redirect("/");

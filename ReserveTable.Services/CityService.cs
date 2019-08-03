@@ -6,6 +6,7 @@
     using Data;
     using Domain;
     using Microsoft.EntityFrameworkCore;
+    using ReserveTable.Models.Home;
 
     public class CityService : ICityService
     {
@@ -24,6 +25,16 @@
             return result > 0;
         }
 
+        public async Task<bool> CheckIfExists(City city)
+        {
+            if (await dbContext.Cities.AnyAsync(c => c.Name == city.Name))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public async Task<IEnumerable<string>> GetAllCities()
         {
             var citiesNames = await dbContext.Cities
@@ -31,6 +42,19 @@
                 .ToListAsync();
 
             return citiesNames;
+        }
+
+        public async Task<IEnumerable<CitiesHomeViewModel>> GetCitiesWithPicture()
+        {
+            IEnumerable<CitiesHomeViewModel> cities = await dbContext.Cities
+                .Select(c => new CitiesHomeViewModel
+                {
+                    Name = c.Name,
+                    Picture = c.Photo
+                })
+                .ToListAsync();
+
+            return cities;
         }
 
         public async Task<string> GetCityByName(string cityName)

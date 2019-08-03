@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Domain;
+    using ReserveTable.Models.Home;
 
     public interface ICityService
     {
@@ -13,5 +14,9 @@
         Task<bool> AddCity(City city);
 
         Task<IEnumerable<string>> GetAllCities();
+
+        Task<IEnumerable<CitiesHomeViewModel>> GetCitiesWithPicture();
+
+        Task<bool> CheckIfExists(City city);
     }
 }

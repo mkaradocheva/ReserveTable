@@ -74,19 +74,10 @@
                 {
                     context.Database.EnsureCreated();
 
-                    //TODO: Implement seeders
-
                     if (!context.Roles.Any())
                     {
                         context.Roles.Add(new ReserveTableUserRole { Name = "Admin", NormalizedName = "ADMIN" });
                         context.Roles.Add(new ReserveTableUserRole { Name = "User", NormalizedName = "USER" });
-                    }
-
-                    if (!context.Cities.Any())
-                    {
-                        context.Cities.Add(new City { Name = "Sofia" });
-                        context.Cities.Add(new City { Name = "Plovdiv" });
-                        context.Cities.Add(new City { Name = "Varna" });
                     }
 
                     context.SaveChanges();
