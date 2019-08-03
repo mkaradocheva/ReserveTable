@@ -89,7 +89,9 @@
                 Address = restaurantFromDb.Address,
                 City = city,
                 PhoneNumber = restaurantFromDb.PhoneNumber,
-                AverageRate = restaurantAverageRate,
+                AverageRate = restaurantAverageRate.ToString() != "NaN" 
+                            ? restaurantAverageRate.ToString() 
+                            : "No ratings yet",
                 Reviews = reviewsViewModel
             };
 

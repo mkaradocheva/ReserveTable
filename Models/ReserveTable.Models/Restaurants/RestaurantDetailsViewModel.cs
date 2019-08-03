@@ -15,7 +15,7 @@ namespace ReserveTable.App.Models.Restaurants
 
         public string PhoneNumber { get; set; }
 
-        public double AverageRate { get; set; }
+        public string AverageRate { get; set; }
 
         public ICollection<AllReviewsForRestaurantViewModel> Reviews { get; set; }
     }
