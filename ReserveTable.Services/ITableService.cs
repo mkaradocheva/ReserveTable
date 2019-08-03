@@ -5,11 +5,10 @@
     using Domain;
     using Models.Tables;
 
-    public interface ITablesService
+    public interface ITableService
     {
         Task<List<Table>> GetRestaurantTables(Restaurant restaurant);
 
         Task<bool> AddTable(AddTableBindingModel model, Restaurant restaurant);
-
     }
 }

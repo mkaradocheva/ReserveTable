@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using ReserveTable.Domain;
-
-namespace ReserveTable.Data
+﻿namespace ReserveTable.Data
 {
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore;
+    using Domain;
+
     public class ReserveTableDbContext : IdentityDbContext<ReserveTableUser, ReserveTableUserRole, string>
     {
         public DbSet<City> Cities { get; set; }

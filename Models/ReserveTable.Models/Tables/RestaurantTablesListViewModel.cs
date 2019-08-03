@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace ReserveTable.Models.Tables
+﻿namespace ReserveTable.Models.Tables
 {
+    using System.Collections.Generic;
+
     public class RestaurantTablesListViewModel
     {
         public string Id { get; set; }

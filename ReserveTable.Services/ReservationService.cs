@@ -10,13 +10,13 @@
     using Models.Reservations;
     using System.Threading.Tasks;
 
-    public class ReservationsService : IReservationsService
+    public class ReservationService : IReservationService
     {
         private const string DateStringFormat = "dd/MM/yyyy HH:mm";
 
         private readonly ReserveTableDbContext dbContext;
 
-        public ReservationsService(ReserveTableDbContext dbContext)
+        public ReservationService(ReserveTableDbContext dbContext)
         {
             this.dbContext = dbContext;
         }

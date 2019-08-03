@@ -1,8 +1,6 @@
 ﻿namespace ReserveTable.Services
 {
-    using System.Collections.Generic;
     using System.Threading.Tasks;
-    using App.Models.Restaurants;
     using Domain;
 
     public interface IRestaurantService

@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using ReserveTable.App.Models.Restaurants;
-
-namespace ReserveTable.App.Models.Cities
+﻿namespace ReserveTable.App.Models.Cities
 {
+    using System.Collections.Generic;
+    using Restaurants;
+
     public class CityRestaurantsViewModel
     {
         public List<RestaurantsViewModel> RestaurantsNames { get; set; }

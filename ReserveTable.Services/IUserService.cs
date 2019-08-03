@@ -3,7 +3,7 @@
     using System.Threading.Tasks;
     using Domain;
 
-    public interface IUsersService
+    public interface IUserService
     {
         Task<ReserveTableUser> GetUserById(string id);
 

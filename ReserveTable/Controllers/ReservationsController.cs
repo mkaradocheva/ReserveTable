@@ -12,13 +12,13 @@
     [Authorize]
     public class ReservationsController : Controller
     {
-        private readonly IReservationsService reservationsService;
+        private readonly IReservationService reservationsService;
         private readonly IRestaurantService restaurantService;
-        private readonly IUsersService usersService;
+        private readonly IUserService usersService;
 
-        public ReservationsController(IReservationsService reservationsService,
+        public ReservationsController(IReservationService reservationsService,
                 IRestaurantService restaurantService,
-                IUsersService usersService)
+                IUserService usersService)
         {
             this.reservationsService = reservationsService;
             this.restaurantService = restaurantService;
@@ -36,7 +36,6 @@
         public async Task<IActionResult> Create(string city, string restaurant, CreateReservationBindingModel viewModel)
         {
             var dateTime = DateTime.Parse(viewModel.Date + " " + viewModel.Time);
-
             var isDateValid = await reservationsService.IsDateValid(dateTime);
 
             if (isDateValid)

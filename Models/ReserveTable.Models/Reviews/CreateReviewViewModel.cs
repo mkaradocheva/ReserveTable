@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace ReserveTable.Models.Reviews
+﻿namespace ReserveTable.Models.Reviews
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class CreateReviewViewModel
     {
         private const string RateRangeErrorMessage = "Rate must be between 1 and 10.";

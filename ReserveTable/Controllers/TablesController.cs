@@ -10,10 +10,10 @@
     [Authorize(Roles = "Admin")]
     public class TablesController : Controller
     {
-        private readonly ITablesService tablesService;
+        private readonly ITableService tablesService;
         private readonly IRestaurantService restaurantService;
 
-        public TablesController(ITablesService tablesService,
+        public TablesController(ITableService tablesService,
                     IRestaurantService restaurantService)
         {
             this.tablesService = tablesService;

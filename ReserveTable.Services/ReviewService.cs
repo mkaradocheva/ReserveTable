@@ -5,11 +5,11 @@
     using Domain;
     using Models.Reviews;
 
-    public class ReviewsService : IReviewsService
+    public class ReviewService : IReviewService
     {
         private readonly ReserveTableDbContext dbContext;
 
-        public ReviewsService(ReserveTableDbContext dbContext)
+        public ReviewService(ReserveTableDbContext dbContext)
         {
             this.dbContext = dbContext;
         }

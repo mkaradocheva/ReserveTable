@@ -9,10 +9,10 @@
 
     public class ReviewsController : Controller
     {
-        private readonly IReviewsService reviewsService;
+        private readonly IReviewService reviewsService;
         private readonly IRestaurantService restaurantService;
 
-        public ReviewsController(IReviewsService reviewsService,
+        public ReviewsController(IReviewService reviewsService,
             IRestaurantService restaurantService)
         {
             this.reviewsService = reviewsService;

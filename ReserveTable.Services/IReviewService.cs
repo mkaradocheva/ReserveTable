@@ -4,7 +4,7 @@
     using Domain;
     using Models.Reviews;
 
-    public interface IReviewsService
+    public interface IReviewService
     {
         Task<bool> CreateReview(CreateReviewBindingModel model, Restaurant restaurant, string userId);
     }

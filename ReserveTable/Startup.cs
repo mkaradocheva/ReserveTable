@@ -59,10 +59,10 @@
 
             services.AddTransient<IRestaurantService, RestaurantService>();
             services.AddTransient<ICityService, CityService>();
-            services.AddTransient<IReservationsService, ReservationsService>();
-            services.AddTransient<IReviewsService, ReviewsService>();
-            services.AddTransient<IUsersService, UsersService>();
-            services.AddTransient<ITablesService, TablesService>();
+            services.AddTransient<IReservationService, ReservationService>();
+            services.AddTransient<IReviewService, ReviewService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<ITableService, TableService>();
             services.AddTransient<ICloudinaryService, CloudinaryService>();
         }
 

@@ -1,5 +1,4 @@
-﻿using System;
-namespace ReserveTable.Services
+﻿namespace ReserveTable.Services
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;

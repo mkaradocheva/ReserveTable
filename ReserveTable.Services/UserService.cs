@@ -6,11 +6,11 @@
     using Domain;
     using Microsoft.EntityFrameworkCore;
 
-    public class UsersService : IUsersService
+    public class UserService : IUserService
     {
         private readonly ReserveTableDbContext dbContext;
 
-        public UsersService(ReserveTableDbContext dbContext)
+        public UserService(ReserveTableDbContext dbContext)
         {
             this.dbContext = dbContext;
         }

@@ -68,7 +68,6 @@
             {
                 return this.View();
             }
-            
             await cityService.AddCity(city);
 
             return this.Redirect("/");

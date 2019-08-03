@@ -8,11 +8,11 @@
     using Microsoft.EntityFrameworkCore;
     using Models.Tables;
 
-    public class TablesService : ITablesService
+    public class TableService : ITableService
     {
         private readonly ReserveTableDbContext dbContext;
 
-        public TablesService(ReserveTableDbContext dbContext)
+        public TableService(ReserveTableDbContext dbContext)
         {
             this.dbContext = dbContext;
         }

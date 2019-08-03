@@ -6,7 +6,7 @@
     using Domain;
     using Models.Reservations;
 
-    public interface IReservationsService
+    public interface IReservationService
     {
         Task<Reservation> MakeReservation(CreateReservationBindingModel viewModel, ReserveTableUser user, Restaurant restaurant);
 

@@ -13,11 +13,11 @@
     {
         private readonly IRestaurantService restaurantService;
         private readonly ICityService cityService;
-        private readonly IUsersService usersService;
+        private readonly IUserService usersService;
 
         public RestaurantsController(IRestaurantService restaurantService,
             ICityService cityService,
-            IUsersService usersService)
+            IUserService usersService)
         {
             this.restaurantService = restaurantService;
             this.cityService = cityService;
