@@ -125,5 +125,15 @@
 
             return viewModel;
         }
+
+        public async Task<bool> IsDateValid(DateTime dateForReservation)
+        {
+            if (dateForReservation > DateTime.Now)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

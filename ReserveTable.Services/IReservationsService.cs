@@ -1,5 +1,6 @@
 ﻿namespace ReserveTable.Services
 {
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Domain;
@@ -14,5 +15,7 @@
         Task<bool> CancelReservation(string reservationId);
 
         Task<CancelReservationViewModel> GetReservationForCancel(string reservationId);
+
+        Task<bool> IsDateValid(DateTime dateForReservation);
     }
 }
