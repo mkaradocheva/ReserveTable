@@ -42,7 +42,7 @@
         public async Task<IActionResult> Create(CreateRestaurantBindingModel modelView)
         {
             string cityId = await cityService.GetCityByName(modelView.City);
-            string pictureUrl = await cloudinaryService.UploadRestaurantPicture(modelView.Photo, $"{modelView.City} {modelView.Name}");
+            string pictureUrl = await cloudinaryService.UploadPicture(modelView.Photo, $"{modelView.City} {modelView.Name}", "restaurant_images");
 
             var restaurant = new Restaurant
             {

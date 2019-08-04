@@ -15,7 +15,7 @@
             this.cloudinaryUtility = cloudinaryUtility;
         }
 
-        public async Task<string> UploadCityPicture(IFormFile pictureFile, string fileName)
+        public async Task<string> UploadPicture(IFormFile pictureFile, string fileName, string folderName)
         {
             byte[] destinationData;
 
@@ -31,33 +31,7 @@
             {
                 ImageUploadParams uploadParams = new ImageUploadParams
                 {
-                    Folder = "city_images",
-                    File = new FileDescription(fileName, ms)
-                };
-
-                uploadResult = this.cloudinaryUtility.Upload(uploadParams);
-            }
-
-            return uploadResult?.SecureUri.AbsoluteUri;
-        }
-
-        public async Task<string> UploadRestaurantPicture(IFormFile pictureFile, string fileName)
-        {
-            byte[] destinationData;
-
-            using (var ms = new MemoryStream())
-            {
-                await pictureFile.CopyToAsync(ms);
-                destinationData = ms.ToArray();
-            }
-
-            UploadResult uploadResult = null;
-
-            using (var ms = new MemoryStream(destinationData))
-            {
-                ImageUploadParams uploadParams = new ImageUploadParams
-                {
-                    Folder = "restaurant_images",
+                    Folder = folderName,
                     File = new FileDescription(fileName, ms)
                 };
 

@@ -32,7 +32,7 @@
         [HttpPost]
         public async Task<IActionResult> Create(CreateCityBindingModel model)
         {
-            string pictureUrl = await cloudinaryService.UploadCityPicture(model.Photo, model.Name);
+            string pictureUrl = await cloudinaryService.UploadPicture(model.Photo, model.Name, "city_images");
 
             var city = new City
             {
@@ -63,14 +63,16 @@
             {
                 restaurantsViewModel.Add(new RestaurantsViewModel
                 {
-                    Name = restaurant.Name
+                    Name = restaurant.Name,
+                    Rate = restaurant.AverageRate.ToString() != "0" ? restaurant.AverageRate.ToString() : "No ratings yet",
+                    Picture = restaurant.Photo
                 });
             }
 
             var model = new CityRestaurantsViewModel
             {
                 CityName = city,
-                RestaurantsNames = restaurantsViewModel
+                Restaurants = restaurantsViewModel
             };
 
             return this.View(model);

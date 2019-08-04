@@ -5,7 +5,7 @@
 
     public class CityRestaurantsViewModel
     {
-        public List<RestaurantsViewModel> RestaurantsNames { get; set; }
+        public List<RestaurantsViewModel> Restaurants { get; set; }
 
         public string CityName { get; set; }
     }
