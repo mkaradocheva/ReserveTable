@@ -46,7 +46,7 @@
 
             if (await cityService.CheckIfExists(city))
             {
-                //TODO: Error handling
+                ModelState.AddModelError("CityExists", "This city already exists");
 
                 return this.View();
             }

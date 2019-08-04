@@ -46,7 +46,7 @@
 
                 if (reservation == null)
                 {
-                    //TODO: Error handling
+                    ModelState.AddModelError("NoAvailableTables", "There are no available tables.");
 
                     return this.View();
                 }
@@ -55,7 +55,7 @@
             }
             else
             {
-                //TODO: Error handling
+                ModelState.AddModelError("InvalidData", "Your date is not valid.");
             }
 
             return this.View();

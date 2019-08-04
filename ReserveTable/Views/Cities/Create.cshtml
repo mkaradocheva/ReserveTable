@@ -1,5 +1,20 @@
 ﻿@model ReserveTable.Models.Cities.CreateCityViewModel
 
+@foreach (var item in ViewContext.ViewData.ModelState)
+{
+    if (item.Value.Errors.Any())
+    {
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>Sorry!</strong>
+        @((item.Value == null) ? "<null>" : item.Value.RawValue)
+        @(string.Join("; ", item.Value.Errors.Select(x => x.ErrorMessage)))
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    }
+}
+
 <h1 class="text-center p-4">Add new city</h1>
 <hr />
 <div class="row d-flex justify-content-center">

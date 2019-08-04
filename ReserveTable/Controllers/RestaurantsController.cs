@@ -53,16 +53,16 @@
                 Photo = pictureUrl
             };
 
-            if (!await restaurantService.CheckIfExistsInDb(restaurant, modelView.City))
+            if (await restaurantService.CheckIfExistsInDb(restaurant, modelView.City))
             {
-                await restaurantService.CreateNewRestaurant(restaurant);
+                TempData["RestaurantExists"] = "This restaurant already exists.";
             }
             else
             {
-                //TODO: Error handling
+                await restaurantService.CreateNewRestaurant(restaurant);
             }
 
-            return this.Redirect("/Home/Index");
+            return this.Redirect($"/Cities/{modelView.City}");
         }
 
         [HttpGet("/Restaurants/{city}/{restaurant}")]
@@ -92,8 +92,8 @@
                 Address = restaurantFromDb.Address,
                 City = city,
                 PhoneNumber = restaurantFromDb.PhoneNumber,
-                AverageRate = restaurantAverageRate.ToString() != "NaN" 
-                            ? restaurantAverageRate.ToString() 
+                AverageRate = restaurantAverageRate.ToString() != "NaN"
+                            ? restaurantAverageRate.ToString()
                             : "No ratings yet",
                 Reviews = reviewsViewModel
             };
