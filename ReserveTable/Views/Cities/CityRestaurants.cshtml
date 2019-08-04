@@ -85,17 +85,18 @@
             $('#order-form').submit();
         });
 
-        //$('#restaurants-search-bar').on("change paste keyup", function () {
-        //    $('.restaurant').show();
+        $('#restaurants-search-bar').on("change paste keyup", function () {
+            $('.card').show();
 
-        //    let searchValue = $('#restaurants-search-bar').val();
+            let searchValue = $('#restaurants-search-bar').val();
 
-        //    for (let elem of $('.restaurant')) {
-        //        let productName = $($(elem).children()[1]).text();
+            for (let elem of $('.card')) {
+                let productName = $($($(elem).children()[1]).children()[0]).text();
+console.log(productName);
 
-        //        if (!productName.toLowerCase().includes(searchValue.toLowerCase())) {
-        //            $(elem).hide();
-        //        }
-        //    }
+                if (!productName.toLowerCase().includes(searchValue.toLowerCase())) {
+                    $(elem).hide();
+                }
+            }
         });
     </script>
