@@ -1,5 +1,6 @@
 ﻿namespace ReserveTable.Domain
 {
+    using System;
     using System.ComponentModel.DataAnnotations;
 
     public class Review
@@ -16,6 +17,8 @@
         [Required]
         [Range(1, 10, ErrorMessage = RateErrorMessage)]
         public double Rate { get; set; }
+
+        public DateTime Date { get; set; }
 
         [Required]
         public string UserId { get; set; }

@@ -7,5 +7,7 @@
         public string Comment { get; set; }
 
         public double Rate { get; set; }
+
+        public string Date { get; set; }
     }
 }

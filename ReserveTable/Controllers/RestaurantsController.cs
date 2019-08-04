@@ -11,6 +11,8 @@
 
     public class RestaurantsController : Controller
     {
+        private const string DateStringFormat = "dd/MM/yyyy HH:mm";
+
         private readonly IRestaurantService restaurantService;
         private readonly IUserService usersService;
         private readonly ICityService cityService;
@@ -81,7 +83,8 @@
                 {
                     Username = user.UserName,
                     Comment = review.Comment,
-                    Rate = review.Rate
+                    Rate = review.Rate,
+                    Date = review.Date.ToString(DateStringFormat)
                 });
             }
 

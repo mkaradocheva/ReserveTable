@@ -1,5 +1,6 @@
 ﻿namespace ReserveTable.App.Controllers
 {
+    using System;
     using System.Security.Claims;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
@@ -39,7 +40,8 @@
                 Comment = model.Comment,
                 Rate = model.Rate,
                 Restaurant = restaurantFromDb,
-                UserId = userId
+                UserId = userId,
+                Date = DateTime.Now
             };
 
             await reviewsService.CreateReview(review);
