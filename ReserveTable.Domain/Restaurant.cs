@@ -17,19 +17,24 @@
 
         public string Id { get; set; }
 
+        [Required]
         [MaxLength(20, ErrorMessage = NameErrorMessage)]
         public string Name { get; set; }
 
-        public bool HasAvailableTables { get; set; }
+        [Required]
+        public string Photo { get; set; }
 
+        [Required]
         [MaxLength(30, ErrorMessage = AddressErrorMessage)]
         public string Address { get; set; }
 
+        [Required]
         public string PhoneNumber { get; set; }
 
         [Range(1, 10, ErrorMessage = AverageRateErrorMessage)]
         public double AverageRate { get; set; }
 
+        [Required]
         public string CityId { get; set; }
         public City City { get; set; }
 

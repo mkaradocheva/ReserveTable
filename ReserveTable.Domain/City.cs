@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using Microsoft.AspNetCore.Http;
 
     public class City
     {
@@ -15,9 +14,11 @@
 
         public string Id { get; set; }
 
+        [Required]
         [MaxLength(20, ErrorMessage = InvalidCityNameErrorMessage)]
         public string Name { get; set; }
 
+        [Required]
         public string Photo { get; set; }
 
         public ICollection<Restaurant> Restaurants { get; set; }

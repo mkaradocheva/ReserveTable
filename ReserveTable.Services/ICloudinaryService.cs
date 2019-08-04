@@ -5,6 +5,8 @@
 
     public interface ICloudinaryService
     {
-        Task<string> UploadPicture(IFormFile pictureFile, string fileName);
+        Task<string> UploadCityPicture(IFormFile pictureFile, string fileName);
+
+        Task<string> UploadRestaurantPicture(IFormFile pictureFile, string fileName);
     }
 }

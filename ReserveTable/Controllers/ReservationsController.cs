@@ -46,10 +46,16 @@
 
                 if (reservation == null)
                 {
+                    //TODO: Error handling
+
                     return this.View();
                 }
 
                 return this.Redirect("/Reservations/My");
+            }
+            else
+            {
+                //TODO: Error handling
             }
 
             return this.View();

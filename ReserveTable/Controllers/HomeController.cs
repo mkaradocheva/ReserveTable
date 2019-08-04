@@ -4,7 +4,7 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using ReserveTable.Models.Home;
-    using ReserveTable.Services;
+    using Services;
 
     public class HomeController : Controller
     {

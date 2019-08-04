@@ -12,19 +12,23 @@
     public class RestaurantsController : Controller
     {
         private readonly IRestaurantService restaurantService;
-        private readonly ICityService cityService;
         private readonly IUserService usersService;
+        private readonly ICityService cityService;
+        private readonly ICloudinaryService cloudinaryService;
 
         public RestaurantsController(IRestaurantService restaurantService,
+            IUserService usersService,
             ICityService cityService,
-            IUserService usersService)
+            ICloudinaryService cloudinaryService)
         {
             this.restaurantService = restaurantService;
-            this.cityService = cityService;
             this.usersService = usersService;
+            this.cityService = cityService;
+            this.cloudinaryService = cloudinaryService;
         }
 
         [Authorize(Roles = "Admin")]
+        [HttpGet]
         public async Task<IActionResult> Create()
         {
             var allCities = await cityService.GetAllCities();
@@ -33,28 +37,35 @@
             return View();
         }
 
-        [HttpPost]
         [Authorize(Roles = "Admin")]
+        [HttpPost]
         public async Task<IActionResult> Create(CreateRestaurantBindingModel modelView)
         {
             string cityId = await cityService.GetCityByName(modelView.City);
+            string pictureUrl = await cloudinaryService.UploadRestaurantPicture(modelView.Photo, $"{modelView.City} {modelView.Name}");
 
             var restaurant = new Restaurant
             {
                 Name = modelView.Name,
                 CityId = cityId,
                 Address = modelView.Address,
-                PhoneNumber = modelView.PhoneNumber
+                PhoneNumber = modelView.PhoneNumber,
+                Photo = pictureUrl
             };
 
             if (!await restaurantService.CheckIfExistsInDb(restaurant, modelView.City))
             {
                 await restaurantService.CreateNewRestaurant(restaurant);
             }
+            else
+            {
+                //TODO: Error handling
+            }
 
             return this.Redirect("/Home/Index");
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("/Restaurants/{city}/{restaurant}")]
         public async Task<IActionResult> Details(string city, string restaurant)
         {

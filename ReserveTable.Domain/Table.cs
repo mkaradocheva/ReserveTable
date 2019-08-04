@@ -14,9 +14,11 @@
 
         public string Id { get; set; }
 
+        [Required]
         [Range(1, 15, ErrorMessage = SeatsCountErrorMessage)]
         public int SeatsCount { get; set; }
 
+        [Required]
         public string RestaurantId { get; set; }
         public Restaurant Restaurant { get; set; }
 

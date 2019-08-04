@@ -19,15 +19,15 @@
             this.restaurantService = restaurantService;
         }
 
-        [HttpGet("/Reviews/Create/{city}/{restaurant}")]
         [Authorize]
+        [HttpGet("/Reviews/Create/{city}/{restaurant}")]
         public async Task<IActionResult> Create(string city, string restaurant)
         {
             return View();
         }
 
-        [HttpPost("/Reviews/Create/{city}/{restaurant}")]
         [Authorize]
+        [HttpPost("/Reviews/Create/{city}/{restaurant}")]
         public async Task<IActionResult> Create(CreateReviewBindingModel model, string city, string restaurant)
         {
             var restaurantFromDb = await restaurantService.GetRestaurantByNameAndCity(city, restaurant);

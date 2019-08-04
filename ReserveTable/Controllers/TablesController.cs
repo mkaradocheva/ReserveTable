@@ -1,4 +1,4 @@
-﻿namespace ReserveTable.App.Controllers
+﻿namespace ReserveTable.App.Areas.Administration.Controllers
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;

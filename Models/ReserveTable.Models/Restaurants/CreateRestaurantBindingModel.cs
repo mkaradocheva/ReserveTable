@@ -1,6 +1,7 @@
 ﻿namespace ReserveTable.App.Models.Restaurants
 {
     using System.ComponentModel.DataAnnotations;
+    using Microsoft.AspNetCore.Http;
 
     public class CreateRestaurantBindingModel
     {
@@ -21,5 +22,8 @@
         [Required]
         [Phone]
         public string PhoneNumber { get; set; }
+
+        [Required]
+        public IFormFile Photo { get; set; }
     }
 }
