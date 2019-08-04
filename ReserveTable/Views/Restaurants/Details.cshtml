@@ -1,5 +1,9 @@
 ﻿@model ReserveTable.App.Models.Restaurants.RestaurantDetailsViewModel
 
+@{
+    ViewData["Title"] = $"{Model.Name}";
+}
+
 <div>
     <h4 class="text-center p-4">@Model.Name - Reserve your table here!</h4>
     <hr />
@@ -29,12 +33,12 @@
             <tbody>
                 @foreach (var review in Model.Reviews)
                 {
-                <tr>
-                    <th scope="row" class="text-center">@review.Date</th>
-                    <td class="text-center">@review.Username</td>
-                    <td class="text-center">@review.Rate</td>
-                    <td class="text-center">@review.Comment</td>
-                </tr>
+                    <tr>
+                        <th scope="row" class="text-center">@review.Date</th>
+                        <td class="text-center">@review.Username</td>
+                        <td class="text-center">@review.Rate</td>
+                        <td class="text-center">@review.Comment</td>
+                    </tr>
                 }
             </tbody>
         </table>

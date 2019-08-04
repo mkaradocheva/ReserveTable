@@ -1,5 +1,9 @@
 ﻿@model ReserveTable.App.Models.Cities.CityRestaurantsViewModel
 
+@{
+    ViewData["Title"] = $"Restaurants in {Model.CityName}";
+}
+
 @if (TempData["RestaurantExists"] != null)
 {
     <div class="alert alert-warning alert-dismissible fade show" role="alert">

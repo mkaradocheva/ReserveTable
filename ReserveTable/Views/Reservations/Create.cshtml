@@ -1,5 +1,9 @@
 ﻿@model ReserveTable.Models.Reservations.CreateReservationViewModel
 
+@{
+    ViewData["Title"] = "Make Reservation";
+}
+
 @foreach (var item in ViewContext.ViewData.ModelState)
 {
     if (item.Value.Errors.Any())
