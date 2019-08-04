@@ -14,15 +14,12 @@
     {
         private readonly ICityService cityService;
         private readonly ICloudinaryService cloudinaryService;
-        private readonly IRestaurantService restaurantService;
 
         public CitiesController(ICityService cityService, 
-            ICloudinaryService cloudinaryService,
-            IRestaurantService restaurantService)
+            ICloudinaryService cloudinaryService)
         {
             this.cityService = cityService;
             this.cloudinaryService = cloudinaryService;
-            this.restaurantService = restaurantService;
         }
 
         [Authorize()]

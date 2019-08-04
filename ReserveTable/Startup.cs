@@ -12,6 +12,7 @@
     using System.Linq;
     using Services;
     using CloudinaryDotNet;
+    using ReserveTable.Mapping;
 
     public class Startup
     {
@@ -68,6 +69,8 @@
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            //AutoMapperConfig.RegisterMappings();
+
             using (var serviceScope = app.ApplicationServices.CreateScope())
             {
                 using (var context = serviceScope.ServiceProvider.GetRequiredService<ReserveTableDbContext>())
