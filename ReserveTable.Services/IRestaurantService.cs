@@ -13,6 +13,8 @@
 
         Task<double> GetAverageRate(Restaurant restaurant);
 
+        Task<bool> SetNewRating(Restaurant restaurant, double rating);
+
         Task<Restaurant> GetRestaurantById(string id);
     }
 }

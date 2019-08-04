@@ -10,11 +10,44 @@
 
     public class CityService : ICityService
     {
+        private const string RatingAscendingCriteria = "rating-lowest-to-highest";
+        private const string RatingDescendingCriteria = "rating-highest-to-lowest";
+        private const string NameAscendingCriteria = "alphabetically-a-to-z";
+        private const string NameDescendingCriteria = "alphabetically-z-to-a";
+
         private readonly ReserveTableDbContext dbContext;
 
         public CityService(ReserveTableDbContext dbContext)
         {
             this.dbContext = dbContext;
+        }
+
+        private IQueryable<Restaurant> GetAllRestaurantsInCityByRatingAscending(string city)
+        {
+            return this.dbContext.Restaurants
+                            .Where(r => r.City.Name == city)
+                            .OrderBy(r => r.AverageRating);
+        }
+
+        private IQueryable<Restaurant> GetAllRestaurantsInCityByRatingDescending(string city)
+        {
+            return this.dbContext.Restaurants
+                            .Where(r => r.City.Name == city)
+                            .OrderByDescending(r => r.AverageRating);
+        }
+
+        private IQueryable<Restaurant> GetAllRestaurantsInCityByNameAscending(string city)
+        {
+            return this.dbContext.Restaurants
+                .Where(r => r.City.Name == city)
+                .OrderBy(r => r.Name);
+        }
+
+        private IQueryable<Restaurant> GetAllRestaurantsInCityByNameDescending(string city)
+        {
+            return this.dbContext.Restaurants
+                .Where(r => r.City.Name == city)
+                .OrderByDescending(r => r.Name);
         }
 
         public async Task<bool> AddCity(City city)
@@ -67,8 +100,20 @@
             return cityId;
         }
 
-        public async Task<List<Restaurant>> GetRestaurantsInCity(string city)
+        public async Task<List<Restaurant>> GetRestaurantsInCity(string city, string criteria = null)
         {
+            switch (criteria)
+            {
+                case RatingAscendingCriteria:
+                    return this.GetAllRestaurantsInCityByRatingAscending(city).ToList();
+                case RatingDescendingCriteria:
+                    return this.GetAllRestaurantsInCityByRatingDescending(city).ToList();
+                case NameAscendingCriteria:
+                    return this.GetAllRestaurantsInCityByNameAscending(city).ToList();
+                case NameDescendingCriteria:
+                    return this.GetAllRestaurantsInCityByNameDescending(city).ToList();
+            }
+
             var restaurants = await dbContext.Restaurants
                 .Where(r => r.City.Name == city)
                 .ToListAsync();

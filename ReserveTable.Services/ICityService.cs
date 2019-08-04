@@ -9,7 +9,7 @@
     {
         Task<string> GetCityByName(string cityName);
 
-        Task<List<Restaurant>> GetRestaurantsInCity(string city);
+        Task<List<Restaurant>> GetRestaurantsInCity(string city, string criteria = null);
 
         Task<bool> AddCity(City city);
 

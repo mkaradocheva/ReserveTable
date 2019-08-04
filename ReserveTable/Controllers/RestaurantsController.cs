@@ -71,7 +71,6 @@
         public async Task<IActionResult> Details(string city, string restaurant)
         {
             var restaurantFromDb = await restaurantService.GetRestaurantByNameAndCity(city, restaurant);
-            var restaurantAverageRate = await restaurantService.GetAverageRate(restaurantFromDb);
 
             var reviewsViewModel = new List<AllReviewsForRestaurantViewModel>();
 
@@ -95,8 +94,8 @@
                 Address = restaurantFromDb.Address,
                 City = city,
                 PhoneNumber = restaurantFromDb.PhoneNumber,
-                AverageRate = restaurantAverageRate.ToString() != "NaN"
-                            ? restaurantAverageRate.ToString()
+                AverageRate = restaurantFromDb.AverageRating.ToString() != "0"
+                            ? restaurantFromDb.AverageRating.ToString()
                             : "No ratings yet",
                 Reviews = reviewsViewModel
             };

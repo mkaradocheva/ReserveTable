@@ -45,6 +45,8 @@
             };
 
             await reviewsService.CreateReview(review);
+            var newRestaurantAverageRating = await restaurantService.GetAverageRate(restaurantFromDb);
+            await restaurantService.SetNewRating(restaurantFromDb, newRestaurantAverageRating);
 
             return this.Redirect($"/Restaurants/{city}/{restaurant}");
         }

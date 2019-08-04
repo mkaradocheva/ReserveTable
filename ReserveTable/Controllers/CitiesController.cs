@@ -57,20 +57,18 @@
         }
 
         [Route("/Cities/{city}")]
-        public async Task<IActionResult> CityRestaurants(string city)
+        public async Task<IActionResult> CityRestaurants(string city, [FromQuery]string criteria)
         {
-            List<Restaurant> restaurants = await cityService.GetRestaurantsInCity(city);
+            List<Restaurant> restaurants = await cityService.GetRestaurantsInCity(city, criteria);
 
             List<RestaurantsViewModel> restaurantsViewModel = new List<RestaurantsViewModel>();
 
             foreach (var restaurant in restaurants)
             {
-                var averageRate = await restaurantService.GetAverageRate(restaurant);
-
                 restaurantsViewModel.Add(new RestaurantsViewModel
                 {
                     Name = restaurant.Name,
-                    Rate = averageRate.ToString() != "NaN" ? averageRate.ToString() : "No ratings yet",
+                    Rate = restaurant.AverageRating.ToString() != "0" ? restaurant.AverageRating.ToString() : "No ratings yet",
                     Picture = restaurant.Photo
                 });
             }
@@ -80,6 +78,8 @@
                 CityName = city,
                 Restaurants = restaurantsViewModel
             };
+
+            this.ViewData["criteria"] = criteria;
 
             return this.View(model);
         }

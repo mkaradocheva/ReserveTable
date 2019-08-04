@@ -25,6 +25,8 @@
         [Required]
         public string Photo { get; set; }
 
+        public double AverageRating { get; set; }
+
         [Required]
         [MaxLength(30, ErrorMessage = AddressErrorMessage)]
         public string Address { get; set; }

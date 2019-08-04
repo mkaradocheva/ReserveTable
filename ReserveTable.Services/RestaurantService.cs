@@ -31,7 +31,7 @@
                 .ToListAsync();
 
             if (allRestaurants
-                .Any(r => r.Name == restaurant.Name 
+                .Any(r => r.Name == restaurant.Name
                 && r.City.Name == cityName
                 && r.Address == restaurant.Address))
             {
@@ -63,6 +63,16 @@
             double average = Math.Round((reviews.Sum(r => r.Rate)) / reviews.Count(), 1);
 
             return average;
+        }
+
+        public async Task<bool> SetNewRating(Restaurant restaurant, double rating)
+        {
+            restaurant.AverageRating = rating;
+            dbContext.Restaurants.Update(restaurant);
+
+            var result = await dbContext.SaveChangesAsync();
+
+            return result > 0;
         }
 
         public async Task<Restaurant> GetRestaurantById(string id)
