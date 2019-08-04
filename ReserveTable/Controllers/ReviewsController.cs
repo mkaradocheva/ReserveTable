@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using ReserveTable.Domain;
     using ReserveTable.Models.Reviews;
     using Services;
 
@@ -33,7 +34,15 @@
             var restaurantFromDb = await restaurantService.GetRestaurantByNameAndCity(city, restaurant);
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            await reviewsService.CreateReview(model, restaurantFromDb, userId);
+            var review = new Review
+            {
+                Comment = model.Comment,
+                Rate = model.Rate,
+                Restaurant = restaurantFromDb,
+                UserId = userId
+            };
+
+            await reviewsService.CreateReview(review);
 
             return this.Redirect($"/Restaurants/{city}/{restaurant}");
         }

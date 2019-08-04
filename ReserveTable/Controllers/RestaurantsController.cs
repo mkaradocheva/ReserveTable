@@ -65,7 +65,6 @@
             return this.Redirect("/Home/Index");
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpGet("/Restaurants/{city}/{restaurant}")]
         public async Task<IActionResult> Details(string city, string restaurant)
         {

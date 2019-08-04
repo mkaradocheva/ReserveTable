@@ -2,10 +2,9 @@
 {
     using System.Threading.Tasks;
     using Domain;
-    using Models.Reviews;
 
     public interface IReviewService
     {
-        Task<bool> CreateReview(CreateReviewBindingModel model, Restaurant restaurant, string userId);
+        Task<bool> CreateReview(Review review);
     }
 }

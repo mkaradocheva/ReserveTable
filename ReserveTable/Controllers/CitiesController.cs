@@ -14,11 +14,15 @@
     {
         private readonly ICityService cityService;
         private readonly ICloudinaryService cloudinaryService;
+        private readonly IRestaurantService restaurantService;
 
-        public CitiesController(ICityService cityService, ICloudinaryService cloudinaryService)
+        public CitiesController(ICityService cityService, 
+            ICloudinaryService cloudinaryService,
+            IRestaurantService restaurantService)
         {
             this.cityService = cityService;
             this.cloudinaryService = cloudinaryService;
+            this.restaurantService = restaurantService;
         }
 
         [Authorize()]
@@ -61,10 +65,12 @@
 
             foreach (var restaurant in restaurants)
             {
+                var averageRate = await restaurantService.GetAverageRate(restaurant);
+
                 restaurantsViewModel.Add(new RestaurantsViewModel
                 {
                     Name = restaurant.Name,
-                    Rate = restaurant.AverageRate.ToString() != "0" ? restaurant.AverageRate.ToString() : "No ratings yet",
+                    Rate = averageRate.ToString() != "NaN" ? averageRate.ToString() : "No ratings yet",
                     Picture = restaurant.Photo
                 });
             }

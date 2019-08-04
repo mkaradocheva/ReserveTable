@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Restaurant
     {
@@ -30,9 +31,6 @@
 
         [Required]
         public string PhoneNumber { get; set; }
-
-        [Range(1, 10, ErrorMessage = AverageRateErrorMessage)]
-        public double AverageRate { get; set; }
 
         [Required]
         public string CityId { get; set; }
