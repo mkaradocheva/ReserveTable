@@ -6,14 +6,13 @@
     using Services.Models;
     using Common;
     using Xunit;
-    using ReserveTable.Data;
     using System.Linq;
 
-    public class ReviewServiceTest
+    public class ReviewServiceTests
     {
         private IReviewService reviewService;
 
-        public ReviewServiceTest()
+        public ReviewServiceTests()
         {
             AutoMapperFactory.InitializeMapper();
         }
