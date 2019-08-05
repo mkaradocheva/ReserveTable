@@ -40,7 +40,7 @@
             reviewServiceModel.UserId = userId;
             reviewServiceModel.Date = DateTime.Now;
 
-            await reviewsService.CreateReview(reviewServiceModel);
+            await reviewsService.Create(reviewServiceModel);
             var newRestaurantAverageRating = await restaurantService.GetAverageRate(restaurantFromDbServiceModel);
             await restaurantService.SetNewRating(restaurantFromDbServiceModel.Id, newRestaurantAverageRating);
 

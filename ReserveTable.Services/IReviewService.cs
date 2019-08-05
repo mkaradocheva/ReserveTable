@@ -5,6 +5,6 @@
 
     public interface IReviewService
     {
-        Task<bool> CreateReview(ReviewServiceModel review);
+        Task<bool> Create(ReviewServiceModel review);
     }
 }

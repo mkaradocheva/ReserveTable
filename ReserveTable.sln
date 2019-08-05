@@ -13,9 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReserveTable.Services", "Re
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReserveTable.Models", "Models\ReserveTable.Models\ReserveTable.Models.csproj", "{D5B35C4D-21E1-489C-B967-4F5B831C0EBB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReserveTable.Mapping", "ReserveTable.Mapping\ReserveTable.Mapping.csproj", "{49B8A1FF-E30A-448B-AAC2-0300D9430FAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReserveTable.Mapping", "ReserveTable.Mapping\ReserveTable.Mapping.csproj", "{49B8A1FF-E30A-448B-AAC2-0300D9430FAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReserveTable.Services.Models", "ReserveTable.Services.Models\ReserveTable.Services.Models.csproj", "{DA990CB3-B2DD-4B59-87BA-814252BC4697}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReserveTable.Services.Models", "ReserveTable.Services.Models\ReserveTable.Services.Models.csproj", "{DA990CB3-B2DD-4B59-87BA-814252BC4697}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReserveTable.Tests", "ReserveTable.Tests\ReserveTable.Tests.csproj", "{62FFF57B-0B1A-4ABD-94DB-CB8EF85A51B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{DA990CB3-B2DD-4B59-87BA-814252BC4697}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA990CB3-B2DD-4B59-87BA-814252BC4697}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA990CB3-B2DD-4B59-87BA-814252BC4697}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62FFF57B-0B1A-4ABD-94DB-CB8EF85A51B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62FFF57B-0B1A-4ABD-94DB-CB8EF85A51B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62FFF57B-0B1A-4ABD-94DB-CB8EF85A51B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62FFF57B-0B1A-4ABD-94DB-CB8EF85A51B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

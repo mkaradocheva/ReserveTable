@@ -14,7 +14,7 @@
             this.dbContext = dbContext;
         }
 
-        public async Task<bool> CreateReview(ReviewServiceModel reviewServiceModel)
+        public async Task<bool> Create(ReviewServiceModel reviewServiceModel)
         {
             Review review = AutoMapper.Mapper.Map<Review>(reviewServiceModel);
 
