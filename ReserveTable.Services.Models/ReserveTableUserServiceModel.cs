@@ -2,8 +2,10 @@
 {
     using System.Collections.Generic;
     using Microsoft.AspNet.Identity.EntityFramework;
+    using ReserveTable.Domain;
+    using ReserveTable.Mapping;
 
-    public class ReserveTableUserServiceModel : IdentityUser
+    public class ReserveTableUserServiceModel : IdentityUser, IMapTo<ReserveTableUser>, IMapFrom<ReserveTableUser>
     {
         public ReserveTableUserRoleServiceModel UserRole { get; set; }
 

@@ -3,6 +3,7 @@
     using System.Threading.Tasks;
     using Data;
     using Domain;
+    using Models;
 
     public class ReviewService : IReviewService
     {
@@ -13,8 +14,10 @@
             this.dbContext = dbContext;
         }
 
-        public async Task<bool> CreateReview(Review review)
+        public async Task<bool> CreateReview(ReviewServiceModel reviewServiceModel)
         {
+            Review review = AutoMapper.Mapper.Map<Review>(reviewServiceModel);
+
             await dbContext.Reviews.AddAsync(review);
             var result = await dbContext.SaveChangesAsync();
 

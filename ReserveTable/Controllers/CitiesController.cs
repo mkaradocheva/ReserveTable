@@ -5,10 +5,11 @@
     using Microsoft.AspNetCore.Mvc;
     using Models.Cities;
     using Models.Restaurants;
-    using Domain;
     using Services;
     using Microsoft.AspNetCore.Authorization;
     using ReserveTable.Models.Cities;
+    using ReserveTable.Services.Models;
+    using System.Linq;
 
     public class CitiesController : Controller
     {
@@ -35,20 +36,15 @@
         {
             string pictureUrl = await cloudinaryService.UploadPicture(model.Photo, model.Name, "city_images");
 
-            var city = new City
-            {
-                Name = model.Name,
-                Photo = pictureUrl
-            };
+            CityServiceModel cityServiceModel = AutoMapper.Mapper.Map<CityServiceModel>(model);
+            cityServiceModel.Photo = pictureUrl;
 
-            if (await cityService.CheckIfExists(city))
+            if (await cityService.CheckIfExists(cityServiceModel))
             {
                 ModelState.AddModelError("CityExists", "This city already exists");
-
                 return this.View();
             }
-
-            await cityService.AddCity(city);
+            await cityService.AddCity(cityServiceModel);
 
             return this.Redirect("/");
         }
@@ -56,19 +52,11 @@
         [Route("/Cities/{city}")]
         public async Task<IActionResult> CityRestaurants(string city, [FromQuery]string criteria)
         {
-            List<Restaurant> restaurants = await cityService.GetRestaurantsInCity(city, criteria);
+            IQueryable<RestaurantServiceModel> restaurants = await cityService.GetRestaurantsInCity(city, criteria);
 
-            List<RestaurantsViewModel> restaurantsViewModel = new List<RestaurantsViewModel>();
-
-            foreach (var restaurant in restaurants)
-            {
-                restaurantsViewModel.Add(new RestaurantsViewModel
-                {
-                    Name = restaurant.Name,
-                    Rate = restaurant.AverageRating.ToString() != "0" ? restaurant.AverageRating.ToString() : "No ratings yet",
-                    Picture = restaurant.Photo
-                });
-            }
+            List<RestaurantsViewModel> restaurantsViewModel = restaurants
+                .Select(restaurant => AutoMapper.Mapper.Map<RestaurantsViewModel>(restaurant))
+                .ToList();
 
             var model = new CityRestaurantsViewModel
             {
@@ -77,9 +65,7 @@
             };
 
             this.ViewData["criteria"] = criteria;
-
             return this.View(model);
         }
-
     }
 }

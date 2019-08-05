@@ -10,6 +10,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\ReserveTable.Domain\ReserveTable.Domain.csproj" />
+    <ProjectReference Include="..\..\ReserveTable.Mapping\ReserveTable.Mapping.csproj" />
+    <ProjectReference Include="..\..\ReserveTable.Services.Models\ReserveTable.Services.Models.csproj" />
   </ItemGroup>
 
 </Project>

@@ -2,8 +2,10 @@
 {
     using System.ComponentModel.DataAnnotations;
     using Microsoft.AspNetCore.Http;
+    using ReserveTable.Mapping;
+    using ReserveTable.Services.Models;
 
-    public class CreateCityBindingModel
+    public class CreateCityBindingModel : IMapTo<CityServiceModel>
     {
         private const string NameLengthErrorMessage = "City name must be between 3 and 20 characters long.";
 

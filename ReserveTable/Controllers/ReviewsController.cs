@@ -5,8 +5,8 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using ReserveTable.Domain;
     using ReserveTable.Models.Reviews;
+    using ReserveTable.Services.Models;
     using Services;
 
     public class ReviewsController : Controller
@@ -32,21 +32,17 @@
         [HttpPost("/Reviews/Create/{city}/{restaurant}")]
         public async Task<IActionResult> Create(CreateReviewBindingModel model, string city, string restaurant)
         {
-            var restaurantFromDb = await restaurantService.GetRestaurantByNameAndCity(city, restaurant);
+            var restaurantFromDbServiceModel = await restaurantService.GetRestaurantByNameAndCity(city, restaurant);
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            var review = new Review
-            {
-                Comment = model.Comment,
-                Rate = model.Rate,
-                Restaurant = restaurantFromDb,
-                UserId = userId,
-                Date = DateTime.Now
-            };
+            ReviewServiceModel reviewServiceModel = AutoMapper.Mapper.Map<ReviewServiceModel>(model);
+            reviewServiceModel.RestaurantId = restaurantFromDbServiceModel.Id;
+            reviewServiceModel.UserId = userId;
+            reviewServiceModel.Date = DateTime.Now;
 
-            await reviewsService.CreateReview(review);
-            var newRestaurantAverageRating = await restaurantService.GetAverageRate(restaurantFromDb);
-            await restaurantService.SetNewRating(restaurantFromDb, newRestaurantAverageRating);
+            await reviewsService.CreateReview(reviewServiceModel);
+            var newRestaurantAverageRating = await restaurantService.GetAverageRate(restaurantFromDbServiceModel);
+            await restaurantService.SetNewRating(restaurantFromDbServiceModel.Id, newRestaurantAverageRating);
 
             return this.Redirect($"/Restaurants/{city}/{restaurant}");
         }

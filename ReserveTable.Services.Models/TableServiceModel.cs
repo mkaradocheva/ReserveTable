@@ -1,8 +1,10 @@
 ﻿namespace ReserveTable.Services.Models
 {
     using System.Collections.Generic;
+    using ReserveTable.Domain;
+    using ReserveTable.Mapping;
 
-    public class TableServiceModel
+    public class TableServiceModel : IMapTo<Table>, IMapFrom<Table>
     {
         public string Id { get; set; }
 

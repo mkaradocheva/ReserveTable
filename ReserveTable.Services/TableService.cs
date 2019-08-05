@@ -1,12 +1,12 @@
 ﻿namespace ReserveTable.Services
 {
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using Data;
     using Domain;
-    using Microsoft.EntityFrameworkCore;
-    using Models.Tables;
+    using Mapping;
+    using ReserveTable.Models.Tables;
+    using Models;
 
     public class TableService : ITableService
     {
@@ -17,13 +17,12 @@
             this.dbContext = dbContext;
         }
 
-        public async Task<bool> AddTable(AddTableBindingModel model, Restaurant restaurant)
+        public async Task<bool> AddTable(AddTableBindingModel model, RestaurantServiceModel restaurantServiceModel)
         {
             var table = new Table
             {
                 SeatsCount = model.SeatsCount,
-                Restaurant = restaurant,
-                RestaurantId = restaurant.Id
+                RestaurantId = restaurantServiceModel.Id
             };
 
             await dbContext.Tables.AddAsync(table);
@@ -32,11 +31,11 @@
             return result > 0; 
         }
 
-        public async Task<List<Table>> GetRestaurantTables(Restaurant restaurant)
+        public async Task<IQueryable<TableServiceModel>> GetRestaurantTables(RestaurantServiceModel restaurant)
         {
-            var tables = await dbContext.Tables
+            var tables = dbContext.Tables
                 .Where(t => t.RestaurantId == restaurant.Id)
-                .ToListAsync();
+                .To<TableServiceModel>();
 
             return tables;
         }

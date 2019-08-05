@@ -8,4 +8,9 @@
     <PackageReference Include="Microsoft.AspNet.Identity.EntityFramework" Version="2.2.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ReserveTable.Domain\ReserveTable.Domain.csproj" />
+    <ProjectReference Include="..\ReserveTable.Mapping\ReserveTable.Mapping.csproj" />
+  </ItemGroup>
+
 </Project>

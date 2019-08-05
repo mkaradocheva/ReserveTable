@@ -1,10 +1,10 @@
 ﻿namespace ReserveTable.Services
 {
     using System.Threading.Tasks;
-    using Domain;
+    using ReserveTable.Services.Models;
 
     public interface IReviewService
     {
-        Task<bool> CreateReview(Review review);
+        Task<bool> CreateReview(ReviewServiceModel review);
     }
 }

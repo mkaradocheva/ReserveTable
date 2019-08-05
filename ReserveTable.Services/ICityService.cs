@@ -1,22 +1,22 @@
 ﻿namespace ReserveTable.Services
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
-    using Domain;
-    using ReserveTable.Models.Home;
+    using ReserveTable.Services.Models;
 
     public interface ICityService
     {
         Task<string> GetCityByName(string cityName);
 
-        Task<List<Restaurant>> GetRestaurantsInCity(string city, string criteria = null);
+        Task<IQueryable<RestaurantServiceModel>> GetRestaurantsInCity(string city, string criteria = null);
 
-        Task<bool> AddCity(City city);
+        Task<bool> AddCity(CityServiceModel city);
 
-        Task<IEnumerable<string>> GetAllCities();
+        Task<IEnumerable<string>> GetAllCitiesNames();
 
-        Task<IEnumerable<CitiesHomeViewModel>> GetCitiesWithPicture();
+        Task<IQueryable<CityServiceModel>> GetAllCities();
 
-        Task<bool> CheckIfExists(City city);
+        Task<bool> CheckIfExists(CityServiceModel city);
     }
 }

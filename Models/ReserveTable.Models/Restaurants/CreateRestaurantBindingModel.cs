@@ -1,9 +1,12 @@
 ﻿namespace ReserveTable.App.Models.Restaurants
 {
     using System.ComponentModel.DataAnnotations;
+    using AutoMapper;
     using Microsoft.AspNetCore.Http;
+    using ReserveTable.Mapping;
+    using ReserveTable.Services.Models;
 
-    public class CreateRestaurantBindingModel
+    public class CreateRestaurantBindingModel : IMapTo<RestaurantServiceModel>, IHaveCustomMappings
     {
         private const string NameLengthErrorMessage = "Name of restaurant must be between 3 and 20 characters long.";
         private const string AddressLengthErrorMessage = "Address must be between 4 and 30 characters long.";
@@ -25,5 +28,13 @@
 
         [Required]
         public IFormFile Photo { get; set; }
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration
+                .CreateMap<CreateRestaurantBindingModel, RestaurantServiceModel>()
+                .ForMember(dest => dest.City,
+                opt => opt.Ignore());
+        }
     }
 }

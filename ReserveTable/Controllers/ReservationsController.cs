@@ -2,11 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
+    using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using ReserveTable.Models.Reservations;
+    using ReserveTable.Services.Models;
     using Services;
 
     [Authorize]
@@ -40,9 +41,9 @@
 
             if (isDateValid)
             {
-                var restaurantFromDb = await restaurantService.GetRestaurantByNameAndCity(city, restaurant);
-                var user = await usersService.GetUserByUsername(this.User.Identity.Name);
-                var reservation = await reservationsService.MakeReservation(viewModel, user, restaurantFromDb);
+                RestaurantServiceModel restaurantFromDb = await restaurantService.GetRestaurantByNameAndCity(city, restaurant);
+                ReserveTableUserServiceModel user = await usersService.GetUserByUsername(this.User.Identity.Name);
+                ReservationServiceModel reservation = await reservationsService.MakeReservation(viewModel, user, restaurantFromDb);
 
                 if (reservation == null)
                 {
@@ -64,21 +65,15 @@
         public async Task<IActionResult> My()
         {
             var username = this.User.Identity.Name;
-            var reservationsFromDb = await reservationsService.GetMyReservations(username);
+            IQueryable<ReservationServiceModel> reservationsServiceModel = await reservationsService.GetMyReservations(username);
 
             var list = new List<MyReservationViewModel>();
 
-            foreach (var reservation in reservationsFromDb)
+            foreach (var reservation in reservationsServiceModel)
             {
-                var restaurant = await restaurantService.GetRestaurantById(reservation.RestaurantId);
+                RestaurantServiceModel restaurant = await restaurantService.GetRestaurantById(reservation.RestaurantId);
 
-                var reservationViewModel = new MyReservationViewModel
-                {
-                    Id = reservation.Id,
-                    Date = reservation.ForDate.ToString("dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture),
-                    Restaurant = restaurant.Name,
-                    City = restaurant.City.Name
-                };
+                var reservationViewModel = AutoMapper.Mapper.Map<MyReservationViewModel>(reservation);
 
                 list.Add(reservationViewModel);
             }
@@ -94,7 +89,10 @@
         [HttpGet("/Reservations/Cancel/{reservationId}")]
         public async Task<IActionResult> Cancel(string reservationId)
         {
-            var viewModel = await reservationsService.GetReservationForCancel(reservationId);
+            var reservationServiceModel = await reservationsService.GetReservationById(reservationId);
+
+            CancelReservationViewModel viewModel = AutoMapper.Mapper.Map<CancelReservationViewModel>(reservationServiceModel);
+
             return this.View(viewModel);
         }
 

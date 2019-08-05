@@ -19,6 +19,7 @@
     <ProjectReference Include="..\ReserveTable.Data\ReserveTable.Data.csproj" />
     <ProjectReference Include="..\ReserveTable.Domain\ReserveTable.Domain.csproj" />
     <ProjectReference Include="..\ReserveTable.Mapping\ReserveTable.Mapping.csproj" />
+    <ProjectReference Include="..\ReserveTable.Services.Models\ReserveTable.Services.Models.csproj" />
     <ProjectReference Include="..\ReserveTable.Services\ReserveTable.Services.csproj" />
   </ItemGroup>
 

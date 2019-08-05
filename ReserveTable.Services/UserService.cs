@@ -2,9 +2,10 @@
 {
     using System.Linq;
     using System.Threading.Tasks;
-    using Data;
-    using Domain;
     using Microsoft.EntityFrameworkCore;
+    using Data;
+    using ReserveTable.Services.Models;
+    using ReserveTable.Mapping;
 
     public class UserService : IUserService
     {
@@ -15,17 +16,19 @@
             this.dbContext = dbContext;
         }
 
-        public async Task<ReserveTableUser> GetUserById(string id)
+        public async Task<ReserveTableUserServiceModel> GetUserById(string id)
         {
             var user = await dbContext.Users.FindAsync(id);
+            ReserveTableUserServiceModel userServiceModel = AutoMapper.Mapper.Map<ReserveTableUserServiceModel>(user);
 
-            return user;
+            return userServiceModel;
         }
 
-        public async Task<ReserveTableUser> GetUserByUsername(string username)
+        public async Task<ReserveTableUserServiceModel> GetUserByUsername(string username)
         {
             var user = await dbContext.Users
                 .Where(u => u.UserName == username)
+                .To<ReserveTableUserServiceModel>()
                 .FirstOrDefaultAsync();
 
             return user;

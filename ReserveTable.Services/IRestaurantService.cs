@@ -1,20 +1,20 @@
 ﻿namespace ReserveTable.Services
 {
     using System.Threading.Tasks;
-    using Domain;
+    using ReserveTable.Services.Models;
 
     public interface IRestaurantService
     {
-        Task<bool> CreateNewRestaurant(Restaurant restaurant);
+        Task<bool> CreateNewRestaurant(RestaurantServiceModel restaurantServiceModel);
 
-        Task<bool> CheckIfExistsInDb(Restaurant restaurant, string cityName);
+        Task<bool> CheckIfExistsInDb(RestaurantServiceModel restaurantServiceModel, string cityName);
 
-        Task<Restaurant> GetRestaurantByNameAndCity(string city, string name);
+        Task<RestaurantServiceModel> GetRestaurantByNameAndCity(string city, string name);
 
-        Task<double> GetAverageRate(Restaurant restaurant);
+        Task<double> GetAverageRate(RestaurantServiceModel restaurantServiceModel);
 
-        Task<bool> SetNewRating(Restaurant restaurant, double rating);
+        Task<bool> SetNewRating(string restaurantId, double rating);
 
-        Task<Restaurant> GetRestaurantById(string id);
+        Task<RestaurantServiceModel> GetRestaurantById(string id);
     }
 }

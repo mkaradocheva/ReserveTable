@@ -8,9 +8,12 @@
     <ProjectReference Include="..\Models\ReserveTable.Models\ReserveTable.Models.csproj" />
     <ProjectReference Include="..\ReserveTable.Data\ReserveTable.Data.csproj" />
     <ProjectReference Include="..\ReserveTable.Domain\ReserveTable.Domain.csproj" />
+    <ProjectReference Include="..\ReserveTable.Mapping\ReserveTable.Mapping.csproj" />
+    <ProjectReference Include="..\ReserveTable.Services.Models\ReserveTable.Services.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="8.1.1" />
     <PackageReference Include="CloudinaryDotNet" Version="1.8.0" />
   </ItemGroup>
 

@@ -13,6 +13,9 @@
     using Services;
     using CloudinaryDotNet;
     using ReserveTable.Mapping;
+    using ReserveTable.Models.Cities;
+    using System.Reflection;
+    using ReserveTable.Services.Models;
 
     public class Startup
     {
@@ -69,7 +72,10 @@
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            //AutoMapperConfig.RegisterMappings();
+            AutoMapperConfig.RegisterMappings(
+                typeof(CreateCityBindingModel).GetTypeInfo().Assembly,
+                typeof(CreateCityViewModel).GetTypeInfo().Assembly,
+                typeof(CityServiceModel).GetTypeInfo().Assembly);
 
             using (var serviceScope = app.ApplicationServices.CreateScope())
             {

@@ -1,8 +1,10 @@
 ﻿namespace ReserveTable.Services.Models
 {
     using System;
+    using ReserveTable.Domain;
+    using ReserveTable.Mapping;
 
-    public class ReservationServiceModel
+    public class ReservationServiceModel : IMapTo<Reservation>, IMapFrom<Reservation>
     {
         public string Id { get; set; }
 

@@ -1,14 +1,14 @@
 ﻿namespace ReserveTable.Services
 {
-    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
-    using Domain;
-    using Models.Tables;
+    using ReserveTable.Models.Tables;
+    using ReserveTable.Services.Models;
 
     public interface ITableService
     {
-        Task<List<Table>> GetRestaurantTables(Restaurant restaurant);
+        Task<IQueryable<TableServiceModel>> GetRestaurantTables(RestaurantServiceModel restaurant);
 
-        Task<bool> AddTable(AddTableBindingModel model, Restaurant restaurant);
+        Task<bool> AddTable(AddTableBindingModel model, RestaurantServiceModel restaurantServiceModel);
     }
 }

@@ -1,8 +1,10 @@
 ﻿namespace ReserveTable.Models.Reviews
 {
     using System.ComponentModel.DataAnnotations;
+    using ReserveTable.Mapping;
+    using ReserveTable.Services.Models;
 
-    public class CreateReviewBindingModel
+    public class CreateReviewBindingModel : IMapTo<ReviewServiceModel>
     {
         private const string RateRangeErrorMessage = "Rate must be between 1 and 10.";
         private const string CommentLengthErrorMessage = "Comment must be between 5 and 100 characters long.";

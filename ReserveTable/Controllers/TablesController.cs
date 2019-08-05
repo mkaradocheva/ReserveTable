@@ -1,10 +1,12 @@
 ﻿namespace ReserveTable.App.Areas.Administration.Controllers
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using ReserveTable.Models.Tables;
+    using ReserveTable.Services.Models;
     using Services;
 
     [Authorize(Roles = "Admin")]
@@ -24,7 +26,7 @@
         public async Task<IActionResult> RestaurantTables(string city, string restaurant)
         {
             var restaurantFromDb = await restaurantService.GetRestaurantByNameAndCity(city, restaurant);
-            var restaurantTables = await tablesService.GetRestaurantTables(restaurantFromDb);
+            IQueryable<TableServiceModel> restaurantTables = await tablesService.GetRestaurantTables(restaurantFromDb);
 
             var tablesList = new List<RestaurantTablesViewModel>();
 
@@ -58,7 +60,7 @@
         [HttpPost("/Tables/{city}/{restaurant}/Add")]
         public async Task<IActionResult> Add(string city, string restaurant, AddTableBindingModel model)
         {
-            var restaurantFromDb = await restaurantService.GetRestaurantByNameAndCity(city, restaurant);
+            RestaurantServiceModel restaurantFromDb = await restaurantService.GetRestaurantByNameAndCity(city, restaurant);
             await tablesService.AddTable(model, restaurantFromDb);
 
             return this.Redirect($"/Tables/{city}/{restaurant}");

@@ -1,18 +1,17 @@
 ﻿namespace ReserveTable.Services
 {
     using System;
-    using System.Collections.Generic;
-    using System.Globalization;
     using System.Linq;
     using Microsoft.EntityFrameworkCore;
     using Data;
     using Domain;
-    using Models.Reservations;
     using System.Threading.Tasks;
+    using ReserveTable.Models.Reservations;
+    using Models;
+    using ReserveTable.Mapping;
 
     public class ReservationService : IReservationService
     {
-        private const string DateStringFormat = "dd/MM/yyyy HH:mm";
 
         private readonly ReserveTableDbContext dbContext;
 
@@ -21,7 +20,7 @@
             this.dbContext = dbContext;
         }
 
-        public async Task<Reservation> MakeReservation(CreateReservationBindingModel viewModel, ReserveTableUser user, Restaurant restaurant)
+        public async Task<ReservationServiceModel> MakeReservation(CreateReservationBindingModel viewModel, ReserveTableUserServiceModel user, RestaurantServiceModel restaurant)
         {
             var dateTime = DateTime.Parse(viewModel.Date + " " + viewModel.Time);
 
@@ -33,7 +32,7 @@
                 .Where(t => t.SeatsCount == viewModel.SeatsCount + 1)
                 .ToList();
 
-            Reservation reservation = new Reservation();
+            ReservationServiceModel reservationServiceModel = new ReservationServiceModel();
 
             if (tablesWithExactCountSeats.Any())
             {
@@ -45,16 +44,18 @@
                     }
                     else
                     {
-                        reservation.ForDate = dateTime;
-                        reservation.SeatsCount = viewModel.SeatsCount;
-                        reservation.UserId = user.Id;
-                        reservation.Table = table;
-                        reservation.Restaurant = restaurant;
+                        reservationServiceModel.ForDate = dateTime;
+                        reservationServiceModel.SeatsCount = viewModel.SeatsCount;
+                        reservationServiceModel.UserId = user.Id;
+                        reservationServiceModel.TableId = table.Id;
+                        reservationServiceModel.RestaurantId = restaurant.Id;
+
+                        var reservation = AutoMapper.Mapper.Map<Reservation>(reservationServiceModel);
 
                         await dbContext.Reservations.AddAsync(reservation);
                         await dbContext.SaveChangesAsync();
 
-                        return reservation;
+                        return reservationServiceModel;
                     }
                 }
             }
@@ -68,16 +69,18 @@
                     }
                     else
                     {
-                        reservation.ForDate = dateTime;
-                        reservation.SeatsCount = viewModel.SeatsCount;
-                        reservation.UserId = user.Id;
-                        reservation.Table = biggerTable;
-                        reservation.Restaurant = restaurant;
+                        reservationServiceModel.ForDate = dateTime;
+                        reservationServiceModel.SeatsCount = viewModel.SeatsCount;
+                        reservationServiceModel.UserId = user.Id;
+                        reservationServiceModel.Table = biggerTable;
+                        reservationServiceModel.Restaurant = restaurant;
+
+                        var reservation = AutoMapper.Mapper.Map<Reservation>(reservationServiceModel);
 
                         await dbContext.Reservations.AddAsync(reservation);
                         await dbContext.SaveChangesAsync();
 
-                        return reservation;
+                        return reservationServiceModel;
                     }
                 }
             }
@@ -85,22 +88,22 @@
             return null;
         }
 
-        public async Task<List<Reservation>> GetMyReservations(string username)
+        public async Task<IQueryable<ReservationServiceModel>> GetMyReservations(string username)
         {
-            var reservations = await dbContext.Reservations
+            var reservationsServiceModel = dbContext.Reservations
                 .Where(r => r.User.UserName == username
                 && r.ForDate.AddHours(2) > DateTime.Now
                 && r.IsCancelled == false)
                 .Include(r => r.Restaurant)
                 .ThenInclude(r => r.City)
-                .ToListAsync();
+                .To<ReservationServiceModel>();
 
-            return reservations;
+            return reservationsServiceModel;
         }
 
         public async Task<bool> CancelReservation(string reservationId)
         {
-            Reservation reservation =  await dbContext.Reservations.FindAsync(reservationId);
+            var reservation = dbContext.Reservations.Find(reservationId);
             reservation.IsCancelled = true;
 
             dbContext.Reservations.Update(reservation);
@@ -109,7 +112,7 @@
             return result > 0;
         }
 
-        public async Task<CancelReservationViewModel> GetReservationForCancel(string reservationId)
+        public async Task<ReservationServiceModel> GetReservationById(string reservationId)
         {
             var reservation = await dbContext.Reservations
                 .Where(r => r.Id == reservationId)
@@ -117,14 +120,9 @@
                 .ThenInclude(r => r.City)
                 .FirstOrDefaultAsync();
 
-            var viewModel = new CancelReservationViewModel
-            {
-                Restaurant = reservation.Restaurant.Name,
-                City = reservation.Restaurant.City.Name,
-                Date = reservation.ForDate.ToString(DateStringFormat, CultureInfo.InvariantCulture)
-            };
+            var reservationServiceModel = AutoMapper.Mapper.Map<ReservationServiceModel>(reservation);
 
-            return viewModel;
+            return reservationServiceModel;
         }
 
         public async Task<bool> IsDateValid(DateTime dateForReservation)

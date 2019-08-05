@@ -1,8 +1,11 @@
 ﻿namespace ReserveTable.Services.Models
 {
     using System.Collections.Generic;
+    using AutoMapper;
+    using ReserveTable.Domain;
+    using ReserveTable.Mapping;
 
-    public class RestaurantServiceModel
+    public class RestaurantServiceModel : IMapFrom<Restaurant>, IMapTo<Restaurant>
     {
         public string Id { get; set; }
 
@@ -22,5 +25,13 @@
         public ICollection<TableServiceModel> Tables { get; set; }
 
         public ICollection<ReviewServiceModel> Reviews { get; set; }
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            //configuration
+            //    .CreateMap<RestaurantServiceModel, RestaurantsViewModel>()
+            //    .ForMember(destination => destination.AverageRating,)
+            //    opts => opts.Map
+        }
     }
 }

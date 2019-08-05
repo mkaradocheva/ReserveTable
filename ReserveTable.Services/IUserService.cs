@@ -1,12 +1,12 @@
 ﻿namespace ReserveTable.Services
 {
     using System.Threading.Tasks;
-    using Domain;
+    using ReserveTable.Services.Models;
 
     public interface IUserService
     {
-        Task<ReserveTableUser> GetUserById(string id);
+        Task<ReserveTableUserServiceModel> GetUserById(string id);
 
-        Task<ReserveTableUser> GetUserByUsername(string username);
+        Task<ReserveTableUserServiceModel> GetUserByUsername(string username);
     }
 }

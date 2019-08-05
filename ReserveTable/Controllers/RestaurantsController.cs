@@ -5,9 +5,9 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Models.Restaurants;
-    using Domain;
     using ReserveTable.Models.Reviews;
     using Services;
+    using ReserveTable.Services.Models;
 
     public class RestaurantsController : Controller
     {
@@ -33,7 +33,7 @@
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            var allCities = await cityService.GetAllCities();
+            var allCities = await cityService.GetAllCitiesNames();
             this.ViewData["cityNames"] = allCities;
 
             return View();
@@ -46,15 +46,10 @@
             string cityId = await cityService.GetCityByName(modelView.City);
             string pictureUrl = await cloudinaryService.UploadPicture(modelView.Photo, $"{modelView.City} {modelView.Name}", "restaurant_images");
 
-            var restaurant = new Restaurant
-            {
-                Name = modelView.Name,
-                CityId = cityId,
-                Address = modelView.Address,
-                PhoneNumber = modelView.PhoneNumber,
-                Photo = pictureUrl
-            };
-
+            var restaurant = AutoMapper.Mapper.Map<RestaurantServiceModel>(modelView);
+            restaurant.Photo = pictureUrl;
+            restaurant.CityId = cityId;
+            
             if (await restaurantService.CheckIfExistsInDb(restaurant, modelView.City))
             {
                 TempData["RestaurantExists"] = "This restaurant already exists.";
