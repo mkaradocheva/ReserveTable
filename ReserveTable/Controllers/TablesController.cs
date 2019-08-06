@@ -61,7 +61,11 @@
         public async Task<IActionResult> Add(string city, string restaurant, AddTableBindingModel model)
         {
             RestaurantServiceModel restaurantFromDb = await restaurantService.GetRestaurantByNameAndCity(city, restaurant);
-            await tablesService.AddTable(model, restaurantFromDb);
+
+            if (ModelState.IsValid)
+            {
+                await tablesService.AddTable(model, restaurantFromDb);
+            }
 
             return this.Redirect($"/Tables/{city}/{restaurant}");
         }

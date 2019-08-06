@@ -7,6 +7,7 @@
     using Mapping;
     using ReserveTable.Models.Tables;
     using Models;
+    using System;
 
     public class TableService : ITableService
     {
@@ -24,6 +25,16 @@
                 SeatsCount = model.SeatsCount,
                 RestaurantId = restaurantServiceModel.Id
             };
+
+            if (table.SeatsCount <= 0 || table.SeatsCount > 15)
+            {
+                throw new ArgumentException(nameof(table.SeatsCount));
+            }
+
+            if (!dbContext.Restaurants.Any(restaurant => restaurant.Id == restaurantServiceModel.Id))
+            {
+                throw new ArgumentNullException(nameof(restaurantServiceModel));
+            }
 
             await dbContext.Tables.AddAsync(table);
             var result = await dbContext.SaveChangesAsync();
