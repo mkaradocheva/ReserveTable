@@ -6,7 +6,6 @@
     using Services.Models;
     using Common;
     using Xunit;
-    using System.Linq;
 
     public class ReviewServiceTests
     {
@@ -40,7 +39,7 @@
         [InlineData(0)]
         [InlineData(11)]
         [InlineData(-1)]
-        public async Task Create_WithInvalidRate_ShouldNotAddInDb(double rate)
+        public async Task Create_WithInvalidRate_ShouldThrowArgumentException(double rate)
         {
             var context = ReserveTableDbContextInMemoryFactory.InitializeContext();
             this.reviewService = new ReviewService(context);
@@ -52,14 +51,11 @@
                 Rate = rate,
             };
 
-            int expectedResult = 0;
-            int actualResult = context.Reviews.Count();
-
-            Assert.Equal(expectedResult, actualResult);
+            await Assert.ThrowsAsync<ArgumentException>(() => this.reviewService.Create(review));
         }
 
         [Fact]
-        public async Task Create_WithNoComment_ShouldNotAddInDb()
+        public async Task Create_WithNoComment_ShouldThrowArgumentException()
         {
             var context = ReserveTableDbContextInMemoryFactory.InitializeContext();
             this.reviewService = new ReviewService(context);
@@ -71,10 +67,7 @@
                 Rate = 9,
             };
 
-            int expectedResult = 0;
-            int actualResult = context.Reviews.Count();
-
-            Assert.Equal(expectedResult, actualResult);
+            await Assert.ThrowsAsync<ArgumentException>(() => this.reviewService.Create(review));
         }
     }
 }
