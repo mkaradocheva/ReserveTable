@@ -1,15 +1,15 @@
 ﻿namespace ReserveTable.Tests.Service
 {
+    using System;
+    using System.Threading.Tasks;
+    using System.Collections.Generic;
+    using System.Linq;
     using Services;
     using Common;
-    using System.Threading.Tasks;
-    using ReserveTable.Services.Models;
     using Xunit;
-    using ReserveTable.Domain;
-    using System.Collections.Generic;
-    using ReserveTable.Data;
-    using System;
-    using System.Linq;
+    using Domain;
+    using Data;
+    using Services.Models;
 
     public class RestaurantServiceTests
     {
@@ -299,6 +299,88 @@
             var actualResult = await restaurantService.GetAverageRate(restaurant);
 
             Assert.Equal(expectedResult, actualResult);
+        }
+
+        [Fact]
+        public async Task SetNewRating_WithData_ShouldReturnCorrectResult()
+        {
+            string errorMessage = "RestaurantService SetNewRating() method does not work properly.";
+            var context = ReserveTableDbContextInMemoryFactory.InitializeContext();
+            this.restaurantService = new RestaurantService(context);
+            await SeedData(context);
+
+            var restaurantId = "1";
+            double rating = 10;
+
+            var actualResult = await restaurantService.SetNewRating(restaurantId, rating);
+            Assert.True(actualResult, errorMessage);
+        }
+
+        [Fact]
+        public async Task SetNewRating_InNotExistantRestaurant_ShouldThrowArgumentNullException()
+        {
+            var context = ReserveTableDbContextInMemoryFactory.InitializeContext();
+            this.restaurantService = new RestaurantService(context);
+            await SeedData(context);
+
+            var restaurantId = "10";
+            double rating = 10;
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => restaurantService.SetNewRating(restaurantId, rating));
+        }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(11)]
+        [InlineData(-1)]
+        public async Task SetNewRating_WithInvalidRating_ShouldThrowArgumentException(double rating)
+        {
+            var context = ReserveTableDbContextInMemoryFactory.InitializeContext();
+            this.restaurantService = new RestaurantService(context);
+            await SeedData(context);
+
+            var restaurantId = "1";
+
+            await Assert.ThrowsAsync<ArgumentException>(() => restaurantService.SetNewRating(restaurantId, rating));
+        }
+
+        [Fact]
+        public async Task GetRestaurantById_WithData_ShouldReturnCorrectResult()
+        {
+            var context = ReserveTableDbContextInMemoryFactory.InitializeContext();
+            this.restaurantService = new RestaurantService(context);
+            await SeedData(context);
+
+            var restaurantId = "1";
+            var expectedResult = new RestaurantServiceModel
+            {
+                Id = "1",
+                Name = "Ego",
+                Address = "Egos Address",
+                CityId = "1",
+                PhoneNumber = "0888888888",
+                Photo = "/src/ego-photo.jpg"
+            };
+
+            var actualResult = await restaurantService.GetRestaurantById(restaurantId);
+            Assert.Equal(expectedResult.Name, actualResult.Name);
+            Assert.Equal(expectedResult.Address, actualResult.Address);
+            Assert.Equal(expectedResult.CityId, actualResult.CityId);
+            Assert.Equal(expectedResult.PhoneNumber, actualResult.PhoneNumber);
+            Assert.Equal(expectedResult.Photo, actualResult.Photo);
+        }
+
+        [Fact]
+        public async Task GetRestaurantById_WithNotExistentRestaurant_ShouldReturnNull()
+        {
+            string errorMessage = "RestaurantService GetRestaurantById() method does not work properly.";
+            var context = ReserveTableDbContextInMemoryFactory.InitializeContext();
+            this.restaurantService = new RestaurantService(context);
+            await SeedData(context);
+
+            var restaurantId = "10";
+            var actualResult = await this.restaurantService.GetRestaurantById(restaurantId);
+            Assert.True(actualResult == null, errorMessage);
         }
     }
 }

@@ -6,10 +6,6 @@
     using Services.Models;
     using Common;
     using Xunit;
-    using ReserveTable.Mapping;
-    using System.Reflection;
-    using AutoMapper;
-    using ReserveTable.Domain;
 
     public class ReviewServiceTests
     {

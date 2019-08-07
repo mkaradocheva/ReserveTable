@@ -6,8 +6,8 @@
     using Microsoft.EntityFrameworkCore;
     using Data;
     using Domain;
-    using ReserveTable.Services.Models;
-    using ReserveTable.Mapping;
+    using Models;
+    using Mapping;
 
     public class RestaurantService : IRestaurantService
     {
@@ -91,6 +91,17 @@
         public async Task<bool> SetNewRating(string restaurantId, double rating)
         {
             var restaurant = dbContext.Restaurants.Find(restaurantId);
+
+            if (restaurant == null)
+            {
+                throw new ArgumentNullException(nameof(restaurant));
+            }
+
+            if (rating < 1 || rating > 10)
+            {
+                throw new ArgumentException(nameof(rating));
+            }
+
             restaurant.AverageRating = rating;
             dbContext.Restaurants.Update(restaurant);
 
