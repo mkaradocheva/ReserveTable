@@ -7,7 +7,7 @@
     {
         Task<bool> CreateNewRestaurant(RestaurantServiceModel restaurantServiceModel);
 
-        Task<bool> CheckIfExistsInDb(RestaurantServiceModel restaurantServiceModel, string cityName);
+        Task<bool> CheckIfExists(RestaurantServiceModel restaurantServiceModel, string cityName);
 
         Task<RestaurantServiceModel> GetRestaurantByNameAndCity(string city, string name);
 

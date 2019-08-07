@@ -50,7 +50,7 @@
             restaurant.Photo = pictureUrl;
             restaurant.CityId = cityId;
             
-            if (await restaurantService.CheckIfExistsInDb(restaurant, modelView.City))
+            if (await restaurantService.CheckIfExists(restaurant, modelView.City))
             {
                 TempData["RestaurantExists"] = "This restaurant already exists.";
             }

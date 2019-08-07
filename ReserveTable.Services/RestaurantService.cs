@@ -11,6 +11,11 @@
 
     public class RestaurantService : IRestaurantService
     {
+        private const int NameMinLength = 3;
+        private const int NameMaxLength = 20;
+        private const int AddressMinLength = 4;
+        private const int AddressMaxLength = 30;
+
         private readonly ReserveTableDbContext dbContext;
 
         public RestaurantService(ReserveTableDbContext dbContext)
@@ -22,13 +27,26 @@
         {
             Restaurant restaurant = AutoMapper.Mapper.Map<Restaurant>(restaurantServiceModel);
 
+            if (dbContext.Cities.Find(restaurant.CityId) == null)
+            {
+                throw new ArgumentNullException(nameof(restaurant));
+            }
+
+            if (restaurant.Name.Length < NameMinLength 
+                || restaurant.Name.Length > NameMaxLength
+                || restaurant.Address.Length < AddressMinLength 
+                || restaurant.Address.Length > AddressMaxLength)
+            {
+                throw new ArgumentException(nameof(restaurant));
+            }
+
             await dbContext.Restaurants.AddAsync(restaurant);
             var result = await dbContext.SaveChangesAsync();
 
             return result > 0;
         }
 
-        public async Task<bool> CheckIfExistsInDb(RestaurantServiceModel restaurantServiceModel, string cityName)
+        public async Task<bool> CheckIfExists(RestaurantServiceModel restaurantServiceModel, string cityName)
         {
             var allRestaurants = await dbContext.Restaurants
                 .Include(r => r.City)
