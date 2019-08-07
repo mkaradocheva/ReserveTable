@@ -4,12 +4,12 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using ReserveTable.Models.Home;
     using Data;
     using Domain;
     using Models;
     using AutoMapper;
     using Mapping;
+    using System;
 
     public class CityService : ICityService
     {
@@ -17,6 +17,8 @@
         private const string RatingDescendingCriteria = "rating-highest-to-lowest";
         private const string NameAscendingCriteria = "alphabetically-a-to-z";
         private const string NameDescendingCriteria = "alphabetically-z-to-a";
+        private const int CityNameMinLength = 3;
+        private const int CityNameMaxLength = 20;
 
         private readonly ReserveTableDbContext dbContext;
 
@@ -28,6 +30,13 @@
         public async Task<bool> AddCity(CityServiceModel cityServiceModel)
         {
             City city = Mapper.Map<City>(cityServiceModel);
+
+            if (city.Name == string.Empty 
+                || city.Name.Length < CityNameMinLength 
+                || city.Name.Length > CityNameMaxLength)
+            {
+                throw new ArgumentException();
+            }
 
             await dbContext.Cities.AddAsync(city);
             var result = await dbContext.SaveChangesAsync();
@@ -86,6 +95,7 @@
             }
 
             var restaurants = dbContext.Restaurants
+                .Include(r => r.City)
                 .Where(r => r.City.Name == city)
                 .To<RestaurantServiceModel>();
 
