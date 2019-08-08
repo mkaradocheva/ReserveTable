@@ -2,13 +2,13 @@
 {
     using System;
     using System.Linq;
+    using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
     using Data;
     using Domain;
-    using System.Threading.Tasks;
     using ReserveTable.Models.Reservations;
     using Models;
-    using ReserveTable.Mapping;
+    using Mapping;
 
     public class ReservationService : IReservationService
     {
@@ -104,8 +104,13 @@
         public async Task<bool> CancelReservation(string reservationId)
         {
             var reservation = dbContext.Reservations.Find(reservationId);
-            reservation.IsCancelled = true;
 
+            if (reservation == null)
+            {
+                throw new ArgumentNullException(nameof(reservation));
+            }
+
+            reservation.IsCancelled = true;
             dbContext.Reservations.Update(reservation);
             var result = await dbContext.SaveChangesAsync();
 
@@ -119,6 +124,11 @@
                 .Include(r => r.Restaurant)
                 .ThenInclude(r => r.City)
                 .FirstOrDefaultAsync();
+
+            if (reservation == null)
+            {
+                throw new ArgumentNullException(nameof(reservation));
+            }
 
             var reservationServiceModel = AutoMapper.Mapper.Map<ReservationServiceModel>(reservation);
 
