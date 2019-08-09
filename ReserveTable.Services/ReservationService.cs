@@ -72,8 +72,8 @@
                         reservationServiceModel.ForDate = dateTime;
                         reservationServiceModel.SeatsCount = viewModel.SeatsCount;
                         reservationServiceModel.UserId = user.Id;
-                        reservationServiceModel.Table = biggerTable;
-                        reservationServiceModel.Restaurant = restaurant;
+                        reservationServiceModel.TableId = biggerTable.Id;
+                        reservationServiceModel.RestaurantId = restaurant.Id;
 
                         var reservation = AutoMapper.Mapper.Map<Reservation>(reservationServiceModel);
 

@@ -8,6 +8,7 @@
     using ReserveTable.Models.Reviews;
     using Services;
     using ReserveTable.Services.Models;
+    using System.Linq;
 
     public class RestaurantsController : Controller
     {
@@ -92,7 +93,7 @@
                 AverageRate = restaurantFromDb.AverageRating.ToString() != "0"
                             ? restaurantFromDb.AverageRating.ToString()
                             : "No ratings yet",
-                Reviews = reviewsViewModel
+                Reviews = reviewsViewModel.OrderByDescending(r => r.Date).ToList()
             };
 
             return this.View(restaurantViewModel);

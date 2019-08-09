@@ -3,16 +3,16 @@
     using System.ComponentModel.DataAnnotations;
     using AutoMapper;
     using Microsoft.AspNetCore.Http;
-    using ReserveTable.Mapping;
-    using ReserveTable.Services.Models;
+    using Mapping;
+    using Services.Models;
 
     public class CreateRestaurantBindingModel : IMapTo<RestaurantServiceModel>, IHaveCustomMappings
     {
-        private const string NameLengthErrorMessage = "Name of restaurant must be between 3 and 20 characters long.";
+        private const string NameLengthErrorMessage = "Name of restaurant must be between 3 and 30 characters long.";
         private const string AddressLengthErrorMessage = "Address must be between 4 and 30 characters long.";
 
         [Required]
-        [StringLength(20, ErrorMessage = NameLengthErrorMessage, MinimumLength = 3)]
+        [StringLength(30, ErrorMessage = NameLengthErrorMessage, MinimumLength = 3)]
         public string Name { get; set; }
 
         [Required]

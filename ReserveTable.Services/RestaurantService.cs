@@ -12,7 +12,7 @@
     public class RestaurantService : IRestaurantService
     {
         private const int NameMinLength = 3;
-        private const int NameMaxLength = 20;
+        private const int NameMaxLength = 30;
         private const int AddressMinLength = 4;
         private const int AddressMaxLength = 30;
 

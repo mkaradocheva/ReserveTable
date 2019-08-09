@@ -145,7 +145,7 @@
 
         [Theory]
         [InlineData("AB")]
-        [InlineData("Happy Happy Happy Happy Happy")]
+        [InlineData("Happy Happy Happy Happy Happy Happy")]
         public async Task CreateNewRestaurant_WithInvalidName_ShouldThrowArgumentException(string name)
         {
             var context = ReserveTableDbContextInMemoryFactory.InitializeContext();

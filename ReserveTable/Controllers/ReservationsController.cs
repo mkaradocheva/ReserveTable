@@ -80,7 +80,7 @@
 
             MyReservationsListViewModel viewModel = new MyReservationsListViewModel
             {
-                Reservations = list
+                Reservations = list.OrderBy(r => r.Date).ToList()
             };
 
             return this.View(viewModel);
