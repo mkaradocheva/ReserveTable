@@ -5,7 +5,7 @@
 
     public class City
     {
-        private const string InvalidCityNameErrorMessage = "Invalid city name. Name must not be longer than 20 characters.";
+        private const int MaxNameLength = 20;
 
         public City()
         {
@@ -15,7 +15,7 @@
         public string Id { get; set; }
 
         [Required]
-        [MaxLength(20, ErrorMessage = InvalidCityNameErrorMessage)]
+        [MaxLength(MaxNameLength, ErrorMessage = "Invalid city name. Name must not be longer than {0} characters.")]
         public string Name { get; set; }
 
         [Required]

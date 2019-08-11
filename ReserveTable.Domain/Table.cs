@@ -5,7 +5,8 @@
 
     public class Table
     {
-        private const string SeatsCountErrorMessage = "Seats count must be a number between 1 and 15.";
+        private const int MinSeatsCount = 1;
+        private const int MaxSeatsCount = 15;
 
         public Table()
         {
@@ -15,7 +16,7 @@
         public string Id { get; set; }
 
         [Required]
-        [Range(1, 15, ErrorMessage = SeatsCountErrorMessage)]
+        [Range(minimum: MinSeatsCount, maximum: MaxSeatsCount, ErrorMessage = "Seats count must be a number between {0} and {1}.")]
         public int SeatsCount { get; set; }
 
         [Required]

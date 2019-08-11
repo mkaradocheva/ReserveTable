@@ -4,10 +4,11 @@
 
     public class CreateReservationBindingModel
     {
-        private const string InvalidSeatsCountErrorMessage = "Seats must be a number between 1 and 99.";
+        private const int MinSeatsCount = 1;
+        private const int MaxSeatsCount = 99;
 
         [Required]
-        [Range(1, 99, ErrorMessage = InvalidSeatsCountErrorMessage)]
+        [Range(minimum: MinSeatsCount, maximum:MaxSeatsCount, ErrorMessage = "Seats must be a number between {0} and {1}.")]
         public int SeatsCount { get; set; }
 
         [Required]

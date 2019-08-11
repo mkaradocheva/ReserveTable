@@ -8,18 +8,20 @@
 
     public class CreateRestaurantBindingModel : IMapTo<RestaurantServiceModel>, IHaveCustomMappings
     {
-        private const string NameLengthErrorMessage = "Name of restaurant must be between 3 and 30 characters long.";
-        private const string AddressLengthErrorMessage = "Address must be between 4 and 30 characters long.";
+        private const int MinNameLength = 3;
+        private const int MaxNameLength = 30;
+        private const int MinAddressLength = 4;
+        private const int MaxAddressLength = 30;
 
         [Required]
-        [StringLength(30, ErrorMessage = NameLengthErrorMessage, MinimumLength = 3)]
+        [StringLength(maximumLength:MaxNameLength, ErrorMessage = "Name of restaurant must be between {0} and {1} characters long.", MinimumLength =  MinNameLength)]
         public string Name { get; set; }
 
         [Required]
         public string City { get; set; }
 
         [Required]
-        [StringLength(30, MinimumLength = 4, ErrorMessage = AddressLengthErrorMessage)]
+        [StringLength(maximumLength:MaxAddressLength, ErrorMessage = "Address must be between {0} and {1} characters long.", MinimumLength = MinAddressLength)]
         public string Address { get; set; }
 
         [Required]

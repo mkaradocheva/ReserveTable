@@ -5,9 +5,8 @@
 
     public class Restaurant
     {
-        private const string NameErrorMessage = "Name must be at max 30 characters long.";
-        private const string AddressErrorMessage = "Address must be at max 30 characters long.";
-        public const string AverageRateErrorMessage = "Rate must be a number between 1 and 10.";
+        private const int MaxNameLength = 30;
+        private const int MaxAddressLength = 30;
 
         public Restaurant()
         {
@@ -18,7 +17,7 @@
         public string Id { get; set; }
 
         [Required]
-        [MaxLength(30, ErrorMessage = NameErrorMessage)]
+        [MaxLength(MaxNameLength, ErrorMessage = "Name must be at max {0} characters long.")]
         public string Name { get; set; }
 
         [Required]
@@ -27,7 +26,7 @@
         public double AverageRating { get; set; }
 
         [Required]
-        [MaxLength(30, ErrorMessage = AddressErrorMessage)]
+        [MaxLength(MaxAddressLength, ErrorMessage = "Address must be at max {0} characters long.")]
         public string Address { get; set; }
 
         [Required]

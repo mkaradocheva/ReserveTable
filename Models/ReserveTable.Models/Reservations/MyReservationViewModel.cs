@@ -7,6 +7,8 @@
 
     public class MyReservationViewModel : IMapFrom<ReservationServiceModel>, IHaveCustomMappings
     {
+        private const string DateStringFormat = "dd/MM/yyyy HH:mm";
+
         public string Id { get; set; }
 
         public string Date { get; set; }
@@ -19,7 +21,7 @@
         {
             configuration.CreateMap<ReservationServiceModel, MyReservationViewModel>()
                 .ForMember(dest => dest.Date,
-                opt => opt.MapFrom(origin => origin.ForDate.ToString("dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture)))
+                opt => opt.MapFrom(origin => origin.ForDate.ToString(DateStringFormat, CultureInfo.InvariantCulture)))
                 .ForMember(dest => dest.City,
                 opt => opt.MapFrom(origin => origin.Restaurant.City.Name))
                 .ForMember(dest => dest.Restaurant,

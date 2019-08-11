@@ -2,15 +2,16 @@
 {
     using System.ComponentModel.DataAnnotations;
     using Microsoft.AspNetCore.Http;
-    using ReserveTable.Mapping;
-    using ReserveTable.Services.Models;
+    using Mapping;
+    using Services.Models;
 
     public class CreateCityBindingModel : IMapTo<CityServiceModel>
     {
-        private const string NameLengthErrorMessage = "City name must be between 3 and 20 characters long.";
+        private const int MinNameLength = 3;
+        private const int MaxNameLength = 20;
 
         [Required]
-        [StringLength(20, MinimumLength = 3, ErrorMessage = NameLengthErrorMessage)]
+        [StringLength(MaxNameLength, ErrorMessage = "City name must be at least {2} and at max {1} characters long.", MinimumLength = MinNameLength)]
         public string Name { get; set; }
 
         [Required]

@@ -5,17 +5,18 @@
 
     public class Review
     {
-        private const string CommentLengthErrorMessage = "Comment should be up to 100 symbols long.";
-        private const string RateErrorMessage = "Rate must be a number between 1 and 10.";
+        private const int MaxCommentLength = 100;
+        private const int MinRate = 1;
+        private const int MaxRate = 10;
 
         public string Id { get; set; }
 
         [Required]
-        [MaxLength(100, ErrorMessage = CommentLengthErrorMessage)]
+        [MaxLength(MaxCommentLength, ErrorMessage = "Comment should be up to {0} symbols long.")]
         public string Comment { get; set; }
 
         [Required]
-        [Range(1, 10, ErrorMessage = RateErrorMessage)]
+        [Range(minimum: MinRate, maximum: MaxRate, ErrorMessage = "Rate must be a number between {0} and {1}.")]
         public double Rate { get; set; }
 
         public DateTime Date { get; set; }
