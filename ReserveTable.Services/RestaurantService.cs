@@ -15,6 +15,8 @@
         private const int NameMaxLength = 30;
         private const int AddressMinLength = 4;
         private const int AddressMaxLength = 30;
+        private const int MinRating = 1;
+        private const int MaxRating = 10;
 
         private readonly ReserveTableDbContext dbContext;
 
@@ -26,19 +28,8 @@
         public async Task<bool> CreateNewRestaurant(RestaurantServiceModel restaurantServiceModel)
         {
             Restaurant restaurant = AutoMapper.Mapper.Map<Restaurant>(restaurantServiceModel);
-
-            if (dbContext.Cities.Find(restaurant.CityId) == null)
-            {
-                throw new ArgumentNullException(nameof(restaurant));
-            }
-
-            if (restaurant.Name.Length < NameMinLength 
-                || restaurant.Name.Length > NameMaxLength
-                || restaurant.Address.Length < AddressMinLength 
-                || restaurant.Address.Length > AddressMaxLength)
-            {
-                throw new ArgumentException(nameof(restaurant));
-            }
+            CheckIfCityExists(restaurant);
+            ValidateRestaurant(restaurant);
 
             await dbContext.Restaurants.AddAsync(restaurant);
             var result = await dbContext.SaveChangesAsync();
@@ -91,20 +82,11 @@
         public async Task<bool> SetNewRating(string restaurantId, double rating)
         {
             var restaurant = dbContext.Restaurants.Find(restaurantId);
-
-            if (restaurant == null)
-            {
-                throw new ArgumentNullException(nameof(restaurant));
-            }
-
-            if (rating < 1 || rating > 10)
-            {
-                throw new ArgumentException(nameof(rating));
-            }
+            CheckIfNull(restaurant);
+            ValidateRating(rating);
 
             restaurant.AverageRating = rating;
             dbContext.Restaurants.Update(restaurant);
-
             var result = await dbContext.SaveChangesAsync();
 
             return result > 0;
@@ -116,6 +98,41 @@
             var restaurantServiceModel = AutoMapper.Mapper.Map<RestaurantServiceModel>(restaurant);
 
             return restaurantServiceModel;
+        }
+
+        private static void CheckIfNull(Restaurant restaurant)
+        {
+            if (restaurant == null)
+            {
+                throw new ArgumentNullException(nameof(restaurant));
+            }
+        }
+
+        private static void ValidateRating(double rating)
+        {
+            if (rating < MinRating || rating > MaxRating)
+            {
+                throw new ArgumentException(nameof(rating));
+            }
+        }
+
+        private static void ValidateRestaurant(Restaurant restaurant)
+        {
+            if (restaurant.Name.Length < NameMinLength
+                            || restaurant.Name.Length > NameMaxLength
+                            || restaurant.Address.Length < AddressMinLength
+                            || restaurant.Address.Length > AddressMaxLength)
+            {
+                throw new ArgumentException(nameof(restaurant));
+            }
+        }
+
+        private void CheckIfCityExists(Restaurant restaurant)
+        {
+            if (dbContext.Cities.Find(restaurant.CityId) == null)
+            {
+                throw new ArgumentNullException(nameof(restaurant));
+            }
         }
     }
 }

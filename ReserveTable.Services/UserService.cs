@@ -4,8 +4,8 @@
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
     using Data;
-    using ReserveTable.Services.Models;
-    using ReserveTable.Mapping;
+    using Models;
+    using Mapping;
 
     public class UserService : IUserService
     {

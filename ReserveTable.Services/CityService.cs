@@ -30,20 +30,14 @@
         public async Task<bool> AddCity(CityServiceModel cityServiceModel)
         {
             City city = Mapper.Map<City>(cityServiceModel);
-
-            if (city.Name == string.Empty 
-                || city.Name.Length < CityNameMinLength 
-                || city.Name.Length > CityNameMaxLength)
-            {
-                throw new ArgumentException();
-            }
+            ValidateCity(city);
 
             await dbContext.Cities.AddAsync(city);
             var result = await dbContext.SaveChangesAsync();
 
             return result > 0;
         }
-
+        
         public async Task<bool> CheckIfExists(CityServiceModel city)
         {
             if (await dbContext.Cities.AnyAsync(c => c.Name == city.Name))
@@ -128,6 +122,16 @@
             return this.dbContext.Restaurants
                 .Where(r => r.City.Name == city)
                 .OrderByDescending(r => r.Name);
+        }
+
+        private static void ValidateCity(City city)
+        {
+            if (city.Name == string.Empty
+                            || city.Name.Length < CityNameMinLength
+                            || city.Name.Length > CityNameMaxLength)
+            {
+                throw new ArgumentException();
+            }
         }
     }
 }
